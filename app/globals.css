@@ -1,26 +1,299 @@
 @import "tailwindcss";
 
+/* ============================================================
+   HORIZONTE COBALT — Design System: The Kinetic Editorial
+   Source: Stitch MCP — TicoBlockchain En Vivo
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Primary --- */
+  --color-primary: #000d33;
+  --color-primary-container: #002060;
+  --color-primary-fixed: #dbe1ff;
+  --color-primary-fixed-dim: #b4c5ff;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #748acf;
+  --color-on-primary-fixed: #00174b;
+  --color-on-primary-fixed-variant: #2c4383;
+
+  /* --- Secondary (Crimson) --- */
+  --color-secondary: #ba002e;
+  --color-secondary-container: #e31c40;
+  --color-secondary-fixed: #ffdad9;
+  --color-secondary-fixed-dim: #ffb3b3;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #fffbff;
+  --color-on-secondary-fixed: #40000a;
+  --color-on-secondary-fixed-variant: #920022;
+
+  /* --- Tertiary --- */
+  --color-tertiary: #2b0005;
+  --color-tertiary-container: #53000f;
+  --color-tertiary-fixed: #ffdad9;
+  --color-tertiary-fixed-dim: #ffb3b3;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #ff465a;
+  --color-on-tertiary-fixed: #40000a;
+  --color-on-tertiary-fixed-variant: #920022;
+
+  /* --- Surface --- */
+  --color-surface: #fbf9f5;
+  --color-surface-bright: #fbf9f5;
+  --color-surface-dim: #dbdad6;
+  --color-surface-container: #efeeea;
+  --color-surface-container-high: #eae8e4;
+  --color-surface-container-highest: #e4e2de;
+  --color-surface-container-low: #f5f3ef;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant: #e4e2de;
+  --color-surface-tint: #455b9d;
+  --color-on-surface: #1b1c1a;
+  --color-on-surface-variant: #444650;
+
+  /* --- Background --- */
+  --color-background: #fbf9f5;
+  --color-on-background: #1b1c1a;
+
+  /* --- Error --- */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+
+  /* --- Inverse --- */
+  --color-inverse-surface: #30312e;
+  --color-inverse-on-surface: #f2f0ed;
+  --color-inverse-primary: #b4c5ff;
+
+  /* --- Outline --- */
+  --color-outline: #757681;
+  --color-outline-variant: #c5c6d2;
 }
 
+/* ============================================================
+   Tailwind v4 Theme — Maps CSS vars to utility classes
+   ============================================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --- Fonts --- */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* --- Primary --- */
+  --color-primary: var(--color-primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-primary-fixed: var(--color-primary-fixed);
+  --color-primary-fixed-dim: var(--color-primary-fixed-dim);
+  --color-on-primary: var(--color-on-primary);
+  --color-on-primary-container: var(--color-on-primary-container);
+  --color-on-primary-fixed: var(--color-on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--color-on-primary-fixed-variant);
+
+  /* --- Secondary --- */
+  --color-secondary: var(--color-secondary);
+  --color-secondary-container: var(--color-secondary-container);
+  --color-secondary-fixed: var(--color-secondary-fixed);
+  --color-secondary-fixed-dim: var(--color-secondary-fixed-dim);
+  --color-on-secondary: var(--color-on-secondary);
+  --color-on-secondary-container: var(--color-on-secondary-container);
+  --color-on-secondary-fixed: var(--color-on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--color-on-secondary-fixed-variant);
+
+  /* --- Tertiary --- */
+  --color-tertiary: var(--color-tertiary);
+  --color-tertiary-container: var(--color-tertiary-container);
+  --color-tertiary-fixed: var(--color-tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--color-tertiary-fixed-dim);
+  --color-on-tertiary: var(--color-on-tertiary);
+  --color-on-tertiary-container: var(--color-on-tertiary-container);
+  --color-on-tertiary-fixed: var(--color-on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--color-on-tertiary-fixed-variant);
+
+  /* --- Surface --- */
+  --color-surface: var(--color-surface);
+  --color-surface-bright: var(--color-surface-bright);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-container-high: var(--color-surface-container-high);
+  --color-surface-container-highest: var(--color-surface-container-highest);
+  --color-surface-container-low: var(--color-surface-container-low);
+  --color-surface-container-lowest: var(--color-surface-container-lowest);
+  --color-surface-variant: var(--color-surface-variant);
+  --color-surface-tint: var(--color-surface-tint);
+  --color-on-surface: var(--color-on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+
+  /* --- Background --- */
+  --color-background: var(--color-background);
+  --color-on-background: var(--color-on-background);
+
+  /* --- Error --- */
+  --color-error: var(--color-error);
+  --color-error-container: var(--color-error-container);
+  --color-on-error: var(--color-on-error);
+  --color-on-error-container: var(--color-on-error-container);
+
+  /* --- Inverse --- */
+  --color-inverse-surface: var(--color-inverse-surface);
+  --color-inverse-on-surface: var(--color-inverse-on-surface);
+  --color-inverse-primary: var(--color-inverse-primary);
+
+  /* --- Outline --- */
+  --color-outline: var(--color-outline);
+  --color-outline-variant: var(--color-outline-variant);
+
+  /* --- Border Radius: Zero-Curvature Policy --- */
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+
+  /* --- Spacing Scale (base 3) --- */
+  --spacing-0_5: 0.1875rem;
+  --spacing-1: 0.375rem;
+  --spacing-1_5: 0.5625rem;
+  --spacing-2: 0.75rem;
+  --spacing-2_5: 0.9375rem;
+  --spacing-3: 1.125rem;
+  --spacing-3_5: 1.3125rem;
+  --spacing-4: 1.5rem;
+  --spacing-5: 1.875rem;
+  --spacing-6: 2.25rem;
+  --spacing-7: 2.625rem;
+  --spacing-8: 3rem;
+  --spacing-9: 3.375rem;
+  --spacing-10: 3.75rem;
+  --spacing-11: 4.125rem;
+  --spacing-12: 4.5rem;
+  --spacing-14: 5.25rem;
+  --spacing-16: 6rem;
+  --spacing-20: 7.5rem;
+  --spacing-24: 9rem;
+  --spacing-28: 10.5rem;
+  --spacing-32: 12rem;
+  --spacing-36: 13.5rem;
+  --spacing-40: 15rem;
+  --spacing-44: 16.5rem;
+  --spacing-48: 18rem;
+  --spacing-52: 19.5rem;
+  --spacing-56: 21rem;
+  --spacing-60: 22.5rem;
+  --spacing-64: 24rem;
+  --spacing-72: 27rem;
+  --spacing-80: 30rem;
+  --spacing-96: 36rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================
+   Typography Utility Classes
+   ============================================================ */
+
+/* Display Large — The "Departure Board" voice */
+.text-display-lg {
+  font-family: var(--font-space-grotesk);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Headline Medium — Authority */
+.text-headline-md {
+  font-family: var(--font-space-grotesk);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* Label Medium — Categories */
+.text-label-md {
+  font-family: var(--font-space-grotesk);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Data Mono — Timestamps, hashes, room numbers */
+.text-data-mono {
+  font-family: var(--font-jetbrains-mono);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+body {
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+/* Zero-curvature enforcement for all interactive elements */
+button,
+input,
+select,
+textarea,
+a {
+  border-radius: 0;
+}
+
+/* Selection highlight using primary */
+::selection {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+/* Focus states — visible ring on keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* Reduced motion — honor user preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Skip link — visually hidden until focused */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 100;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-secondary);
+  color: var(--color-on-secondary);
+  font-family: var(--font-space-grotesk);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
 }
