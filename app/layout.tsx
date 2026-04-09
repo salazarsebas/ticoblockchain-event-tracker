@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,11 +39,21 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
       style={{ touchAction: "manipulation" }}
     >
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-surface text-on-surface font-sans">
         <a href="#main" className="skip-link">
           Ir al contenido principal
         </a>
-        {children}
+        <NavBar />
+        <div className="flex-1 flex flex-col pt-[64px]">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );

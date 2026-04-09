@@ -189,6 +189,25 @@
 }
 
 /* ============================================================
+   Material Symbols
+   ============================================================ */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* ============================================================
    Typography Utility Classes
    ============================================================ */
 
@@ -296,4 +315,199 @@ textarea:focus-visible,
 
 .skip-link:focus {
   top: 0;
+}
+
+/* ============================================================
+   Stitch Compatibility Classes
+   ============================================================ */
+
+/* font-headline: alias for Space Grotesk (matches Stitch's font-headline) */
+.font-headline {
+  font-family: var(--font-space-grotesk);
+}
+
+/* mono-data: JetBrains Mono for timestamps, data points */
+.mono-data {
+  font-family: var(--font-jetbrains-mono);
+}
+
+/* No-scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================================================
+   Entrance Animations
+   ============================================================ */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: 65%; }
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+@keyframes live-glow {
+  0%, 100% {
+    box-shadow: 0 0 4px var(--color-secondary),
+                0 0 12px color-mix(in srgb, var(--color-secondary) 40%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 8px var(--color-secondary),
+                0 0 24px color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  }
+}
+
+@keyframes border-breathe {
+  0%, 100% { border-left-color: var(--color-secondary); }
+  50% { border-left-color: color-mix(in srgb, var(--color-secondary) 50%, transparent); }
+}
+
+@keyframes pin-bounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-12px); }
+  60% { transform: translateY(-4px); }
+}
+
+/* Utility classes for animations */
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.animate-slide-left {
+  animation: slide-in-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.animate-slide-right {
+  animation: slide-in-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.animate-reveal-up {
+  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.animate-progress-fill {
+  animation: progress-fill 2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+.animate-hero-zoom {
+  animation: hero-zoom 20s ease-in-out alternate infinite;
+}
+
+.animate-live-glow {
+  animation: live-glow 2s ease-in-out infinite;
+}
+
+.animate-border-breathe {
+  animation: border-breathe 2.5s ease-in-out infinite;
+}
+
+.animate-pin-bounce {
+  animation: pin-bounce 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+/* Stagger delay helpers via inline --delay */
+.stagger-1 { --delay: 100ms; }
+.stagger-2 { --delay: 200ms; }
+.stagger-3 { --delay: 300ms; }
+.stagger-4 { --delay: 400ms; }
+.stagger-5 { --delay: 500ms; }
+.stagger-6 { --delay: 600ms; }
+.stagger-7 { --delay: 700ms; }
+.stagger-8 { --delay: 800ms; }
+
+/* Hover lift — subtle upward shift for interactive cards */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Button hover shine — a sweep highlight */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+.btn-shine:hover::after {
+  left: 100%;
 }
