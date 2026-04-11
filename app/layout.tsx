@@ -19,9 +19,41 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ticoblockchain.cr";
+
 export const metadata: Metadata = {
-  title: "TicoBlockchain En Vivo",
-  description: "Evento blockchain en vivo — Costa Rica",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "TicoBlockchain 2026 — En Vivo",
+    template: "%s · TicoBlockchain 2026",
+  },
+  description:
+    "Evento blockchain en vivo desde Costa Rica. 24 de mayo, Hotel Barceló San José. Main Stage + Escenario 2.",
+  applicationName: "TicoBlockchain 2026",
+  keywords: [
+    "TicoBlockchain",
+    "blockchain",
+    "Costa Rica",
+    "Web3",
+    "cripto",
+    "fintech",
+    "LATAM",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "es_CR",
+    siteName: "TicoBlockchain 2026",
+    title: "TicoBlockchain 2026 — En Vivo",
+    description:
+      "Main Stage + Escenario 2 · 24 de mayo 2026 · Hotel Barceló San José.",
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TicoBlockchain 2026 — En Vivo",
+    description:
+      "Main Stage + Escenario 2 · 24 de mayo 2026 · Hotel Barceló San José.",
+  },
 };
 
 export const viewport: Viewport = {
@@ -39,17 +71,6 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
       style={{ touchAction: "manipulation" }}
     >
-      <head>
-        {/* Material Symbols icon font. Loaded here because App Router
-            root layout is the correct place for external fonts, and
-            Tailwind v4 reorders CSS @imports in ways that break external
-            font-face imports in globals.css. */}
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body className="min-h-full flex flex-col bg-surface text-on-surface font-sans">
         <a href="#main" className="skip-link">
           Ir al contenido principal

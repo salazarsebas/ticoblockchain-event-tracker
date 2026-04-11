@@ -1,6 +1,7 @@
 "use client";
 
-import type { KeyboardEvent } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
+import { ICON_PATHS, type IconName } from "../../components/Icon";
 import { ZONES } from "../data/zones";
 import { GRECO_FEATURES } from "../data/greco-features";
 import { STANDS } from "../data/stands";
@@ -254,52 +255,42 @@ function AudienceGrid() {
   );
 }
 
-type InteractiveProps<T> = {
+// Shared wrapper for all three interactive shape types. Handles the
+// accessibility role, dim/selected visual states, and the bounding rect.
+// Callers provide shape-specific text/icon children.
+type InteractiveShapeProps = {
+  id: string;
+  bbox: BBox;
+  fill: string;
+  ariaLabel: string;
   dimmed: boolean;
   selected: boolean;
   onSelect: (id: string) => void;
   onKeyDown: (e: KeyboardEvent<SVGGElement>) => void;
-} & T;
+  extraClassName?: string;
+  children?: ReactNode;
+};
 
-function GrecoFeatureShape({
-  feature,
+function InteractiveShape({
+  id,
+  bbox,
+  fill,
+  ariaLabel,
   dimmed,
   selected,
   onSelect,
   onKeyDown,
-}: InteractiveProps<{ feature: GrecoFeature }>) {
-  const { bbox, kind, label, shortLabel } = feature;
-  const cx = bbox.x + bbox.width / 2;
-  const cy = bbox.y + bbox.height / 2;
-
-  const fill =
-    kind === "stage"
-      ? "var(--color-primary-container)"
-      : kind === "check-in"
-        ? "var(--color-secondary)"
-        : kind === "entry-door"
-          ? "var(--color-secondary)"
-          : "var(--color-primary-fixed-dim)"; // mesas-regalo, mesas-transmision
-
-  const textFill =
-    kind === "stage" || kind === "check-in" || kind === "entry-door"
-      ? "var(--color-on-primary)"
-      : "var(--color-primary)";
-
-  const showLabel = kind !== "entry-door"; // doors are too thin for labels
-  const displayLabel = (shortLabel ?? label).toUpperCase();
-  // Only pulse when the stage is actually active — otherwise the opacity
-  // keyframes override the dimmed inline opacity and the stage stays visible.
-  const pulseClass = kind === "stage" && !dimmed ? "map-stage-pulse" : "";
-
+  extraClassName,
+  children,
+}: InteractiveShapeProps) {
   return (
     <g
       role="button"
       tabIndex={0}
-      aria-label={label}
-      onClick={() => onSelect(feature.id)}
+      aria-label={ariaLabel}
+      onClick={() => onSelect(id)}
       onKeyDown={onKeyDown}
-      className={`map-shape cursor-pointer ${pulseClass}`}
+      className={`map-shape cursor-pointer${extraClassName ? ` ${extraClassName}` : ""}`}
       style={{ opacity: dimmed ? 0.2 : 1 }}
     >
       <rect
@@ -311,6 +302,54 @@ function GrecoFeatureShape({
         stroke={selected ? "var(--color-secondary)" : "var(--color-primary)"}
         strokeWidth={selected ? 5 : 2}
       />
+      {children}
+    </g>
+  );
+}
+
+type ShapeHandlers = {
+  dimmed: boolean;
+  selected: boolean;
+  onSelect: (id: string) => void;
+  onKeyDown: (e: KeyboardEvent<SVGGElement>) => void;
+};
+
+function GrecoFeatureShape({
+  feature,
+  ...handlers
+}: { feature: GrecoFeature } & ShapeHandlers) {
+  const { bbox, kind, label, shortLabel } = feature;
+  const cx = bbox.x + bbox.width / 2;
+  const cy = bbox.y + bbox.height / 2;
+
+  const fill =
+    kind === "stage"
+      ? "var(--color-primary-container)"
+      : kind === "check-in" || kind === "entry-door"
+        ? "var(--color-secondary)"
+        : "var(--color-primary-fixed-dim)"; // mesas-regalo, mesas-transmision
+
+  const textFill =
+    kind === "stage" || kind === "check-in" || kind === "entry-door"
+      ? "var(--color-on-primary)"
+      : "var(--color-primary)";
+
+  const showLabel = kind !== "entry-door"; // doors are too thin for labels
+  const displayLabel = (shortLabel ?? label).toUpperCase();
+  // Only pulse when the stage is actually active — otherwise the opacity
+  // keyframes override the dimmed inline opacity and the stage stays visible.
+  const extraClassName =
+    kind === "stage" && !handlers.dimmed ? "map-stage-pulse" : undefined;
+
+  return (
+    <InteractiveShape
+      id={feature.id}
+      bbox={bbox}
+      fill={fill}
+      ariaLabel={label}
+      extraClassName={extraClassName}
+      {...handlers}
+    >
       {showLabel && (
         <text
           x={cx}
@@ -327,40 +366,26 @@ function GrecoFeatureShape({
           {displayLabel}
         </text>
       )}
-    </g>
+    </InteractiveShape>
   );
 }
 
 function StandShape({
   stand,
-  dimmed,
-  selected,
-  onSelect,
-  onKeyDown,
-}: InteractiveProps<{ stand: Stand }>) {
+  ...handlers
+}: { stand: Stand } & ShapeHandlers) {
   const { bbox, number } = stand;
   const cx = bbox.x + bbox.width / 2;
   const cy = bbox.y + bbox.height / 2;
 
   return (
-    <g
-      role="button"
-      tabIndex={0}
-      aria-label={`Stand ${number}`}
-      onClick={() => onSelect(stand.id)}
-      onKeyDown={onKeyDown}
-      className="map-shape cursor-pointer"
-      style={{ opacity: dimmed ? 0.2 : 1 }}
+    <InteractiveShape
+      id={stand.id}
+      bbox={bbox}
+      fill="var(--color-surface-variant)"
+      ariaLabel={`Stand ${number}`}
+      {...handlers}
     >
-      <rect
-        x={bbox.x}
-        y={bbox.y}
-        width={bbox.width}
-        height={bbox.height}
-        fill="var(--color-surface-variant)"
-        stroke={selected ? "var(--color-secondary)" : "var(--color-primary)"}
-        strokeWidth={selected ? 5 : 2}
-      />
       <text
         x={cx}
         y={cy - 4}
@@ -388,17 +413,14 @@ function StandShape({
       >
         {number.toString().padStart(2, "0")}
       </text>
-    </g>
+    </InteractiveShape>
   );
 }
 
 function LobbyPOIShape({
   poi,
-  dimmed,
-  selected,
-  onSelect,
-  onKeyDown,
-}: InteractiveProps<{ poi: LobbyPOI }>) {
+  ...handlers
+}: { poi: LobbyPOI } & ShapeHandlers) {
   const { bbox, label, shortLabel, category, iconName } = poi;
   const cx = bbox.x + bbox.width / 2;
   const cy = bbox.y + bbox.height / 2;
@@ -418,39 +440,14 @@ function LobbyPOIShape({
   const displayLabel = (shortLabel ?? label).toUpperCase();
 
   return (
-    <g
-      role="button"
-      tabIndex={0}
-      aria-label={label}
-      onClick={() => onSelect(poi.id)}
-      onKeyDown={onKeyDown}
-      className="map-shape cursor-pointer"
-      style={{ opacity: dimmed ? 0.2 : 1 }}
+    <InteractiveShape
+      id={poi.id}
+      bbox={bbox}
+      fill={fill}
+      ariaLabel={label}
+      {...handlers}
     >
-      <rect
-        x={bbox.x}
-        y={bbox.y}
-        width={bbox.width}
-        height={bbox.height}
-        fill={fill}
-        stroke={selected ? "var(--color-secondary)" : "var(--color-primary)"}
-        strokeWidth={selected ? 5 : 2}
-      />
-      <text
-        x={cx}
-        y={cy - 12}
-        fontFamily='"Material Symbols Outlined"'
-        fontSize={26}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill={textFill}
-        style={{
-          fontVariationSettings: '"FILL" 1',
-          pointerEvents: "none",
-        }}
-      >
-        {iconName}
-      </text>
+      <POIIcon iconName={iconName} cx={cx} cy={cy - 12} fill={textFill} />
       <text
         x={cx}
         y={cy + 18}
@@ -465,7 +462,7 @@ function LobbyPOIShape({
       >
         {displayLabel}
       </text>
-    </g>
+    </InteractiveShape>
   );
 }
 
@@ -504,19 +501,42 @@ function YouAreHerePin() {
       >
         ESTÁS AQUÍ
       </text>
-      {/* Pin icon via Material Symbols ligature */}
-      <text
-        x={entranceCenterX}
-        y={iconY}
-        fontFamily='"Material Symbols Outlined"'
-        fontSize={36}
-        textAnchor="middle"
-        dominantBaseline="middle"
+      <POIIcon
+        iconName="location_on"
+        cx={entranceCenterX}
+        cy={iconY}
+        size={36}
         fill="var(--color-secondary)"
-        style={{ fontVariationSettings: '"FILL" 1' }}
-      >
-        location_on
-      </text>
+      />
+    </g>
+  );
+}
+
+// Renders a shared Icon glyph inline inside the SVG context. The 24x24
+// path is centered on (cx, cy) via a transform so the existing text
+// anchoring math keeps working unchanged.
+function POIIcon({
+  iconName,
+  cx,
+  cy,
+  size = 26,
+  fill,
+}: {
+  iconName: IconName;
+  cx: number;
+  cy: number;
+  size?: number;
+  fill: string;
+}) {
+  const scale = size / 24;
+  const tx = cx - size / 2;
+  const ty = cy - size / 2;
+  return (
+    <g
+      transform={`translate(${tx} ${ty}) scale(${scale})`}
+      style={{ pointerEvents: "none" }}
+    >
+      <path d={ICON_PATHS[iconName]} fill={fill} />
     </g>
   );
 }

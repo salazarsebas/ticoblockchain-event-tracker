@@ -3,13 +3,29 @@
 
 export type SessionStatus = "past" | "live" | "next" | "scheduled";
 
+// TicoBlockchain 2026 runs two parallel tracks. "both" is used for
+// ceremonies and breaks that span the whole venue.
+export type Stage = "main" | "escenario-2" | "both";
+
+export type SessionCategory =
+  | "keynote"
+  | "main-stage" // sponsor-paid Main Stage slot (Diamond / Platino)
+  | "workshop" // Gold tier
+  | "panel" // Silver tier
+  | "pitch" // Startup Pitch Session
+  | "break" // Registro, Coffee Break
+  | "ceremony"; // Apertura, Cierre, Coctel
+
 export type Session = {
   id: string;
-  time: string; // "10:30" or "10:00 — 10:45"
+  time: string; // display: "09:10 — 09:55"
+  startTime: string; // 24h "HH:mm" sort key
   title: string;
   speakerName?: string;
   speakerOrg?: string;
-  room: string; // always "SALA GRECO" for this event
+  description?: string; // topic detail / panelist roster
+  stage: Stage;
+  category: SessionCategory;
   status: SessionStatus;
 };
 
@@ -19,7 +35,7 @@ export type Speaker = {
   org: string;
   talk: string;
   time: string;
-  room: string;
+  stage: Exclude<Stage, "both">;
   status: SessionStatus;
   imageUrl: string;
 };

@@ -1,7 +1,14 @@
 import Image from "next/image";
 import DepartureRow from "./components/DepartureRow";
+import Icon from "./components/Icon";
 import SessionCard from "./components/SessionCard";
-import { SESSIONS, getLiveSession, getNextSessions } from "./data/sessions";
+import { SESSIONS, getLiveSessions, getNextSessions } from "./data/sessions";
+import type { Session } from "./data/types";
+
+// Sorted once per render pass — cheap for ~21 sessions.
+function sortByStartTime(sessions: readonly Session[]): Session[] {
+  return [...sessions].sort((a, b) => a.startTime.localeCompare(b.startTime));
+}
 import { HERO_CONTENT, BENTO_HIGHLIGHTS } from "./data/home-content";
 import { VENUE } from "./data/venue";
 
@@ -28,18 +35,37 @@ function splitSpeakerName(name: string | undefined): {
   };
 }
 
+// Hero fallback: when the live Main Stage session has no named speaker
+// (sponsor slot like WINK), fall back to the org name, then the title.
+function heroHeadline(session: Session | undefined): {
+  first: string;
+  last: string;
+} {
+  if (!session) return { first: "EN", last: "PREPARACIÓN" };
+  if (session.speakerName) return splitSpeakerName(session.speakerName);
+  if (session.speakerOrg) return { first: session.speakerOrg, last: "" };
+  return { first: session.title, last: "" };
+}
+
 export default function EnVivoPage() {
-  const live = getLiveSession();
+  const live = getLiveSessions();
+  const mainLive = live.main;
+  const parallelLive = live.escenario2;
+
   const sidebarSessions = getNextSessions(3);
 
-  // The agenda preview shows up to 4 sessions — prefer live + its neighbors.
-  const liveIndex = SESSIONS.findIndex((s) => s.status === "live");
+  // Agenda preview anchors to the Main Stage live row. Slice ±1 around it
+  // for visual continuity; fall back to the first 5 rows if nothing is live.
+  const sortedSessions = sortByStartTime(SESSIONS);
+  const anchorIdx = mainLive
+    ? sortedSessions.findIndex((s) => s.id === mainLive.id)
+    : -1;
   const agendaPreview =
-    liveIndex >= 0
-      ? SESSIONS.slice(Math.max(0, liveIndex - 1), liveIndex + 3)
-      : SESSIONS.slice(0, 4);
+    anchorIdx >= 0
+      ? sortedSessions.slice(Math.max(0, anchorIdx - 1), anchorIdx + 4)
+      : sortedSessions.slice(0, 5);
 
-  const speakerName = splitSpeakerName(live?.speakerName);
+  const headline = heroHeadline(mainLive);
 
   return (
     <main id="main">
@@ -61,17 +87,17 @@ export default function EnVivoPage() {
           {/* Main Speaker Name (Oversized Editorial) */}
           <div className="mt-12 md:mt-0">
             <h1 className="text-[clamp(2.5rem,12vw,12rem)] leading-[0.85] font-black uppercase tracking-tighter -ml-1 md:-ml-4 break-words font-display animate-reveal-up stagger-1">
-              {speakerName.first}
-              {speakerName.last && (
+              {headline.first}
+              {headline.last && (
                 <>
                   <br />
-                  {speakerName.last}
+                  {headline.last}
                 </>
               )}
             </h1>
             <div className="mt-8 flex items-baseline gap-4 border-l-4 border-secondary pl-6 animate-fade-up stagger-3">
               <h2 className="text-xl sm:text-2xl md:text-4xl font-display font-bold uppercase tracking-tight max-w-2xl">
-                {live?.title ?? "Sesión en preparación"}
+                {mainLive?.title ?? "Sesión en preparación"}
               </h2>
             </div>
           </div>
@@ -83,12 +109,12 @@ export default function EnVivoPage() {
             </div>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
               <div className="mono-data text-sm uppercase tracking-wider text-on-primary/60">
-                PRÓXIMA EN ESTE SALÓN:{" "}
+                PRÓXIMA EN MAIN STAGE:{" "}
                 {sidebarSessions[0] ? (
                   <>
                     {sidebarSessions[0].title.toUpperCase()}
                     <span className="text-on-primary font-bold ml-2">
-                      {sidebarSessions[0].time}
+                      {sidebarSessions[0].startTime}
                     </span>
                   </>
                 ) : (
@@ -97,10 +123,7 @@ export default function EnVivoPage() {
               </div>
               <div className="flex gap-4">
                 <button className="bg-secondary text-on-secondary px-6 py-3 sm:px-8 sm:py-4 font-display font-bold uppercase tracking-widest text-xs flex items-center gap-2 btn-shine hover:scale-105 transition-transform duration-200 min-h-[48px]">
-                  <span className="material-symbols-outlined text-sm">
-                    play_arrow
-                  </span>{" "}
-                  VER STREAM
+                  <Icon name="play_arrow" size={14} /> VER STREAM
                 </button>
               </div>
             </div>
@@ -123,7 +146,7 @@ export default function EnVivoPage() {
         <div className="lg:col-span-3 bg-surface-container-low p-5 sm:p-8 flex flex-col border-t lg:border-t-0 lg:border-l border-primary/10">
           <h3 className="font-display font-black text-xl uppercase mb-8 flex items-center justify-between text-primary animate-fade-up stagger-2">
             PRÓXIMAS CHARLAS
-            <span className="material-symbols-outlined">sensors</span>
+            <Icon name="sensors" size={22} />
           </h3>
           <div className="space-y-1">
             {sidebarSessions.slice(0, 2).map((session, i) => (
@@ -158,6 +181,36 @@ export default function EnVivoPage() {
           </div>
         </div>
       </section>
+
+      {/* En Paralelo — Escenario 2 Live Session */}
+      {parallelLive && (
+        <section className="bg-surface-container-high px-5 sm:px-8 md:px-12 lg:px-24 py-10 border-t border-primary/10 border-b-4 border-b-secondary animate-fade-up">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <span className="flex h-3 w-3 relative">
+                <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-secondary opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-secondary animate-live-glow" />
+              </span>
+              <span className="mono-data text-[11px] font-bold tracking-widest uppercase text-secondary">
+                {HERO_CONTENT.parallelLabel}
+              </span>
+            </div>
+            <div className="flex-grow md:ml-8">
+              <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tighter text-primary">
+                {parallelLive.title}
+              </h3>
+              {(parallelLive.speakerName ?? parallelLive.speakerOrg) && (
+                <p className="mono-data text-[11px] uppercase tracking-wider text-on-surface-variant mt-1">
+                  {parallelLive.speakerName ?? parallelLive.speakerOrg}
+                </p>
+              )}
+            </div>
+            <span className="mono-data text-2xl font-black text-secondary whitespace-nowrap">
+              {parallelLive.time}
+            </span>
+          </div>
+        </section>
+      )}
 
       {/* Chronogram / Departure Board Section */}
       <section className="p-5 sm:p-8 md:p-12 lg:p-24 bg-surface">
@@ -305,9 +358,11 @@ function BentoCell({ item, index }: BentoCellProps) {
       className={`bg-surface p-5 sm:p-8 border border-on-primary/10 group cursor-pointer hover-lift animate-fade-up ${stagger}`}
     >
       <div className="flex justify-between items-start mb-12">
-        <span className="material-symbols-outlined text-primary group-hover:text-secondary transition-colors duration-200">
-          location_on
-        </span>
+        <Icon
+          name="location_on"
+          size={24}
+          className="text-primary group-hover:text-secondary transition-colors duration-200"
+        />
         <span className="mono-data text-[10px] font-bold uppercase text-primary/40">
           {item.label}
         </span>

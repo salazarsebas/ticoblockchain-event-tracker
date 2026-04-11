@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import StatusBadge from "../components/StatusBadge";
 import { SPEAKERS } from "../data/speakers";
+import { stageLabel } from "../data/venue";
 
 export const metadata: Metadata = {
-  title: "Exponentes — TicoBlockchain 2026",
-  description: "Conoce a los exponentes de TicoBlockchain 2026",
+  title: "Exponentes",
+  description:
+    "Conoce a los exponentes confirmados de TicoBlockchain 2026 — keynotes, paneles y charlas.",
 };
 
 export default function ExponentesPage() {
@@ -89,7 +91,7 @@ export default function ExponentesPage() {
                   {speaker.time}
                 </p>
                 <p className="mono-data text-[10px] uppercase opacity-60">
-                  {speaker.room}
+                  {stageLabel(speaker.stage)}
                 </p>
               </div>
             </div>

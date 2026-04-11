@@ -1,3 +1,5 @@
+import type { IconName } from "../components/Icon";
+
 export type BBox = { x: number; y: number; width: number; height: number };
 
 export type POICategory =
@@ -51,7 +53,7 @@ export type LobbyPOI = {
   shortLabel?: string;
   category: POICategory;
   bbox: BBox;
-  iconName: string;
+  iconName: IconName;
   description?: string;
 };
 

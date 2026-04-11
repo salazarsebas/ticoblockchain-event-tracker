@@ -1,4 +1,5 @@
 import type { Session } from "../data/types";
+import { stageShort } from "../data/venue";
 import StatusBadge from "./StatusBadge";
 
 type DepartureRowProps = {
@@ -7,8 +8,11 @@ type DepartureRowProps = {
 };
 
 // Departure-board style row for the home page agenda preview.
-// 12-col grid: time | room badge | title | status.
-export default function DepartureRow({ session, staggerClass }: DepartureRowProps) {
+// 12-col grid: time | stage badge | title | status.
+export default function DepartureRow({
+  session,
+  staggerClass,
+}: DepartureRowProps) {
   const isLive = session.status === "live";
   const isPast = session.status === "past";
 
@@ -39,10 +43,12 @@ export default function DepartureRow({ session, staggerClass }: DepartureRowProp
 
   return (
     <div className={rowClasses}>
-      <div className={timeClasses}>{isLive ? "AHORA" : session.time}</div>
+      <div className={timeClasses}>
+        {isLive ? "AHORA" : session.startTime}
+      </div>
       <div className="md:col-span-2">
         <span className="bg-primary-fixed px-3 py-1 text-[10px] font-bold uppercase mono-data">
-          {session.room}
+          {stageShort(session.stage)}
         </span>
       </div>
       <div className="md:col-span-6">

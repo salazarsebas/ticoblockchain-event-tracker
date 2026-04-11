@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Icon from "./Icon";
 
 const navLinks = [
   { href: "/", label: "EN VIVO" },
@@ -65,15 +66,13 @@ export default function NavBar() {
 
           <button
             type="button"
-            className="md:hidden min-w-[48px] min-h-[48px] flex items-center justify-center border-2 border-primary bg-transparent"
+            className="md:hidden min-w-[48px] min-h-[48px] flex items-center justify-center border-2 border-primary bg-transparent text-primary"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label="Menú de navegación"
             onClick={() => setMenuOpen((prev) => !prev)}
           >
-            <span className="material-symbols-outlined text-primary">
-              {menuOpen ? "close" : "menu"}
-            </span>
+            <Icon name={menuOpen ? "close" : "menu"} size={24} />
           </button>
         </div>
       </div>

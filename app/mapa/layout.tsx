@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Mapa — TicoBlockchain 2026",
+  title: "Mapa",
   description:
     "Mapa interactivo del recinto de TicoBlockchain 2026 en el Hotel Barceló San José.",
 };

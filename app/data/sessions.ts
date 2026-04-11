@@ -1,111 +1,291 @@
 import type { Session } from "./types";
-import { VENUE } from "./venue";
 
-// All sessions happen in Sala Greco — the only room at the event.
-// Sorted chronologically. Exactly one session has status "live" at a time.
+// Real TicoBlockchain 2026 agenda — 24 MAYO 2026.
+// Two parallel tracks: Main Stage + Escenario 2.
+// Ceremonies / breaks use stage="both" (single row spanning both tracks).
+// Parallel sessions appear as two rows sharing the same startTime.
+// Exactly one session has status "live" per stage at a time. Initial demo
+// state has WINK (Main) and Olanzo (Escenario 2) live at 10:00.
 export const SESSIONS: readonly Session[] = [
   {
     id: "registro",
-    time: "08:00",
+    time: "08:00 — 09:00",
+    startTime: "08:00",
     title: "Registro y Café de Bienvenida",
-    speakerName: "Equipo TicoBlockchain",
-    room: VENUE.roomLabel,
+    speakerOrg: "Equipo TicoBlockchain",
+    stage: "both",
+    category: "break",
     status: "past",
   },
   {
-    id: "keynote-estado-cripto",
-    time: "09:00",
-    title: "Keynote: El Estado de Cripto en LATAM",
-    speakerName: "Elena Rodríguez",
-    speakerOrg: "Founder @ Solarpunk Finance",
-    room: VENUE.roomLabel,
+    id: "apertura",
+    time: "09:00 — 09:10",
+    startTime: "09:00",
+    title: "Apertura",
+    speakerOrg: "Equipo TicoBlockchain",
+    stage: "both",
+    category: "ceremony",
     status: "past",
   },
   {
-    id: "defi-profundo",
-    time: "10:30",
-    title: "DeFi Profundo: Protocolos de Próxima Generación",
-    speakerName: "Marco Solís",
-    speakerOrg: "CTO Soluciones Blockchain",
-    room: VENUE.roomLabel,
+    id: "keynote-1-visa",
+    time: "09:10 — 09:55",
+    startTime: "09:10",
+    title: "Keynote 1 — VISA",
+    speakerName: "Daniel Calderón",
+    speakerOrg: "Gerente de Desarrollo de Negocios — VISA · Centroamérica y Caribe",
+    description:
+      "Apertura del día con la visión de VISA sobre el futuro de los pagos digitales y la integración cripto en la región.",
+    stage: "main",
+    category: "keynote",
+    status: "past",
+  },
+  {
+    id: "wink-main",
+    time: "10:00 — 10:25",
+    startTime: "10:00",
+    title: "WINK — Mitos y Realidades de la Inclusión Financiera",
+    speakerName: "Diego Loaiza Centeno",
+    speakerOrg: "CEO @ Wink",
+    description:
+      "Un recorrido sin filtros por los retos reales de llevar servicios financieros a los no bancarizados, desde la óptica de un neobanco costarricense.",
+    stage: "main",
+    category: "main-stage",
     status: "live",
   },
   {
-    id: "panel-inversion",
-    time: "11:00",
-    title: "Panel: Inversión Institucional en Web3",
-    speakerName: "Varios Panelistas",
-    room: VENUE.roomLabel,
+    id: "olanzo-esc2",
+    time: "10:00 — 10:25",
+    startTime: "10:00",
+    title: "Olanzo",
+    speakerOrg: "Olanzo",
+    description:
+      "Presentación patrocinada — infraestructura para pagos y liquidación on-chain.",
+    stage: "escenario-2",
+    category: "main-stage",
+    status: "live",
+  },
+  {
+    id: "perspectivas-inversion-main",
+    time: "10:30 — 10:55",
+    startTime: "10:30",
+    title: "Perspectivas de Inversión 2026: Retos y Oportunidades",
+    speakerName: "Karla Córdoba Brenes · Rogelio Martínez",
+    speakerOrg: "Panel: AsoBlockchain + BlockchainGuard",
+    description:
+      "Panel con Karla Córdoba Brenes (Presidenta AsoBlockchain — Finanzas Regenerativas y RWA) y Rogelio Martínez (Inversor Ángel, Fundador BlockchainGuard — Inversión en Startups). Dónde está fluyendo el capital Web3 en LATAM para 2026.",
+    stage: "main",
+    category: "panel",
     status: "next",
   },
   {
-    id: "soberania-l2",
-    time: "11:45",
-    title: "Soberanía de Datos en la Era de L2: ZK-Rollups en LATAM",
-    speakerName: "Carlos Méndez",
-    speakerOrg: "Lead Architect @ Ethereum Foundation",
-    room: VENUE.roomLabel,
+    id: "nimiq-esc2",
+    time: "10:30 — 10:55",
+    startTime: "10:30",
+    title: "Nimiq",
+    speakerOrg: "Nimiq",
+    description:
+      "Presentación patrocinada — pagos peer-to-peer directos en navegador sin intermediarios.",
+    stage: "escenario-2",
+    category: "main-stage",
+    status: "next",
+  },
+  {
+    id: "startup-pitch-1-main",
+    time: "11:00 — 11:35",
+    startTime: "11:00",
+    title: "Startup Pitch Session — Parte 1",
+    description:
+      "Rondas rápidas de pitches de startups cripto y fintech de la región frente a un jurado de inversionistas.",
+    stage: "main",
+    category: "pitch",
     status: "scheduled",
   },
   {
-    id: "almuerzo",
-    time: "12:30",
-    title: "Almuerzo de Networking & Workshop Abierto",
-    speakerName: "Comunidad Abierta",
-    room: VENUE.roomLabel,
+    id: "lnet-credenciales-esc2",
+    time: "11:00 — 11:35",
+    startTime: "11:00",
+    title: "LNET — Web3 y Agronegocios · Credenciales Verificables",
+    speakerName: "Jaddy Fernández",
+    speakerOrg: "Alianzas Estratégicas @ LNET Global",
+    description:
+      "Cómo las credenciales verificables y Web3 están transformando la trazabilidad y financiación del sector agroalimentario latinoamericano.",
+    stage: "escenario-2",
+    category: "panel",
     status: "scheduled",
   },
   {
-    id: "seguridad-contracts",
-    time: "14:00",
-    title: "Seguridad en Smart Contracts: Auditoría Real",
-    speakerName: "Dra. Lucía Méndez",
-    speakerOrg: "Auditora Lead",
-    room: VENUE.roomLabel,
+    id: "payers-district-main",
+    time: "12:10 — 12:30",
+    startTime: "12:10",
+    title: "Payers District en Prospera",
+    speakerName: "Franz Tuñez",
+    speakerOrg: "Prospera (Argentina)",
+    description:
+      "Caso de estudio desde Argentina: cómo Prospera está construyendo un distrito de pagos descentralizados bajo un marco legal pro-cripto.",
+    stage: "main",
+    category: "panel",
     status: "scheduled",
   },
   {
-    id: "marco-legal",
-    time: "14:45",
-    title: "Marco Legal 2026: Ley Cripto y Activos Digitales en Centroamérica",
-    speakerName: "Sofía Alfaro",
-    speakerOrg: "Legal Counsel @ CryptoCR",
-    room: VENUE.roomLabel,
+    id: "smart-cities-esc2",
+    time: "12:10 — 12:30",
+    startTime: "12:10",
+    title: "SMART CITIES",
+    description:
+      "Infraestructura urbana tokenizada: ciudades inteligentes financiadas y gobernadas on-chain.",
+    stage: "escenario-2",
+    category: "panel",
     status: "scheduled",
   },
   {
-    id: "panel-dinero-digital",
-    time: "15:30",
-    title: "Panel: El Futuro del Dinero Digital en CR",
-    speakerName: "Panelistas Invitados",
-    room: VENUE.roomLabel,
+    id: "keynote-2-identidad-main",
+    time: "12:35 — 13:10",
+    startTime: "12:35",
+    title: "Keynote 2 — Identidad Para Siempre",
+    speakerName: "Stephanie Sánchez",
+    speakerOrg: "Miss Crypto Lawyer · Embajadora Oficial TicoBlockchain",
+    description:
+      "La visión legal y humana de la identidad auto-soberana: por qué la identidad on-chain es el próximo campo de batalla regulatorio.",
+    stage: "main",
+    category: "keynote",
     status: "scheduled",
   },
   {
-    id: "experiencias-onchain",
-    time: "16:15",
-    title: "Diseño de Experiencias On-chain: De Billeteras a Metaversos",
-    speakerName: "Andrés Mora",
-    speakerOrg: "Creative Director @ Metahuman",
-    room: VENUE.roomLabel,
+    id: "lulubit-esc2",
+    time: "12:35 — 13:10",
+    startTime: "12:35",
+    title: "Lulubit",
+    speakerOrg: "Lulubit",
+    description:
+      "Taller patrocinado — herramientas para integrar pagos cripto en comercios tradicionales.",
+    stage: "escenario-2",
+    category: "workshop",
     status: "scheduled",
   },
   {
-    id: "clausura",
-    time: "17:00",
-    title: "Clausura y Cócteles",
-    speakerName: "Patrocinadores Platinum",
-    room: VENUE.roomLabel,
+    id: "panel-fia",
+    time: "13:15 — 13:35",
+    startTime: "13:15",
+    title: "Panel FIA — Regulación Fintech en Centroamérica",
+    speakerName: "José Miguel Zamora Barquero · Randall Barquero",
+    speakerOrg: "Panel: AsoFintech + Consortium Legal",
+    description:
+      "Panel regulatorio con José Miguel Zamora Barquero (Presidente AsoFintech — Regulación e Integración Regional) y Randall Barquero (Socio Consortium Legal, JD AsoFintech — Regulación Fintech: Actualidad y Perspectivas).",
+    stage: "main",
+    category: "panel",
+    status: "scheduled",
+  },
+  {
+    id: "coffee-break",
+    time: "14:40 — 15:05",
+    startTime: "14:40",
+    title: "Coffee Break — Networking",
+    stage: "both",
+    category: "break",
+    status: "scheduled",
+  },
+  {
+    id: "pagos-stablecoins-main",
+    time: "15:10 — 15:45",
+    startTime: "15:10",
+    title: "Pagos y Stablecoins — Ecosistema Fintech Regional",
+    speakerName: "Roberto Grella · Steven Cabrera",
+    speakerOrg: "Panel: Fintech Uruguay + Epark",
+    description:
+      "Panel con Roberto Grella (Fintech Uruguay — Ecosistema Fintech Regional) y Steven Cabrera (Fundador Epark — Fintech for Good). El tablero de pagos stablecoin en LATAM y el rol social de la fintech.",
+    stage: "main",
+    category: "panel",
+    status: "scheduled",
+  },
+  {
+    id: "startup-pitch-2-esc2",
+    time: "15:10 — 15:45",
+    startTime: "15:10",
+    title: "Startup Pitch Session — Parte 2",
+    description:
+      "Segunda ronda de pitches. Nuevos proyectos buscando capital, alianzas y distribución regional.",
+    stage: "escenario-2",
+    category: "pitch",
+    status: "scheduled",
+  },
+  {
+    id: "agentes-autonomos-main",
+    time: "15:50 — 16:20",
+    startTime: "15:50",
+    title: "Agentes Autónomos en Cripto · AI en Cripto",
+    speakerName: "Roberto Ponce Romay · Carlos René",
+    speakerOrg: "Panel: Invermaster Ventures + DESA",
+    description:
+      "Panel con Roberto Ponce Romay (Managing Director Invermaster Ventures — Agentes Autónomos en Cripto) y Carlos René (CEO & Founder DESA — AI en Cripto). Cómo los agentes autónomos impulsados por IA están redefiniendo la operación on-chain.",
+    stage: "main",
+    category: "panel",
+    status: "scheduled",
+  },
+  {
+    id: "privacidad-blockchains-esc2",
+    time: "15:50 — 16:20",
+    startTime: "15:50",
+    title: "Privacidad en Blockchains Públicas",
+    speakerName: "Andy Guzmán Toledo",
+    speakerOrg: "Head of Privacy @ Ethereum Foundation",
+    description:
+      "Una mirada técnica desde la Ethereum Foundation al estado actual de la privacidad en redes públicas — por qué importa y qué viene.",
+    stage: "escenario-2",
+    category: "panel",
+    status: "scheduled",
+  },
+  {
+    id: "cierre",
+    time: "17:40 — 17:45",
+    startTime: "17:40",
+    title: "Cierre",
+    speakerOrg: "Equipo TicoBlockchain",
+    stage: "both",
+    category: "ceremony",
+    status: "scheduled",
+  },
+  {
+    id: "coctel",
+    time: "18:00 — 20:00",
+    startTime: "18:00",
+    title: "Cóctel de Cierre",
+    speakerOrg: "Patrocinadores",
+    stage: "both",
+    category: "ceremony",
     status: "scheduled",
   },
 ] as const;
 
-export function getLiveSession(): Session | undefined {
-  return SESSIONS.find((s) => s.status === "live");
+// Returns the current live session per physical stage. A "both"-stage
+// session (ceremony/break) is mirrored onto both keys so the home hero
+// never shows an empty state during Registro / Apertura / Cierre / Coctel.
+export function getLiveSessions(): {
+  main?: Session;
+  escenario2?: Session;
+} {
+  let main: Session | undefined;
+  let escenario2: Session | undefined;
+
+  for (const s of SESSIONS) {
+    if (s.status !== "live") continue;
+    if (s.stage === "both") {
+      main = main ?? s;
+      escenario2 = escenario2 ?? s;
+    } else if (s.stage === "main") {
+      main = main ?? s;
+    } else if (s.stage === "escenario-2") {
+      escenario2 = escenario2 ?? s;
+    }
+  }
+
+  return { main, escenario2 };
 }
 
+// Next upcoming sessions across both tracks, sorted chronologically.
 export function getNextSessions(count: number): Session[] {
-  return SESSIONS.filter(
-    (s) => s.status === "next" || s.status === "scheduled",
-  ).slice(0, count);
+  return [...SESSIONS]
+    .filter((s) => s.status === "next" || s.status === "scheduled")
+    .sort((a, b) => a.startTime.localeCompare(b.startTime))
+    .slice(0, count);
 }

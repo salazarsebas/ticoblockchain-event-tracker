@@ -1,5 +1,6 @@
 "use client";
 
+import Icon, { type IconName } from "../../components/Icon";
 import type { POICategory } from "../types";
 
 type FilterChipsProps = {
@@ -10,7 +11,7 @@ type FilterChipsProps = {
 type ChipConfig = {
   category: POICategory;
   label: string;
-  iconName: string;
+  iconName: IconName;
 };
 
 const CHIPS: readonly ChipConfig[] = [
@@ -50,16 +51,7 @@ export default function FilterChips({
                 : "bg-surface text-primary border-primary",
             ].join(" ")}
           >
-            <span
-              className="material-symbols-outlined"
-              aria-hidden="true"
-              style={{
-                fontSize: "18px",
-                fontVariationSettings: '"FILL" 1',
-              }}
-            >
-              {chip.iconName}
-            </span>
+            <Icon name={chip.iconName} size={18} />
             {chip.label}
           </button>
         );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Icon from "../../components/Icon";
 import type {
   GrecoFeature,
   LobbyPOI,
@@ -108,13 +109,7 @@ export default function FeatureDetailPanel({
             aria-label="Cerrar panel de detalles"
             className="shrink-0 bg-secondary text-on-secondary w-10 h-10 inline-flex items-center justify-center hover:bg-secondary-container transition-colors"
           >
-            <span
-              className="material-symbols-outlined"
-              aria-hidden="true"
-              style={{ fontSize: "22px", fontVariationSettings: '"FILL" 1' }}
-            >
-              close
-            </span>
+            <Icon name="close" size={22} />
           </button>
         </div>
 

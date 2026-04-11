@@ -3,7 +3,8 @@ import type { BentoHighlight } from "./types";
 // Home page hero — the current live talk gets the most editorial weight.
 // Driven by the live session in app/data/sessions.ts.
 export const HERO_CONTENT = {
-  liveLabel: "EN VIVO · SALA GRECO",
+  liveLabel: "EN VIVO · MAIN STAGE",
+  parallelLabel: "EN PARALELO · ESCENARIO 2",
   heroImageUrl:
     "https://lh3.googleusercontent.com/aida-public/AB6AXuDIy5fc4IZu6iNfnSyydLGICw_03Yg3dzAeY5crteyQMDNdOudnJKA_QGJHEOOZhdSJJrNAomLxeFVD-RU4h8xVJ8qT9QhsVg9ih5Mgah_1UxDpBpN7eKIZGkiHoc2yVhAz7DDdu1QWQssJsdO3VoLI4DvvEn9iX2gZK-_5feGPyx9uE1YK633syMYSZ8swh48QRH6n33TSYF-Vn1V4Km8ha9fDPG8h0qXb0sFnTAhmvSAKNptAHcFiDhxzu1EbJ55p0dFcrTBzZUE",
   heroImageAlt:

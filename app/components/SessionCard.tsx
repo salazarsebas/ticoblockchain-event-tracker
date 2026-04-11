@@ -1,4 +1,5 @@
 import type { Session } from "../data/types";
+import { stageShort } from "../data/venue";
 
 type SessionCardProps = {
   session: Session;
@@ -43,6 +44,9 @@ export default function SessionCard({
     isDark ? "text-on-primary/40 uppercase" : "text-primary/60",
   ].join(" ");
 
+  const stageLbl = stageShort(session.stage);
+  const subText = session.speakerName ?? session.speakerOrg ?? "";
+
   return (
     <div className={cardClasses}>
       <div className="flex items-center gap-2 mb-4">
@@ -50,13 +54,11 @@ export default function SessionCard({
           <span className="w-2 h-2 rounded-full bg-secondary animate-live-glow" />
         )}
         <span className={labelClasses}>
-          {isDark ? session.room : `${session.time} · ${session.room}`}
+          {isDark ? stageLbl : `${session.startTime} · ${stageLbl}`}
         </span>
       </div>
       <h4 className={titleClasses}>{session.title}</h4>
-      <div className={subLabelClasses}>
-        {session.speakerName ?? ""}
-      </div>
+      <div className={subLabelClasses}>{subText}</div>
     </div>
   );
 }

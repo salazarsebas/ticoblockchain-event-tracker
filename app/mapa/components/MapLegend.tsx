@@ -1,5 +1,7 @@
 "use client";
 
+import Icon from "../../components/Icon";
+
 type LegendEntry = {
   label: string;
   swatchClass: string;
@@ -71,15 +73,9 @@ export default function MapLegend() {
           ))}
         </ul>
       </div>
-      <div className="mt-10 bg-secondary p-3 flex items-center gap-3">
-        <span
-          className="material-symbols-outlined text-on-secondary"
-          aria-hidden="true"
-          style={{ fontVariationSettings: '"FILL" 1' }}
-        >
-          location_on
-        </span>
-        <span className="font-display font-black uppercase tracking-tight text-on-secondary">
+      <div className="mt-10 bg-secondary p-3 flex items-center gap-3 text-on-secondary">
+        <Icon name="location_on" size={22} />
+        <span className="font-display font-black uppercase tracking-tight">
           Estás aquí
         </span>
       </div>
