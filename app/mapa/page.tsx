@@ -82,14 +82,14 @@ export default function MapaPage() {
           <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black uppercase tracking-tighter text-primary animate-reveal-up">
             MAPA
           </h1>
-          <div className="mt-4 md:mt-0 mono-data text-primary flex items-center gap-2">
+          <div className="mt-4 md:mt-0 mono-data text-primary flex items-center gap-2 animate-fade-up stagger-2">
             <span className="w-3 h-3 bg-secondary" aria-hidden="true" />
             UBICACIÓN: HOTEL BARCELÓ SAN JOSÉ
           </div>
         </div>
 
         {/* Filter chips */}
-        <div className="mb-6">
+        <div className="mb-6 animate-fade-up stagger-3">
           <FilterChips
             activeFilters={activeFilters}
             onToggle={handleToggleFilter}
@@ -97,7 +97,7 @@ export default function MapaPage() {
         </div>
 
         {/* Main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border-4 border-primary">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border-4 border-primary animate-fade-up stagger-4">
           {/* Legend column — hidden on mobile, shown on lg+ */}
           <div className="hidden lg:block lg:col-span-3">
             <MapLegend />

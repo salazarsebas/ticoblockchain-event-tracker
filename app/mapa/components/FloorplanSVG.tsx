@@ -288,7 +288,9 @@ function GrecoFeatureShape({
 
   const showLabel = kind !== "entry-door"; // doors are too thin for labels
   const displayLabel = (shortLabel ?? label).toUpperCase();
-  const pulseClass = kind === "stage" ? "map-stage-pulse" : "";
+  // Only pulse when the stage is actually active — otherwise the opacity
+  // keyframes override the dimmed inline opacity and the stage stays visible.
+  const pulseClass = kind === "stage" && !dimmed ? "map-stage-pulse" : "";
 
   return (
     <g
