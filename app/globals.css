@@ -321,11 +321,6 @@ textarea:focus-visible,
    Stitch Compatibility Classes
    ============================================================ */
 
-/* font-headline: alias for Space Grotesk (matches Stitch's font-headline) */
-.font-headline {
-  font-family: var(--font-space-grotesk);
-}
-
 /* mono-data: JetBrains Mono for timestamps, data points */
 .mono-data {
   font-family: var(--font-jetbrains-mono);
@@ -525,4 +520,26 @@ textarea:focus-visible,
 }
 .btn-shine:hover::after {
   left: 100%;
+}
+
+/* ============================================================
+   Map interactive shapes — hover & selected states
+   ============================================================ */
+
+/* Interactive SVG groups get a crimson stroke on hover */
+.map-shape {
+  transition: opacity 0.2s ease;
+}
+.map-shape:hover > rect:first-of-type {
+  stroke: var(--color-secondary);
+  stroke-width: 4;
+}
+
+/* Subtle opacity pulse to mark the stage as the focal point */
+@keyframes stage-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.88; }
+}
+.map-stage-pulse {
+  animation: stage-pulse 3.2s ease-in-out infinite;
 }
