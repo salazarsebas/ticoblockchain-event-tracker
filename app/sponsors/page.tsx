@@ -10,17 +10,17 @@ export default function SponsorsPage() {
   return (
     <main id="main" className="pb-20">
       <section className="px-4 sm:px-6 md:px-12 bg-white py-24">
-        <h1 className="text-4xl sm:text-6xl md:text-8xl font-headline font-black uppercase tracking-tighter text-primary mb-10 sm:mb-16 md:mb-20 animate-reveal-up">
+        <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black uppercase tracking-tighter text-primary mb-10 sm:mb-16 md:mb-20 animate-reveal-up">
           SPONSORS
         </h1>
 
         {/* Tier 01: Diamante */}
         <div className="mb-24 flex flex-col sm:flex-row border-t-4 border-primary pt-8 animate-fade-up stagger-1">
           <div className="sm:w-1/4 mb-6 sm:mb-0">
-            <div className="text-6xl sm:text-8xl md:text-9xl font-headline font-black text-primary leading-none">
+            <div className="text-6xl sm:text-8xl md:text-9xl font-display font-black text-primary leading-none">
               01
             </div>
-            <div className="font-headline font-bold text-2xl uppercase tracking-widest text-secondary mt-2">
+            <div className="font-display font-bold text-2xl uppercase tracking-widest text-secondary mt-2">
               Diamante
             </div>
           </div>
@@ -51,10 +51,10 @@ export default function SponsorsPage() {
         {/* Tier 02: Oro */}
         <div className="mb-24 flex flex-col sm:flex-row border-t-2 border-outline-variant pt-8 animate-fade-up stagger-3">
           <div className="sm:w-1/4 mb-6 sm:mb-0">
-            <div className="text-5xl sm:text-7xl md:text-8xl font-headline font-black text-primary/40 leading-none">
+            <div className="text-5xl sm:text-7xl md:text-8xl font-display font-black text-primary/40 leading-none">
               02
             </div>
-            <div className="font-headline font-bold text-xl uppercase tracking-widest text-primary mt-2">
+            <div className="font-display font-bold text-xl uppercase tracking-widest text-primary mt-2">
               Oro
             </div>
           </div>
@@ -95,10 +95,10 @@ export default function SponsorsPage() {
         {/* Tier 03: Plata */}
         <div className="flex flex-col sm:flex-row border-t-2 border-outline-variant pt-8 animate-fade-up stagger-5">
           <div className="sm:w-1/4 mb-6 sm:mb-0">
-            <div className="text-4xl sm:text-6xl md:text-7xl font-headline font-black text-primary/20 leading-none">
+            <div className="text-4xl sm:text-6xl md:text-7xl font-display font-black text-primary/20 leading-none">
               03
             </div>
-            <div className="font-headline font-bold text-lg uppercase tracking-widest text-primary/60 mt-2">
+            <div className="font-display font-bold text-lg uppercase tracking-widest text-primary/60 mt-2">
               Plata
             </div>
           </div>
