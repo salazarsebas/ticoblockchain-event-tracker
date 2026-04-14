@@ -1,20 +1,25 @@
 import Image from "next/image";
 import DepartureRow from "./components/DepartureRow";
+import DevTimeBanner from "./components/DevTimeBanner";
 import Icon from "./components/Icon";
 import LiveDot from "./components/LiveDot";
+import LiveRefresh from "./components/LiveRefresh";
 import SessionCard from "./components/SessionCard";
 import { HERO_CONTENT, BENTO_HIGHLIGHTS } from "./data/home-content";
+import { resolveNow } from "./data/now";
 import {
   getLiveSessions,
   getNextSessions,
+  getNextTransitionAt,
   getSessionsAt,
 } from "./data/sessions";
 import type { Session } from "./data/types";
 import { VENUE } from "./data/venue";
 
-// Revalidate every 60 seconds so time-derived session status (live/next/past)
-// updates during the event without a redeploy.
-export const revalidate = 60;
+// Dynamically rendered — the page is intentionally live and reads ?now=
+// for dev-mode time simulation. Smart client refresh (LiveRefresh) invalidates
+// at exact transition boundaries, so ISR-style caching would fight correctness.
+export const dynamic = "force-dynamic";
 
 // Sorted once per render pass — cheap for ~21 sessions.
 function sortByStartTime(sessions: readonly Session[]): Session[] {
@@ -46,8 +51,14 @@ function heroHeadline(session: Session | undefined): {
   return { first: session.title, last: "" };
 }
 
-export default function EnVivoPage() {
-  const now = new Date();
+export default async function EnVivoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ now?: string | string[] }>;
+}) {
+  const { now: resolvedNow, simulated } = resolveNow((await searchParams).now);
+  const now = resolvedNow;
+  const nextTransitionAt = getNextTransitionAt(now);
   const live = getLiveSessions(now);
   const mainLive = live.main;
   const parallelLive = live.escenario2;
@@ -69,6 +80,11 @@ export default function EnVivoPage() {
 
   return (
     <main id="main">
+      <LiveRefresh
+        nextTransitionAt={nextTransitionAt}
+        simulated={simulated !== null}
+      />
+      {simulated && <DevTimeBanner simulated={simulated} />}
       {/* Live Hero Section */}
       <section className="grid grid-cols-1 lg:grid-cols-12 min-h-[60vh] sm:min-h-[70vh] lg:min-h-[819px] bg-primary overflow-hidden">
         {/* Hero Stream Side */}

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s · TicoBlockchain 2026",
   },
   description:
-    "Evento blockchain en vivo desde Costa Rica. 24 de mayo, Hotel Barceló San José. Main Stage + Escenario 2.",
+    "Evento blockchain en vivo desde Costa Rica. 14 de mayo, Hotel Barceló San José. Main Stage + Escenario 2.",
   applicationName: "TicoBlockchain 2026",
   keywords: [
     "TicoBlockchain",
@@ -45,14 +45,14 @@ export const metadata: Metadata = {
     siteName: "TicoBlockchain 2026",
     title: "TicoBlockchain 2026 — En Vivo",
     description:
-      "Main Stage + Escenario 2 · 24 de mayo 2026 · Hotel Barceló San José.",
+      "Main Stage + Escenario 2 · 14 de mayo 2026 · Hotel Barceló San José.",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
     title: "TicoBlockchain 2026 — En Vivo",
     description:
-      "Main Stage + Escenario 2 · 24 de mayo 2026 · Hotel Barceló San José.",
+      "Main Stage + Escenario 2 · 14 de mayo 2026 · Hotel Barceló San José.",
   },
 };
 

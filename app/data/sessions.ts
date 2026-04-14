@@ -1,7 +1,7 @@
 import type { Session, SessionStatus } from "./types";
 import { VENUE } from "./venue";
 
-// Real TicoBlockchain 2026 agenda — 24 MAYO 2026.
+// Real TicoBlockchain 2026 agenda — 14 MAYO 2026.
 // Two parallel tracks: Main Stage + Escenario 2.
 // Ceremonies / breaks use stage="both" (single row spanning both tracks).
 // Parallel sessions appear as two rows sharing the same startTime.
@@ -300,6 +300,32 @@ export function getNextSessions(count: number, now: Date): Session[] {
     .filter((s) => s.status === "next" || s.status === "scheduled")
     .sort((a, b) => a.startTime.localeCompare(b.startTime))
     .slice(0, count);
+}
+
+// Returns the next moment the status map will change — i.e. the nearest
+// talk start or end after `now`, as an ISO UTC string. The client uses this
+// to schedule a single surgical refresh at the exact boundary instead of
+// polling. Returns null outside event day or after the last transition.
+export function getNextTransitionAt(now: Date): string | null {
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO !== VENUE.eventDateISO) return null;
+
+  const times = new Set<string>();
+  for (const s of SESSIONS) {
+    const range = parseTimeRange(s.time);
+    if (!range) continue;
+    times.add(range.start);
+    times.add(range.end);
+  }
+
+  const nextHHMM = [...times].filter((t) => t > nowLocal.hhmm).sort()[0];
+  if (!nextHHMM) return null;
+
+  // CR is UTC-6 year-round (no DST) — the explicit offset makes this
+  // timestamp unambiguous regardless of server zone.
+  return new Date(
+    `${VENUE.eventDateISO}T${nextHHMM}:00-06:00`,
+  ).toISOString();
 }
 
 // ─── Time-derived status helpers ──────────────────────────────────────────

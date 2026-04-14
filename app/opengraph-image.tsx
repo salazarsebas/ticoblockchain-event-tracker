@@ -68,7 +68,7 @@ export default function OpenGraphImage() {
               marginBottom: 8,
             }}
           >
-            24 MAYO 2026
+            14 MAYO 2026
           </div>
           <div
             style={{

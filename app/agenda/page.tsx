@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import DevTimeBanner from "../components/DevTimeBanner";
 import Icon from "../components/Icon";
+import LiveRefresh from "../components/LiveRefresh";
 import TimelineRow from "../components/TimelineRow";
-import { getSessionsAt } from "../data/sessions";
+import { resolveNow } from "../data/now";
+import { getNextTransitionAt, getSessionsAt } from "../data/sessions";
 import type { Stage } from "../data/types";
+
+// Dynamically rendered — consumes ?stage and ?now search params and serves
+// time-derived session statuses on each request.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Agenda",
   description:
-    "Cronograma oficial de TicoBlockchain 2026. Main Stage y Escenario 2 · 24 de mayo 2026.",
+    "Cronograma oficial de TicoBlockchain 2026. Main Stage y Escenario 2 · 14 de mayo 2026.",
 };
 
 type StageFilter = "todo" | "main" | "escenario-2";
@@ -35,12 +42,14 @@ function matchesFilter(stage: Stage, filter: StageFilter): boolean {
 export default async function AgendaPage({
   searchParams,
 }: {
-  searchParams: Promise<{ stage?: string | string[] }>;
+  searchParams: Promise<{ stage?: string | string[]; now?: string | string[] }>;
 }) {
   const params = await searchParams;
   const activeFilter = normalizeFilter(params.stage);
+  const { now, simulated } = resolveNow(params.now);
+  const nextTransitionAt = getNextTransitionAt(now);
 
-  const sortedSessions = getSessionsAt(new Date()).sort((a, b) =>
+  const sortedSessions = getSessionsAt(now).sort((a, b) =>
     a.startTime.localeCompare(b.startTime),
   );
   const filteredSessions = sortedSessions.filter((s) =>
@@ -52,10 +61,15 @@ export default async function AgendaPage({
       id="main"
       className="flex-grow pb-20 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto w-full"
     >
+      <LiveRefresh
+        nextTransitionAt={nextTransitionAt}
+        simulated={simulated !== null}
+      />
+      {simulated && <DevTimeBanner simulated={simulated} />}
       {/* Hero Section Header */}
       <section className="mb-16 border-l-8 border-primary pl-6 pt-8 animate-slide-left">
         <span className="mono-data text-secondary font-bold tracking-widest text-sm uppercase">
-          Cronograma Oficial · 24 MAYO 2026
+          Cronograma Oficial · 14 MAYO 2026
         </span>
         <h1 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mt-2 font-display text-primary">
           AGENDA

@@ -1,6 +1,6 @@
 import type { Speaker } from "./types";
 
-// Confirmed speakers for TicoBlockchain 2026 — 24 MAYO.
+// Confirmed speakers for TicoBlockchain 2026 — 14 MAYO.
 // Ordered by next appearance. Exactly one is "live" at a time.
 //
 // Portrait URLs are pulled from the official ticoblockchain.cr site

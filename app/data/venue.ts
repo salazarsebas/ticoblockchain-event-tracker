@@ -5,8 +5,8 @@ import type { Stage } from "./types";
 
 export const VENUE = {
   name: "Hotel Barceló San José",
-  eventDate: "24 MAYO 2026",
-  eventDateISO: "2026-05-24",
+  eventDate: "14 MAYO 2026",
+  eventDateISO: "2026-05-14",
   timezone: "GMT-6",
   timezoneName: "America/Costa_Rica",
 } as const;

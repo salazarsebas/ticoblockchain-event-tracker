@@ -12,7 +12,7 @@ export default function AgendaLoading() {
       {/* Hero header skeleton */}
       <section className="mb-16 border-l-8 border-primary pl-6 pt-8 animate-slide-left">
         <div className="mono-data text-secondary font-bold tracking-widest text-sm uppercase">
-          Cronograma Oficial · 24 MAYO 2026
+          Cronograma Oficial · 14 MAYO 2026
         </div>
         <h1 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mt-2 font-display text-primary">
           AGENDA
