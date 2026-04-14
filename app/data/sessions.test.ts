@@ -35,9 +35,15 @@ describe("computeSessionStatuses — event day", () => {
     expect(statuses.get("keynote-1-visa")).toBe("past");
     expect(statuses.get("wink-main")).toBe("live");
     expect(statuses.get("olanzo-esc2")).toBe("live");
-    // Next scheduled slot on each stage starts at 10:30 — promoted to "next".
-    expect(statuses.get("perspectivas-inversion-main")).toBe("next");
+    // Main pass promotes the earliest scheduled matching (main OR both): the
+    // "both"-stage morning coffee break at 10:30 wins.
+    expect(statuses.get("coffee-break-am")).toBe("next");
+    // Esc-2 pass then looks for the next scheduled matching (esc-2 OR both) —
+    // the coffee break is already "next" so it's excluded, falling through to
+    // Nimiq (10:55). This is by design: each stage gets its own "next" marker.
     expect(statuses.get("nimiq-esc2")).toBe("next");
+    // Perspectivas is main-only and later than the coffee break — still plain scheduled.
+    expect(statuses.get("perspectivas-inversion-main")).toBe("scheduled");
   });
 
   test("at 10:25 exactly — WINK ends (inclusive end), next slot live-adjacent", () => {
@@ -46,9 +52,26 @@ describe("computeSessionStatuses — event day", () => {
     // 10:25 >= end "10:25" → past.
     expect(statuses.get("wink-main")).toBe("past");
     expect(statuses.get("olanzo-esc2")).toBe("past");
-    // 10:25 < start "10:30" → still scheduled, but promoted to next.
+    // Same "next" promotion pattern as at 10:00 — coffee break wins main,
+    // Nimiq wins esc-2 as fallback.
+    expect(statuses.get("coffee-break-am")).toBe("next");
+    expect(statuses.get("nimiq-esc2")).toBe("next");
+    expect(statuses.get("perspectivas-inversion-main")).toBe("scheduled");
+  });
+
+  test("at 10:35 — morning coffee break is live on both stages", () => {
+    const statuses = computeSessionStatuses(SESSIONS, crDate("10:35"));
+    expect(statuses.get("coffee-break-am")).toBe("live");
+    // Perspectivas + Nimiq start at 10:55 → now promoted to "next".
     expect(statuses.get("perspectivas-inversion-main")).toBe("next");
     expect(statuses.get("nimiq-esc2")).toBe("next");
+  });
+
+  test("at 17:30 — gap before CRTW, nothing live on either stage", () => {
+    const statuses = computeSessionStatuses(SESSIONS, crDate("17:30"));
+    // Agentes Autónomos ended 16:20, CRTW hasn't started — single next per stage.
+    expect(statuses.get("agentes-autonomos-main")).toBe("past");
+    expect(statuses.get("crtw")).toBe("next");
   });
 
   test("at 14:50 — coffee break (both-stage) is live", () => {
