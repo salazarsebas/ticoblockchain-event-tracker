@@ -86,7 +86,7 @@ export default async function EnVivoPage({
       />
       {simulated && <DevTimeBanner simulated={simulated} />}
       {/* Live Hero Section */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 min-h-[60vh] sm:min-h-[70vh] lg:min-h-[819px] bg-primary overflow-hidden">
+      <section className="grid grid-cols-1 lg:grid-cols-12 min-h-[60vh] sm:min-h-[70vh] lg:min-h-[85vh] bg-primary overflow-hidden">
         {/* Hero Stream Side */}
         <div className="lg:col-span-9 relative flex flex-col justify-between p-5 sm:p-8 md:p-12 text-on-primary">
           {/* Live Indicator */}
@@ -278,7 +278,7 @@ export default async function EnVivoPage({
               DIRECCIÓN DE CORREO
             </label>
             <input
-              className="w-full bg-transparent border-b-2 border-primary focus:border-secondary transition-colors duration-200 py-4 outline-none font-display font-bold uppercase"
+              className="w-full bg-transparent border-b-2 border-primary focus:border-secondary transition-colors duration-200 py-4 text-base outline-none font-display font-bold uppercase"
               placeholder="TU@EMAIL.COM"
               type="email"
             />

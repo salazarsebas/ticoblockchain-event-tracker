@@ -46,3 +46,6 @@ next-env.d.ts
 # Only a shared `settings.json` (if we ever add one) should be tracked.
 .claude/*
 !.claude/settings.json
+
+# forge pipeline artifacts — per-run plans are ephemeral.
+/plans

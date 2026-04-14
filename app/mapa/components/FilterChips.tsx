@@ -44,6 +44,7 @@ export default function FilterChips({
             aria-pressed={active}
             className={[
               "shrink-0 inline-flex items-center gap-2 px-4 py-2 border-2",
+              "min-h-[44px]",
               "font-display text-xs font-bold uppercase tracking-wider",
               "transition-colors",
               active

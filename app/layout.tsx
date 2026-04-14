@@ -76,7 +76,8 @@ export default function RootLayout({
           Ir al contenido principal
         </a>
         <NavBar />
-        <div className="flex-1 flex flex-col pt-[64px]">
+        {/* Offset matches NavBar's fixed height contract (see NavBar.tsx). */}
+        <div className="flex-1 flex flex-col pt-[72px]">
           {children}
         </div>
         <Footer />

@@ -82,8 +82,8 @@ export default function ExponentesPage() {
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-black font-display tracking-tighter uppercase leading-none text-primary">
+                <div className="min-w-0">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-black font-display tracking-tighter uppercase leading-none text-primary break-words">
                     {speaker.name}
                   </h2>
                   <p className="mono-data text-xs uppercase text-on-primary-container mt-1">

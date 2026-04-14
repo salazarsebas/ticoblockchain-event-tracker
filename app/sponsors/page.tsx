@@ -113,7 +113,7 @@ export default function SponsorsPage() {
       <section className="bg-white px-4 sm:px-6 md:px-12 pt-8 md:pt-12 pb-24 md:pb-32">
         {/* ── Section heading ───────────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-20 gap-6">
-          <h1 className="text-6xl md:text-8xl font-display font-black uppercase tracking-tighter text-primary leading-none animate-reveal-up">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black uppercase tracking-tighter text-primary leading-none animate-reveal-up">
             Sponsors
           </h1>
           <div

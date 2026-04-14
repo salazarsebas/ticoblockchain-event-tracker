@@ -93,7 +93,7 @@ export default async function AgendaPage({
             const isActive = f.id === activeFilter;
             const href = f.id === "todo" ? "/agenda" : `/agenda?stage=${f.id}`;
             const chipClasses = [
-              "px-4 py-2 text-[11px] font-display font-bold uppercase tracking-widest border-2 transition-colors duration-200",
+              "inline-flex items-center px-4 py-2 min-h-[44px] text-[11px] font-display font-bold uppercase tracking-widest border-2 transition-colors duration-200",
               isActive
                 ? "bg-primary text-on-primary border-primary"
                 : "bg-transparent text-primary border-primary/40 hover:border-primary hover:bg-surface-container-high",
