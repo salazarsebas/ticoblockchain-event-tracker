@@ -99,7 +99,14 @@ export default async function EnVivoPage({
 
           {/* Main Speaker Name (Oversized Editorial) */}
           <div className="mt-12 md:mt-0">
-            <h1 className="text-[clamp(2.5rem,12vw,12rem)] leading-[0.85] font-black uppercase tracking-tighter -ml-1 md:-ml-4 break-words font-display animate-reveal-up stagger-1">
+            <h1
+              aria-label={
+                headline.last
+                  ? `${headline.first} ${headline.last}`
+                  : headline.first
+              }
+              className="text-[clamp(2.5rem,12vw,12rem)] leading-[0.85] font-black uppercase tracking-tighter -ml-1 md:-ml-4 break-words font-display animate-reveal-up stagger-1"
+            >
               {headline.first}
               {headline.last && (
                 <>

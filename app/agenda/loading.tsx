@@ -14,7 +14,10 @@ export default function AgendaLoading() {
         <div className="mono-data text-secondary font-bold tracking-widest text-sm uppercase">
           Cronograma Oficial · 14 MAYO 2026
         </div>
-        <h1 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mt-2 font-display text-primary">
+        <h1
+          aria-label="Agenda de eventos"
+          className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mt-2 font-display text-primary"
+        >
           AGENDA
           <br />
           DE EVENTOS

@@ -16,7 +16,10 @@ export default function ExponentesPage() {
       {/* Hero Section */}
       <section className="px-4 sm:px-6 mb-16 border-b-2 border-primary pb-8 pt-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <h1 className="text-[10vw] md:text-[6vw] leading-[0.85] font-black uppercase font-display tracking-tighter text-primary animate-reveal-up">
+          <h1
+            aria-label="Exponentes 2026"
+            className="text-[10vw] md:text-[6vw] leading-[0.85] font-black uppercase font-display tracking-tighter text-primary animate-reveal-up"
+          >
             EXPONENTES
             <br />
             <span className="text-secondary">2026</span>
@@ -73,10 +76,6 @@ export default function ExponentesPage() {
                     src={speaker.imageUrl}
                     alt={speaker.name}
                     fill
-                    // External CDN files (Webflow) are already over-compressed
-                    // — re-encoding them adds generation loss. Local files are
-                    // high-quality originals and benefit from Next.js resizing.
-                    unoptimized={!speaker.imageUrl.startsWith("/")}
                     quality={90}
                     sizes="(min-width: 768px) 128px, (min-width: 640px) 96px, 80px"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
