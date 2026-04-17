@@ -110,7 +110,7 @@ const TIER_STYLES: Record<SponsorTier, TierStyle> = {
 export default function SponsorsPage() {
   return (
     <main id="main">
-      <section className="bg-white px-4 sm:px-6 md:px-12 pt-8 md:pt-12 pb-24 md:pb-32">
+      <section className="bg-surface-container-lowest px-4 sm:px-6 md:px-12 pt-8 md:pt-12 pb-24 md:pb-32">
         {/* ── Section heading ───────────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-20 gap-6">
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black uppercase tracking-tighter text-primary leading-none animate-reveal-up">
@@ -225,7 +225,7 @@ function DiamanteTile({
 }) {
   return (
     <div
-      className="relative bg-white border-4 border-primary p-10 md:p-14 group transition-all duration-300 hover:-translate-y-1 animate-fade-up"
+      className="relative bg-surface-container-lowest border-4 border-primary p-10 md:p-14 animate-fade-up"
       style={{ "--delay": `${tierIndex * STAGGER_TIER_MS + index * 120 + 100}ms` } as CSSProperties}
     >
       <div className="absolute top-4 left-4 z-10 font-mono text-[10px] text-primary/40 uppercase tracking-widest">
@@ -240,7 +240,7 @@ function DiamanteTile({
             fill
             priority
             sizes="(min-width: 1024px) 50vw, 90vw"
-            className="object-contain transition-transform duration-300 group-hover:scale-105"
+            className="object-contain"
             unoptimized
           />
         </div>
@@ -269,7 +269,7 @@ function StandardTile({
 }) {
   return (
     <div
-      className={`bg-white ${borderClass} ${heightClass} ${paddingClass} flex items-center justify-center group transition-all duration-300 hover:-translate-y-1 animate-fade-up`}
+      className={`bg-surface-container-lowest ${borderClass} ${heightClass} ${paddingClass} flex items-center justify-center animate-fade-up transition-colors duration-300`}
       style={{
         "--delay": `${tierIndex * STAGGER_TIER_MS + index * 90 + 150}ms`,
       } as CSSProperties}
@@ -280,7 +280,7 @@ function StandardTile({
           alt={sponsor.name}
           fill
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 80vw"
-          className="object-contain transition-transform duration-300 group-hover:scale-105"
+          className="object-contain"
           unoptimized
         />
       </div>

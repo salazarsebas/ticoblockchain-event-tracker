@@ -24,7 +24,11 @@ export default function DevTimeBanner({ simulated }: DevTimeBannerProps) {
   return (
     <div
       role="status"
-      className="fixed bottom-4 left-4 z-50 bg-secondary text-on-secondary px-4 py-3 shadow-lg border-2 border-on-secondary/20 flex items-center gap-3 mono-data text-[11px] uppercase tracking-widest font-bold"
+      className="fixed z-50 bg-secondary text-on-secondary px-4 py-3 shadow-lg border-2 border-on-secondary/20 flex items-center gap-3 mono-data text-[11px] uppercase tracking-widest font-bold"
+      style={{
+        bottom: "calc(1rem + env(safe-area-inset-bottom))",
+        left: "calc(1rem + env(safe-area-inset-left))",
+      }}
     >
       <span>HORA SIMULADA · {simulated}</span>
       <Link

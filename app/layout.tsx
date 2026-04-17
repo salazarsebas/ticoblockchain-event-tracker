@@ -58,6 +58,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#fbf9f5",
+  // Let the app paint into the iOS notch / Dynamic Island area so safe-area
+  // insets actually resolve to a non-zero value. Without this, env(safe-area-*)
+  // always returns 0 on iPhones and fixed elements would still clip.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -76,8 +80,9 @@ export default function RootLayout({
           Ir al contenido principal
         </a>
         <NavBar />
-        {/* Offset matches NavBar's fixed height contract (see NavBar.tsx). */}
-        <div className="flex-1 flex flex-col pt-[72px]">
+        {/* Offset matches NavBar's fixed height contract (see NavBar.tsx),
+            plus the top safe-area so content isn't covered on notched devices. */}
+        <div className="flex-1 flex flex-col pt-[calc(72px+env(safe-area-inset-top))]">
           {children}
         </div>
         <Footer />

@@ -77,9 +77,9 @@ export default function NavBar() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-surface">
+    <nav className="fixed top-0 w-full z-50 bg-surface pt-[env(safe-area-inset-top)]">
       <div
-        className={`flex items-center justify-between px-4 sm:px-6 ${NAV_HEIGHT}`}
+        className={`flex items-center justify-between px-[max(1rem,env(safe-area-inset-left))] sm:px-[max(1.5rem,env(safe-area-inset-left))] ${NAV_HEIGHT}`}
       >
         {/* Logo. min-w-0 + truncate ensures the logo shrinks before the
             right cluster at narrow widths. The " 2026" suffix hides below
@@ -124,7 +124,8 @@ export default function NavBar() {
           the menu. Only rendered on mobile since the menu itself is md:hidden. */}
       {menuOpen && (
         <div
-          className="md:hidden fixed left-0 right-0 top-[72px] bottom-0 bg-primary/40 z-40 animate-fade-in"
+          className="md:hidden fixed left-0 right-0 bottom-0 bg-primary/40 z-40 animate-fade-in"
+          style={{ top: "calc(72px + env(safe-area-inset-top))" }}
           onClick={() => setMenuOpen(false)}
           aria-hidden="true"
         />

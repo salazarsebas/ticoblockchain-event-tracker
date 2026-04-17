@@ -14,49 +14,45 @@ export const HERO_CONTENT = {
   capacityLabel: "ESTADO ACTUAL DEL EVENTO: 85% CAPACIDAD",
 } as const;
 
-// Practical info cards for attendees — replaces the old bento grid.
+// "Información Práctica" manifest. Each item has a mono-data hook that
+// shouts from across the room — this is the departure-board treatment
+// applied to attendee logistics.
 export const PRACTICAL_INFO: readonly PracticalInfoItem[] = [
   {
     id: "checkin",
-    icon: "how_to_reg",
-    title: "CHECK-IN: 07:30",
-    detail:
-      "Presenta tu QR de confirmación en la entrada principal para recibir tu gafete oficial y kit de bienvenida.",
+    hook: "07:30",
+    label: "Check-in",
+    body: "Presenta tu QR de confirmación en la entrada principal para recibir tu gafete oficial y kit de bienvenida.",
   },
   {
     id: "wifi",
-    icon: "sensors",
-    title: "RED: TICOBLOCKCHAIN",
-    detail:
-      "Conectividad simétrica de alta velocidad. La contraseña de acceso se encuentra impresa al reverso de tu gafete.",
+    hook: "TicoBlockchain",
+    label: "Red · WiFi",
+    body: "Conectividad simétrica de alta velocidad. La contraseña de acceso está impresa al reverso de tu gafete.",
   },
   {
     id: "parking",
-    icon: "location_on",
-    title: "PARQUEO DISPONIBLE",
-    detail:
-      "Estacionamiento gratuito y vigilado en las instalaciones del hotel para todos los asistentes registrados.",
+    hook: "Gratis",
+    label: "Parqueo",
+    body: "Estacionamiento gratuito y vigilado en las instalaciones del hotel para todos los asistentes registrados.",
   },
   {
     id: "lunch",
-    icon: "restaurant",
-    title: "DOS TURNOS CON TIQUETE",
-    detail:
-      "Turno 1: 11:00 · Turno 2: 12:30. Revisa el color de tu tiquete para confirmar tu horario de almuerzo.",
+    hook: "11:00 / 12:30",
+    label: "Almuerzo · Dos turnos",
+    body: "Revisa el color de tu tiquete para confirmar tu horario. Servicio con tiquete incluido en tu registro.",
   },
   {
     id: "dresscode",
-    icon: "campaign",
-    title: "CASUAL / SMART CASUAL",
-    detail:
-      "Sin requisitos formales. Sugerimos vestimenta cómoda para facilitar el networking y las sesiones largas.",
+    hook: "Casual",
+    label: "Dress code",
+    body: "Sin requisitos formales. Sugerimos vestimenta cómoda para facilitar el networking y las sesiones largas.",
   },
   {
     id: "contact",
-    icon: "storefront",
-    title: "ORGANIZACIÓN",
-    detail:
-      "Soporte en tiempo real vía WhatsApp: +506 XXXX-XXXX para cualquier consulta técnica o logística durante el día.",
+    hook: "Naranja",
+    label: "Staff · Soporte",
+    body: "Equipo identificado con gafete naranja en lobby y ambos escenarios. Soporte logístico y técnico durante todo el día.",
   },
 ] as const;
 

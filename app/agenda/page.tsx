@@ -119,16 +119,38 @@ export default async function AgendaPage({
         </div>
 
         {/* List Content */}
-        <div className="flex flex-col">
-          {filteredSessions.map((session, i) => (
-            <TimelineRow
-              key={session.id}
-              session={session}
-              staggerClass={`stagger-${Math.min(i + 1, 7)}`}
-              lastItem={i === filteredSessions.length - 1}
-            />
-          ))}
-        </div>
+        {filteredSessions.length === 0 ? (
+          <div className="border-t-2 border-primary border-b-2 py-16 px-6 text-center animate-fade-up">
+            <div className="mono-data text-[10px] uppercase tracking-widest text-secondary font-bold mb-4">
+              Sin resultados
+            </div>
+            <h3 className="font-display text-2xl sm:text-4xl font-black uppercase tracking-tighter text-primary mb-4">
+              No hay sesiones
+              <br />
+              en este escenario
+            </h3>
+            <p className="text-on-surface-variant mb-8 max-w-md mx-auto">
+              El filtro actual no coincide con ninguna charla del cronograma.
+            </p>
+            <Link
+              href="/agenda"
+              className="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 font-display font-bold uppercase tracking-widest text-xs btn-shine hover:bg-primary-container transition-colors duration-200 min-h-[48px]"
+            >
+              <Icon name="north_east" size={14} /> Ver toda la agenda
+            </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            {filteredSessions.map((session, i) => (
+              <TimelineRow
+                key={session.id}
+                session={session}
+                staggerClass={`stagger-${Math.min(i + 1, 7)}`}
+                lastItem={i === filteredSessions.length - 1}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Almuerzo Callout — overlaps talks so it sits outside the chronological flow */}

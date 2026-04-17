@@ -319,6 +319,59 @@ export function getNextSessions(count: number, now: Date): Session[] {
     .slice(0, count);
 }
 
+// Discrete event lifecycle phase, derived from the wall clock in the event
+// timezone. Drives the home hero swap (countdown / live speaker / gratitude)
+// and hides during-only sections (parallel-live, "ahora" decorations) when
+// the event isn't actually running.
+export type EventPhase = "before" | "during" | "after";
+
+// Event day runs 08:00–20:00 CRT. Registro opens at 08:00 and the Cóctel
+// de Cierre ends at 20:00 — the full window the live page should feel "hot."
+const EVENT_START_HHMM = "08:00";
+const EVENT_END_HHMM = "20:00";
+
+export function getEventPhase(now: Date): EventPhase {
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO < VENUE.eventDateISO) return "before";
+  if (nowLocal.dateISO > VENUE.eventDateISO) return "after";
+  if (nowLocal.hhmm < EVENT_START_HHMM) return "before";
+  if (nowLocal.hhmm >= EVENT_END_HHMM) return "after";
+  return "during";
+}
+
+// Whole days between today (event timezone) and event day. 0 once the page
+// has crossed into event-day but is still before 08:00 ("today").
+export function getDaysUntilEvent(now: Date): number {
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO >= VENUE.eventDateISO) return 0;
+  const a = new Date(`${nowLocal.dateISO}T00:00:00-06:00`).getTime();
+  const b = new Date(`${VENUE.eventDateISO}T00:00:00-06:00`).getTime();
+  return Math.max(0, Math.round((b - a) / 86_400_000));
+}
+
+// Fraction (0..1) of elapsed time through a session's time window, computed
+// in the event timezone. Returns null when the session has no parseable
+// range or `now` is outside the window. Drives the hero progress bar.
+export function getSessionProgress(
+  session: Session,
+  now: Date,
+): number | null {
+  const range = parseTimeRange(session.time);
+  if (!range) return null;
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO !== VENUE.eventDateISO) return null;
+  if (nowLocal.hhmm < range.start || nowLocal.hhmm >= range.end) return null;
+
+  const toMin = (hhmm: string) => {
+    const [h, m] = hhmm.split(":").map(Number);
+    return h * 60 + m;
+  };
+  const total = toMin(range.end) - toMin(range.start);
+  if (total <= 0) return null;
+  const elapsed = toMin(nowLocal.hhmm) - toMin(range.start);
+  return Math.max(0, Math.min(1, elapsed / total));
+}
+
 // Returns the next moment the status map will change — i.e. the nearest
 // talk start or end after `now`, as an ISO UTC string. The client uses this
 // to schedule a single surgical refresh at the exact boundary instead of

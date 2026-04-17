@@ -43,11 +43,15 @@ export type Speaker = {
   monochrome?: boolean;
 };
 
+// Single row of the "Información Práctica" manifest. Designed around an
+// editorial "data hook" (a timestamp, network name, ratio, single word)
+// so the section reads like a departure-board column rather than a grid
+// of identical feature cards.
 export type PracticalInfoItem = {
   id: string;
-  icon: import("../components/Icon").IconName;
-  title: string;
-  detail: string;
+  hook: string; // mono-data headline (e.g. "07:30", "TICOBLOCKCHAIN", "GRATIS")
+  label: string; // short uppercase label (e.g. "Check-in", "Red · WiFi")
+  body: string; // prose detail
 };
 
 export type VenueDirections = {

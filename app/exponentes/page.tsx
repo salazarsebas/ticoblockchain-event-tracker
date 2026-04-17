@@ -58,7 +58,7 @@ export default function ExponentesPage() {
         {SPEAKERS.map((speaker, index) => (
           <div
             key={speaker.id}
-            className={`group px-4 sm:px-6 py-10 border-b border-outline-variant hover:bg-surface-container-low transition-colors duration-200 animate-fade-up stagger-${Math.min(index + 2, 7)}`}
+            className={`px-4 sm:px-6 py-10 border-b border-outline-variant animate-fade-up stagger-${Math.min(index + 2, 7)}`}
           >
             <div className="grid grid-cols-12 gap-2 sm:gap-4 items-center">
               <div className="col-span-12 md:col-span-1 mb-4 md:mb-0">
@@ -66,10 +66,8 @@ export default function ExponentesPage() {
               </div>
               <div className="col-span-12 md:col-span-5 flex items-center gap-4 sm:gap-6">
                 <div
-                  className={`w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex-shrink-0 transition-all duration-500 relative overflow-hidden rounded-full ring-2 ring-primary/10 group-hover:ring-secondary ${
-                    speaker.monochrome
-                      ? "grayscale group-hover:grayscale-0"
-                      : ""
+                  className={`w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 flex-shrink-0 relative overflow-hidden rounded-full ring-2 ring-primary/10 ${
+                    speaker.monochrome ? "grayscale" : ""
                   }`}
                 >
                   <Image
@@ -79,7 +77,7 @@ export default function ExponentesPage() {
                     unoptimized={!speaker.imageUrl.startsWith("/")}
                     quality={90}
                     sizes="(min-width: 768px) 128px, (min-width: 640px) 96px, 80px"
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="object-cover"
                   />
                 </div>
                 <div className="min-w-0">
@@ -92,7 +90,7 @@ export default function ExponentesPage() {
                 </div>
               </div>
               <div className="col-span-12 md:col-span-4">
-                <h3 className="text-base sm:text-lg md:text-xl font-bold leading-tight max-w-sm uppercase text-primary group-hover:translate-x-1 transition-transform duration-300">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold leading-tight max-w-sm uppercase text-primary">
                   {speaker.talk}
                 </h3>
               </div>

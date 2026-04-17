@@ -335,12 +335,12 @@ textarea:focus-visible,
 
 @keyframes progress-fill {
   from { width: 0%; }
-  to { width: 65%; }
+  to { width: var(--progress-pct, 0%); }
 }
 
 @keyframes hero-zoom {
   from { transform: scale(1); }
-  to { transform: scale(1.08); }
+  to { transform: scale(1.06); }
 }
 
 @keyframes live-glow {
@@ -403,11 +403,13 @@ textarea:focus-visible,
 }
 
 .animate-progress-fill {
-  animation: progress-fill 2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  animation: progress-fill 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
 
+/* Single-pass zoom: subtle entrance flourish, then rest. Previous version
+   looped infinitely which the UX guide flags as decoration-only motion. */
 .animate-hero-zoom {
-  animation: hero-zoom 20s ease-in-out alternate infinite;
+  animation: hero-zoom 14s ease-out forwards;
 }
 
 .animate-live-glow {
