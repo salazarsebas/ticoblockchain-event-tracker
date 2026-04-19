@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import FloorplanSVG from "./components/FloorplanSVG";
-import MapLegend from "./components/MapLegend";
 import FilterChips from "./components/FilterChips";
 import FeatureDetailPanel from "./components/FeatureDetailPanel";
 import { GRECO_FEATURES } from "./data/greco-features";
@@ -74,49 +73,41 @@ export default function MapaPage() {
     });
   }, []);
 
+  const handleResetFilters = useCallback(() => {
+    setActiveFilters(new Set(ALL_CATEGORIES));
+  }, []);
+
   return (
     <main id="main" className="pb-20">
       <section className="px-4 sm:px-6 md:px-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-baseline mb-8 pt-8">
-          <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-black uppercase tracking-tighter text-primary animate-reveal-up">
+        <div className="flex flex-col md:flex-row justify-between md:items-end gap-3 mb-6 pt-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-black uppercase tracking-tighter text-primary leading-none animate-reveal-up">
             MAPA
           </h1>
-          <div className="mt-4 md:mt-0 mono-data text-primary flex items-center gap-2 animate-fade-up stagger-2">
-            <span className="w-3 h-3 bg-secondary" aria-hidden="true" />
-            UBICACIÓN: HOTEL BARCELÓ SAN JOSÉ
-          </div>
+          <p className="mono-data text-[10px] sm:text-xs uppercase tracking-widest text-on-surface-variant max-w-md animate-fade-up stagger-2">
+            Sala Greco + Lobby. Tocá cualquier forma para ver detalles.
+          </p>
         </div>
 
-        {/* Filter chips */}
+        {/* Filter chips — double as legend via per-category color swatches */}
         <div className="mb-6 animate-fade-up stagger-3">
           <FilterChips
             activeFilters={activeFilters}
             onToggle={handleToggleFilter}
+            onReset={handleResetFilters}
+            totalCategories={ALL_CATEGORIES.length}
           />
         </div>
 
-        {/* Main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border-4 border-primary animate-fade-up stagger-4">
-          {/* Legend column — hidden on mobile, shown on lg+ */}
-          <div className="hidden lg:block lg:col-span-3">
-            <MapLegend />
-          </div>
-
-          {/* Map canvas */}
-          <div className="lg:col-span-9 bg-surface-container-low relative overflow-hidden p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-[360px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[640px]">
-            <div className="w-full max-w-5xl">
-              <FloorplanSVG
-                selectedId={selectedId}
-                activeFilters={activeFilters}
-                onSelect={handleSelect}
-              />
-            </div>
-          </div>
-
-          {/* Mobile legend — stacked below map */}
-          <div className="lg:hidden">
-            <MapLegend />
+        {/* Map canvas */}
+        <div className="bg-surface-container-low border-4 border-primary relative overflow-hidden p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-[420px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] animate-fade-up stagger-4">
+          <div className="w-full max-w-5xl">
+            <FloorplanSVG
+              selectedId={selectedId}
+              activeFilters={activeFilters}
+              onSelect={handleSelect}
+            />
           </div>
         </div>
       </section>

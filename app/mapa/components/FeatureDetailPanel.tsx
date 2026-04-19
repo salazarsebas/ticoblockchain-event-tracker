@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import Icon from "../../components/Icon";
+import { getLiveSessions, getNextSessions } from "../../data/sessions";
+import type { Session } from "../../data/types";
 import type {
   GrecoFeature,
   LobbyPOI,
@@ -165,9 +167,7 @@ function buildGrecoContent(feature: GrecoFeature): Content {
   if (feature.kind === "stage") {
     return {
       ...base,
-      extras: (
-        <DataBlock label="Próxima Charla" value="POR CONFIRMAR" />
-      ),
+      extras: <StageSchedule />,
     };
   }
 
@@ -271,5 +271,31 @@ function DataBlock({ label, value }: { label: string; value: string }) {
         {value}
       </p>
     </div>
+  );
+}
+
+// Resolves the Main Stage's current live or next scheduled session at the
+// moment the detail panel opens. Falls back to a static placeholder when
+// the day is over or hasn't started yet. Only the Main Stage is shown
+// here — the floorplan has one physical stage.
+function StageSchedule() {
+  const now = new Date();
+  const live = getLiveSessions(now);
+  const upcoming: Session | undefined =
+    live.main ?? getNextSessions(5, now).find((s) => s.stage !== "escenario-2");
+
+  if (!upcoming) {
+    return <DataBlock label="Próxima charla" value="Por confirmar" />;
+  }
+
+  const label = upcoming.status === "live" ? "En vivo" : "Próxima charla";
+  const speaker = upcoming.speakerName ?? upcoming.speakerOrg;
+
+  return (
+    <>
+      <DataBlock label={label} value={upcoming.title} />
+      {speaker && <DataBlock label="Exponente" value={speaker} />}
+      <DataBlock label="Horario" value={upcoming.time} />
+    </>
   );
 }
