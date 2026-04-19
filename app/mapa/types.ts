@@ -20,7 +20,8 @@ export type Zone = {
 export type GrecoFeatureKind =
   | "stage"
   | "mesas-regalo"
-  | "mesas-transmision"
+  | "sonido"
+  | "mesas-cocteleras"
   | "check-in"
   | "audience"
   | "entry-door";
@@ -34,9 +35,10 @@ export type GrecoFeature = {
   category: POICategory;
   interactive: boolean;
   description?: string;
+  iconName?: IconName;
 };
 
-export type StandNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type StandNumber = 1 | 2 | 3 | 4 | 5;
 
 export type Stand = {
   id: `stand-${StandNumber}`;
@@ -48,7 +50,12 @@ export type Stand = {
 };
 
 export type LobbyPOI = {
-  id: "hotel-entrance" | "food-coffee" | "toilets";
+  id:
+    | "hotel-entrance"
+    | "food-coffee"
+    | "toilets"
+    | "entrevistas"
+    | "asoblockchain";
   label: string;
   shortLabel?: string;
   category: POICategory;

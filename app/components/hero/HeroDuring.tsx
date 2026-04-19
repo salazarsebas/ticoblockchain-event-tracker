@@ -5,6 +5,7 @@ import type { SponsorCallout as SponsorCalloutData } from "../../data/home-conte
 import { HERO_CONTENT } from "../../data/home-content";
 import { getMinutesUntilStart } from "../../data/sessions";
 import type { Session } from "../../data/types";
+import { MAX_STAGGER_LEVEL } from "../../lib/stagger";
 import AgendaPreviewRow from "../AgendaPreviewRow";
 import Icon from "../Icon";
 import LiveDot from "../LiveDot";
@@ -202,7 +203,7 @@ export default function HeroDuring({
               key={session.id}
               session={session}
               countdownMinutes={getMinutesUntilStart(session.startTime, now)}
-              staggerClass={`stagger-${Math.min(i + 4, 7)}`}
+              staggerClass={`stagger-${Math.min(i + 4, MAX_STAGGER_LEVEL)}`}
             />
           ))}
         </div>

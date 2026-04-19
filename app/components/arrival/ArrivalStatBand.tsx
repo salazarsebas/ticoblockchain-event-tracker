@@ -1,4 +1,5 @@
 import type { ArrivalStat } from "../../data/types";
+import { MAX_STAGGER_LEVEL } from "../../lib/stagger";
 
 type ArrivalStatBandProps = {
   stats: readonly ArrivalStat[];
@@ -17,7 +18,7 @@ export default function ArrivalStatBand({ stats }: ArrivalStatBandProps) {
           className={[
             "p-6 sm:p-8 md:p-10 animate-fade-up",
             i > 0 ? "md:border-l-2 md:border-primary/20 border-t-2 md:border-t-0 border-primary/20" : "",
-            `stagger-${Math.min(i + 1, 7)}`,
+            `stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`,
           ].join(" ")}
         >
           <div className="mono-data font-black uppercase tracking-tighter text-primary text-[clamp(2rem,5vw,3.75rem)] leading-[0.9] break-words">

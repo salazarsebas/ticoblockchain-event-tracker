@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HERO_CONTENT } from "../../data/home-content";
 import type { Session } from "../../data/types";
+import { MAX_STAGGER_LEVEL } from "../../lib/stagger";
 import AgendaPreviewRow from "../AgendaPreviewRow";
 import Icon from "../Icon";
 
@@ -148,7 +149,7 @@ export default function HeroBefore({
               key={session.id}
               session={session}
               clampTitle
-              staggerClass={`stagger-${Math.min(i + 3, 7)}`}
+              staggerClass={`stagger-${Math.min(i + 3, MAX_STAGGER_LEVEL)}`}
             />
           ))}
         </div>

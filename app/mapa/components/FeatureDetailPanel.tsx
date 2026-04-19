@@ -239,8 +239,10 @@ function grecoKindLabel(
       return "Escenario";
     case "mesas-regalo":
       return "Mesas";
-    case "mesas-transmision":
-      return "Prensa";
+    case "sonido":
+      return "Sonido";
+    case "mesas-cocteleras":
+      return "Mesa de networking";
     case "check-in":
       return "Registro";
     case "entry-door":

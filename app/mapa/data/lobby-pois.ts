@@ -2,6 +2,24 @@ import type { LobbyPOI } from "../types";
 
 export const LOBBY_POIS: readonly LobbyPOI[] = [
   {
+    id: "asoblockchain",
+    label: "AsoBlockchain",
+    category: "tables",
+    iconName: "storefront",
+    bbox: { x: 80, y: 670, width: 140, height: 70 },
+    description:
+      "Mesa de la Asociación de Blockchain de Costa Rica. Acercate para conocer su trabajo, afiliarte o conversar con la comunidad.",
+  },
+  {
+    id: "entrevistas",
+    label: "Entrevistas",
+    category: "tables",
+    iconName: "mic",
+    bbox: { x: 760, y: 650, width: 160, height: 70 },
+    description:
+      "Zona de entrevistas del evento. Asistentes, speakers y sponsors comparten su experiencia en vivo durante la jornada.",
+  },
+  {
     id: "toilets",
     label: "Servicios Sanitarios",
     shortLabel: "Sanitarios",

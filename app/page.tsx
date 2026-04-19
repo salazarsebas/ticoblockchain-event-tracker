@@ -11,6 +11,7 @@ import HeroDuring from "./components/hero/HeroDuring";
 import Icon from "./components/Icon";
 import LiveRefresh from "./components/LiveRefresh";
 import NowScrubLine from "./components/NowScrubLine";
+import { MAX_STAGGER_LEVEL } from "./lib/stagger";
 import {
   PRACTICAL_INFO,
   SPONSOR_CALLOUTS,
@@ -250,7 +251,7 @@ export default async function EnVivoPage({
                   <div key={session.id}>
                     <DepartureRow
                       session={session}
-                      staggerClass={`stagger-${Math.min(i + 3, 7)}`}
+                      staggerClass={`stagger-${Math.min(i + 3, MAX_STAGGER_LEVEL)}`}
                       countdownMinutes={countdownMinutes}
                     />
                     {i + 1 === scrubIndex && scrubIndex !== 0 && (
@@ -302,7 +303,7 @@ export default async function EnVivoPage({
           {PRACTICAL_INFO.map((item, i) => (
             <div
               key={item.id}
-              className={`grid grid-cols-[auto_1fr] md:grid-cols-[3rem_5fr_6fr] gap-x-4 md:gap-x-8 gap-y-3 py-6 sm:py-8 md:py-10 border-b border-on-primary/15 items-start animate-fade-up stagger-${Math.min(i + 1, 7)}`}
+              className={`grid grid-cols-[auto_1fr] md:grid-cols-[3rem_5fr_6fr] gap-x-4 md:gap-x-8 gap-y-3 py-6 sm:py-8 md:py-10 border-b border-on-primary/15 items-start animate-fade-up stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
             >
               <div className="mono-data text-[11px] sm:text-xs uppercase tracking-widest font-bold text-secondary pt-2 md:pt-4 row-span-2 md:row-span-1">
                 {String(i + 1).padStart(2, "0")}

@@ -4,12 +4,14 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
   {
     id: "stage",
     kind: "stage",
-    label: "Escenario Principal",
+    label: "Escenario Principal VISA",
+    shortLabel: "Escenario VISA",
     category: "stage",
     interactive: true,
+    iconName: "mic",
     bbox: { x: 360, y: 60, width: 280, height: 90 },
     description:
-      "Escenario principal de Sala Greco. Aquí ocurren las charlas y keynotes del evento.",
+      "Escenario principal de Sala Greco, patrocinado por VISA. Aquí ocurren las charlas y keynotes del evento.",
   },
   {
     id: "mesas-regalo",
@@ -18,20 +20,22 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     shortLabel: "Regalos",
     category: "tables",
     interactive: true,
+    iconName: "redeem",
     bbox: { x: 730, y: 70, width: 190, height: 70 },
     description:
       "Zona de swag y materiales del evento. Pasá a retirar tu kit de asistente.",
   },
   {
-    id: "mesas-transmision",
-    kind: "mesas-transmision",
-    label: "Mesas de Transmisión",
-    shortLabel: "Prensa",
+    id: "sonido",
+    kind: "sonido",
+    label: "Sonido",
+    shortLabel: "Sonido",
     category: "tables",
     interactive: true,
-    bbox: { x: 80, y: 300, width: 80, height: 110 },
+    iconName: "graphic_eq",
+    bbox: { x: 80, y: 170, width: 80, height: 110 },
     description:
-      "Área de prensa y transmisión en vivo. Acreditación de medios únicamente.",
+      "Mesa de sonido y producción técnica del evento. Acceso restringido al staff.",
   },
   {
     id: "audience",
@@ -47,9 +51,54 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     label: "Check-in",
     category: "checkin",
     interactive: true,
-    bbox: { x: 420, y: 678, width: 160, height: 42 },
+    iconName: "how_to_reg",
+    bbox: { x: 380, y: 670, width: 110, height: 30 },
     description:
       "Presentá tu código QR antes de entrar a Sala Greco. Ubicado en el lobby, entre las dos puertas de acceso.",
+  },
+  {
+    id: "hallos",
+    kind: "check-in",
+    label: "Hallos",
+    category: "checkin",
+    interactive: true,
+    iconName: "how_to_reg",
+    bbox: { x: 510, y: 670, width: 110, height: 30 },
+    description:
+      "Segunda estación de validación de entradas. El equipo de Hallos escanea tu código QR junto al check-in principal.",
+  },
+  {
+    id: "mesa-cocktail-1",
+    kind: "mesas-cocteleras",
+    label: "Mesa Cocktail 1",
+    shortLabel: "Mesa",
+    category: "tables",
+    interactive: true,
+    bbox: { x: 300, y: 570, width: 60, height: 30 },
+    description:
+      "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
+  },
+  {
+    id: "mesa-cocktail-2",
+    kind: "mesas-cocteleras",
+    label: "Mesa Cocktail 2",
+    shortLabel: "Mesa",
+    category: "tables",
+    interactive: true,
+    bbox: { x: 470, y: 570, width: 60, height: 30 },
+    description:
+      "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
+  },
+  {
+    id: "mesa-cocktail-3",
+    kind: "mesas-cocteleras",
+    label: "Mesa Cocktail 3",
+    shortLabel: "Mesa",
+    category: "tables",
+    interactive: true,
+    bbox: { x: 640, y: 570, width: 60, height: 30 },
+    description:
+      "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
   },
   {
     id: "entry-door-left",

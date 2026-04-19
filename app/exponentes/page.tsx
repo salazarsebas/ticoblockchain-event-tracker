@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SPEAKERS } from "../data/speakers";
+import { MAX_STAGGER_LEVEL } from "../lib/stagger";
 import SpeakerCard from "./_components/SpeakerCard";
 import { groupAppearances } from "./_lib/groupSpeakers";
 
@@ -57,7 +58,7 @@ export default function ExponentesPage() {
             <SpeakerCard
               key={key}
               appearance={appearance}
-              staggerClass={`stagger-${Math.min(i + 1, 7)}`}
+              staggerClass={`stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
             />
           );
         })}

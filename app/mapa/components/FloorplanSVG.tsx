@@ -99,8 +99,6 @@ export default function FloorplanSVG({
         />
       ))}
 
-      {/* "Estás aquí" pin anchored to Hotel Main Entrance */}
-      <YouAreHerePin />
     </svg>
   );
 }
@@ -318,7 +316,7 @@ function GrecoFeatureShape({
   feature,
   ...handlers
 }: { feature: GrecoFeature } & ShapeHandlers) {
-  const { bbox, kind, label, shortLabel } = feature;
+  const { bbox, kind, label, shortLabel, iconName } = feature;
   const cx = bbox.x + bbox.width / 2;
   const cy = bbox.y + bbox.height / 2;
 
@@ -327,7 +325,7 @@ function GrecoFeatureShape({
       ? "var(--color-primary-container)"
       : kind === "check-in" || kind === "entry-door"
         ? "var(--color-secondary)"
-        : "var(--color-primary-fixed-dim)"; // mesas-regalo, mesas-transmision
+        : "var(--color-primary-fixed-dim)"; // mesas-regalo, sonido, mesas-cocteleras
 
   const textFill =
     kind === "stage" || kind === "check-in" || kind === "entry-door"
@@ -341,6 +339,13 @@ function GrecoFeatureShape({
   const extraClassName =
     kind === "stage" && !handlers.dimmed ? "map-stage-pulse" : undefined;
 
+  // check-in strips are only 30px tall — stack icon+text horizontally instead of vertically.
+  const horizontalLayout = kind === "check-in";
+  const labelFontSize = kind === "stage" ? 20 : 13;
+  const iconSize = kind === "stage" ? 28 : horizontalLayout ? 16 : 22;
+  const iconOffsetY = kind === "stage" ? 18 : 14;
+  const labelOffsetY = kind === "stage" ? 16 : 13;
+
   return (
     <InteractiveShape
       id={feature.id}
@@ -350,15 +355,33 @@ function GrecoFeatureShape({
       extraClassName={extraClassName}
       {...handlers}
     >
+      {iconName && horizontalLayout && (
+        <POIIcon
+          iconName={iconName}
+          cx={bbox.x + 16}
+          cy={cy}
+          size={iconSize}
+          fill={textFill}
+        />
+      )}
+      {iconName && !horizontalLayout && (
+        <POIIcon
+          iconName={iconName}
+          cx={cx}
+          cy={cy - iconOffsetY}
+          size={iconSize}
+          fill={textFill}
+        />
+      )}
       {showLabel && (
         <text
-          x={cx}
-          y={cy}
+          x={horizontalLayout && iconName ? bbox.x + 32 : cx}
+          y={iconName && !horizontalLayout ? cy + labelOffsetY : cy}
           className="font-display"
-          fontSize={kind === "stage" ? 20 : 13}
+          fontSize={labelFontSize}
           fontWeight={700}
           letterSpacing="0.05em"
-          textAnchor="middle"
+          textAnchor={horizontalLayout && iconName ? "start" : "middle"}
           dominantBaseline="middle"
           fill={textFill}
           style={{ textTransform: "uppercase", pointerEvents: "none" }}
@@ -386,25 +409,18 @@ function StandShape({
       ariaLabel={`Stand ${number}`}
       {...handlers}
     >
-      <text
-        x={cx}
-        y={cy - 4}
-        className="font-display"
-        fontSize={9}
-        fontWeight={700}
-        letterSpacing="0.08em"
-        textAnchor="middle"
-        dominantBaseline="middle"
+      <POIIcon
+        iconName="storefront"
+        cx={cx}
+        cy={cy - 12}
+        size={16}
         fill="var(--color-primary)"
-        style={{ textTransform: "uppercase", pointerEvents: "none" }}
-      >
-        STAND
-      </text>
+      />
       <text
         x={cx}
         y={cy + 12}
         className="font-display"
-        fontSize={20}
+        fontSize={18}
         fontWeight={900}
         textAnchor="middle"
         dominantBaseline="middle"
@@ -466,51 +482,6 @@ function LobbyPOIShape({
   );
 }
 
-function YouAreHerePin() {
-  // Anchored to the Hotel Main Entrance POI (x=760, y=770, w=160, h=90).
-  // The badge sits just above the entrance rect; the pin icon points into it.
-  const entranceCenterX = 760 + 160 / 2; // 840
-  const iconY = 758; // icon center — top of the icon touches the entrance
-  const badgeBottom = iconY - 20;
-
-  return (
-    <g
-      className="animate-pin-bounce"
-      aria-hidden="true"
-      style={{ pointerEvents: "none" }}
-    >
-      {/* Badge */}
-      <rect
-        x={entranceCenterX - 50}
-        y={badgeBottom - 18}
-        width={100}
-        height={18}
-        fill="var(--color-secondary)"
-      />
-      <text
-        x={entranceCenterX}
-        y={badgeBottom - 9}
-        className="font-mono"
-        fontSize={9}
-        fontWeight={700}
-        letterSpacing="0.08em"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        fill="var(--color-on-secondary)"
-        style={{ textTransform: "uppercase" }}
-      >
-        ESTÁS AQUÍ
-      </text>
-      <POIIcon
-        iconName="location_on"
-        cx={entranceCenterX}
-        cy={iconY}
-        size={36}
-        fill="var(--color-secondary)"
-      />
-    </g>
-  );
-}
 
 // Renders a shared Icon glyph inline inside the SVG context. The 24x24
 // path is centered on (cx, cy) via a transform so the existing text

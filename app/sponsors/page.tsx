@@ -18,8 +18,15 @@ export const metadata: Metadata = {
 };
 
 // Animation timing — every tier block fades up STAGGER_TIER_MS later than
-// the previous one so the eye follows the cascade top-to-bottom.
+// the previous one so the eye follows the cascade top-to-bottom. Inside a
+// tier, tiles stagger with their own per-item step so logos don't all pop
+// at once, plus an initial offset so the first tile lands just after the
+// tier header settles.
 const STAGGER_TIER_MS = 80;
+const DIAMANTE_ITEM_MS = 120;
+const DIAMANTE_OFFSET_MS = 100;
+const STANDARD_ITEM_MS = 90;
+const STANDARD_OFFSET_MS = 150;
 
 // Per-tier visual treatment.
 //
@@ -233,7 +240,7 @@ function DiamanteTile({
   return (
     <div
       className="animate-fade-up"
-      style={{ "--delay": `${tierIndex * STAGGER_TIER_MS + index * 120 + 100}ms` } as CSSProperties}
+      style={{ "--delay": `${tierIndex * STAGGER_TIER_MS + index * DIAMANTE_ITEM_MS + DIAMANTE_OFFSET_MS}ms` } as CSSProperties}
     >
       <div className="relative bg-surface-container-lowest border-4 border-primary p-10 md:p-14">
         <div className="absolute top-4 left-4 z-10 font-mono text-[10px] text-primary/40 uppercase tracking-widest">
@@ -280,7 +287,7 @@ function StandardTile({
     <div
       className="animate-fade-up"
       style={{
-        "--delay": `${tierIndex * STAGGER_TIER_MS + index * 90 + 150}ms`,
+        "--delay": `${tierIndex * STAGGER_TIER_MS + index * STANDARD_ITEM_MS + STANDARD_OFFSET_MS}ms`,
       } as CSSProperties}
     >
       <div

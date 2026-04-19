@@ -1,3 +1,4 @@
+import { MAX_STAGGER_LEVEL } from "../../lib/stagger";
 import type { TimeSlot } from "../_lib/groupSessions";
 import TimeSlotRow from "./TimeSlotRow";
 
@@ -41,7 +42,7 @@ export default function DualTrackTimeline({ slots, stageFilter }: DualTrackTimel
             key={slot.startTime}
             slot={slot}
             singleStage={singleStage}
-            staggerClass={`stagger-${Math.min(i + 1, 7)}`}
+            staggerClass={`stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
           />
         ))}
       </ol>
