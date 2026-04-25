@@ -43,7 +43,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     label: "Butacas",
     category: "stage",
     interactive: false,
-    bbox: { x: 260, y: 180, width: 480, height: 380 },
+    bbox: { x: 260, y: 180, width: 480, height: 332 },
   },
   {
     id: "check-in",
@@ -74,7 +74,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     shortLabel: "Mesa",
     category: "tables",
     interactive: true,
-    bbox: { x: 300, y: 570, width: 60, height: 30 },
+    bbox: { x: 90, y: 300, width: 60, height: 30 },
     description:
       "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
   },
@@ -85,7 +85,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     shortLabel: "Mesa",
     category: "tables",
     interactive: true,
-    bbox: { x: 470, y: 570, width: 60, height: 30 },
+    bbox: { x: 90, y: 360, width: 60, height: 30 },
     description:
       "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
   },
@@ -96,7 +96,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     shortLabel: "Mesa",
     category: "tables",
     interactive: true,
-    bbox: { x: 640, y: 570, width: 60, height: 30 },
+    bbox: { x: 90, y: 420, width: 60, height: 30 },
     description:
       "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
   },
@@ -106,7 +106,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     label: "Acceso Izquierdo",
     category: "entrance",
     interactive: true,
-    bbox: { x: 340, y: 611, width: 80, height: 18 },
+    bbox: { x: 280, y: 611, width: 80, height: 18 },
     description: "Puerta de acceso izquierda a Sala Greco.",
   },
   {
@@ -115,7 +115,37 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     label: "Acceso Derecho",
     category: "entrance",
     interactive: true,
-    bbox: { x: 580, y: 611, width: 80, height: 18 },
+    bbox: { x: 640, y: 611, width: 80, height: 18 },
     description: "Puerta de acceso derecha a Sala Greco.",
+  },
+  {
+    id: "stage-2",
+    kind: "stage",
+    label: "Escenario 2",
+    shortLabel: "Escenario 2",
+    category: "stage",
+    interactive: true,
+    iconName: "mic",
+    bbox: { x: 320, y: 1180, width: 240, height: 70 },
+    description:
+      "Segundo escenario del evento. Charlas y paneles en paralelo al Escenario VISA durante toda la jornada.",
+  },
+  {
+    id: "audience-esc2",
+    kind: "audience",
+    label: "Butacas Escenario 2",
+    category: "stage",
+    interactive: false,
+    bbox: { x: 170, y: 940, width: 480, height: 180 },
+  },
+  {
+    id: "esc2-entry-door",
+    kind: "entry-door",
+    label: "Acceso Escenario 2",
+    category: "entrance",
+    interactive: true,
+    bbox: { x: 728, y: 970, width: 24, height: 70 },
+    description:
+      "Puerta de acceso al Escenario 2. Se llega bajando por el corredor que conecta con el lobby.",
   },
 ] as const;

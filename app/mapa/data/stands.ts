@@ -1,37 +1,37 @@
 import type { Stand } from "../types";
 
-// Left wall: Sonido sits at the top (y=170, h=110 — see greco-features.ts),
-// then 4 stands stacked below it at 60px intervals.
-// Right wall: a single stand, centered vertically in the audience range.
+// All 5 stands sit along the bottom of Sala Greco, distributed evenly across
+// the audience width (x=260..740) at y=540, just below the seating grid and
+// above the entry doors. Each stand is 80px wide with 20px gaps between.
 export const STANDS: readonly Stand[] = [
   {
     id: "stand-1",
     number: 1,
     wall: "left",
-    bbox: { x: 80, y: 290, width: 80, height: 50 },
+    bbox: { x: 260, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-2",
     number: 2,
     wall: "left",
-    bbox: { x: 80, y: 350, width: 80, height: 50 },
+    bbox: { x: 360, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-3",
     number: 3,
     wall: "left",
-    bbox: { x: 80, y: 410, width: 80, height: 50 },
+    bbox: { x: 460, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-4",
     number: 4,
     wall: "left",
-    bbox: { x: 80, y: 470, width: 80, height: 50 },
+    bbox: { x: 560, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-5",
     number: 5,
-    wall: "right",
-    bbox: { x: 840, y: 345, width: 80, height: 50 },
+    wall: "left",
+    bbox: { x: 660, y: 540, width: 80, height: 50 },
   },
 ] as const;

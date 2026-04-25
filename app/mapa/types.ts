@@ -12,7 +12,7 @@ export type POICategory =
   | "tables";
 
 export type Zone = {
-  id: "greco" | "lobby";
+  id: "greco" | "lobby" | "escenario-2";
   label: string;
   bbox: BBox;
 };

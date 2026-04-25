@@ -15,14 +15,35 @@ import type {
 } from "../types";
 
 const VIEWBOX_WIDTH = 1000;
-const VIEWBOX_HEIGHT = 900;
+const VIEWBOX_HEIGHT = 1300;
 
 // Wall between Sala Greco and the Lobby — has gaps where the entry doors sit.
 const WALL_Y = 620;
 const DOOR_GAPS: readonly { x: number; width: number }[] = [
-  { x: 340, width: 80 }, // matches entry-door-left bbox
-  { x: 580, width: 80 }, // matches entry-door-right bbox
+  { x: 280, width: 80 }, // matches entry-door-left bbox
+  { x: 640, width: 80 }, // matches entry-door-right bbox
 ];
+
+// Wall between Lobby and Escenario 2 room — has a single open passage
+// at the top of the internal corridor (people enter the corridor freely
+// from the lobby through this opening, no door marker).
+const WALL_LOBBY_ESC2_Y = 880;
+const LOBBY_ESC2_DOOR_GAPS: readonly { x: number; width: number }[] = [
+  { x: 742, width: 126 }, // open passage at top of corridor
+];
+
+// Internal corridor on the right side of Escenario 2 — formed by two
+// vertical walls. Top is open (matches LOBBY_ESC2_DOOR_GAPS), bottom is
+// closed by the outer building. Left wall has a door gap (entrance into
+// the main stage area).
+const CORRIDOR_WALL_X = 740; // left corridor wall
+const CORRIDOR_RIGHT_WALL_X = 870; // right corridor wall (inside the building)
+const CORRIDOR_DOOR_GAP = { y: 970, height: 70 }; // matches esc2-entry-door bbox
+const CORRIDOR_BOTTOM_Y = 1280;
+
+// Audience grid configurations — Sala Greco (large) and Escenario 2 (smaller).
+const GRECO_AUDIENCE_AREA: BBox = { x: 260, y: 180, width: 480, height: 332 };
+const ESC2_AUDIENCE_AREA: BBox = { x: 150, y: 940, width: 480, height: 180 };
 
 type FloorplanSVGProps = {
   selectedId: string | null;
@@ -50,18 +71,23 @@ export default function FloorplanSVG({
       aria-labelledby="mapa-title mapa-desc"
       className="w-full h-auto select-none"
     >
-      <title id="mapa-title">Mapa de Sala Greco y Lobby</title>
+      <title id="mapa-title">Mapa de Sala Greco, Lobby y Escenario 2</title>
       <desc id="mapa-desc">
         Mapa interactivo del recinto TicoBlockchain 2026 en Hotel Barceló San
-        José. Sala Greco y el lobby del hotel forman un solo espacio
-        conectado, separados por una pared interior con dos puertas de acceso.
-        Incluye escenario principal, nueve stands, mesas de regalos y prensa,
-        check-in, servicios sanitarios, zona de comida y entrada del hotel.
+        José. Sala Greco, el lobby y el Escenario 2 forman un solo espacio
+        conectado, separados por paredes interiores con puertas de acceso. El
+        Escenario 2 se ubica al sur del lobby y se accede por un corredor en
+        el costado derecho. Incluye escenario principal, escenario 2, stands,
+        mesas de regalos, check-in, servicios sanitarios, zona de comida y
+        entrada del hotel.
       </desc>
 
       <ContainerOutline />
-      <AudienceGrid />
+      <AudienceGrid area={GRECO_AUDIENCE_AREA} rows={7} />
+      <AudienceGrid area={ESC2_AUDIENCE_AREA} rows={3} />
       <Wall />
+      <LobbyEsc2Wall />
+      <CorridorWall />
 
       {/* Greco interactive features */}
       {GRECO_FEATURES.filter((f) => f.interactive).map((feature) => (
@@ -106,20 +132,21 @@ export default function FloorplanSVG({
 /* ----------------------------- Sub-components ----------------------------- */
 
 function ContainerOutline() {
-  const greco = ZONES[0].bbox;
-  const lobby = ZONES[1].bbox;
+  const greco = ZONES.find((z) => z.id === "greco")!.bbox;
+  const lobby = ZONES.find((z) => z.id === "lobby")!.bbox;
+  const esc2 = ZONES.find((z) => z.id === "escenario-2")!.bbox;
 
-  // Unified outer boundary from top of Greco to bottom of Lobby.
+  // Unified outer boundary from top of Greco to bottom of Escenario 2.
   const outer: BBox = {
     x: greco.x,
     y: greco.y,
     width: greco.width,
-    height: lobby.y + lobby.height - greco.y,
+    height: esc2.y + esc2.height - greco.y,
   };
 
   return (
     <g>
-      {/* Unified container — single room */}
+      {/* Unified container — single building */}
       <rect
         x={outer.x}
         y={outer.y}
@@ -135,6 +162,16 @@ function ContainerOutline() {
         y={lobby.y}
         width={lobby.width - 4}
         height={lobby.height - 2}
+        fill="var(--color-surface-container-low)"
+      />
+      {/* Corridor tint — internal hallway between the two vertical walls.
+          Starts where the lobby tint ends so they meet seamlessly through
+          the open passage at the top of the corridor (no white sliver). */}
+      <rect
+        x={CORRIDOR_WALL_X + 2}
+        y={lobby.y + lobby.height - 2}
+        width={CORRIDOR_RIGHT_WALL_X - CORRIDOR_WALL_X - 4}
+        height={esc2.y + esc2.height - (lobby.y + lobby.height - 2) - 2}
         fill="var(--color-surface-container-low)"
       />
 
@@ -160,6 +197,17 @@ function ContainerOutline() {
         fill="var(--color-primary)"
       >
         LOBBY
+      </text>
+      <text
+        x={esc2.x + 16}
+        y={esc2.y + 32}
+        className="font-display"
+        fontSize={18}
+        fontWeight={700}
+        letterSpacing="0.08em"
+        fill="var(--color-primary)"
+      >
+        ESCENARIO 2
       </text>
     </g>
   );
@@ -204,13 +252,85 @@ function Wall() {
   );
 }
 
-function AudienceGrid() {
+function LobbyEsc2Wall() {
+  // Horizontal wall between the Lobby and the Escenario 2 room. Drawn as
+  // segments around the main entrance door gap so the corridor is enclosed
+  // except for the labeled entrance.
+  const xStart = 60;
+  const xEnd = 940;
+  const segments: { x1: number; x2: number }[] = [];
+  const gaps = [...LOBBY_ESC2_DOOR_GAPS].sort((a, b) => a.x - b.x);
+  let cursor = xStart;
+  for (const gap of gaps) {
+    if (gap.x > cursor) segments.push({ x1: cursor, x2: gap.x });
+    cursor = gap.x + gap.width;
+  }
+  if (cursor < xEnd) segments.push({ x1: cursor, x2: xEnd });
+
+  return (
+    <g aria-hidden="true" style={{ pointerEvents: "none" }}>
+      {segments.map((seg, i) => (
+        <line
+          key={i}
+          x1={seg.x1}
+          y1={WALL_LOBBY_ESC2_Y}
+          x2={seg.x2}
+          y2={WALL_LOBBY_ESC2_Y}
+          stroke="var(--color-primary)"
+          strokeWidth={4}
+          strokeLinecap="butt"
+        />
+      ))}
+    </g>
+  );
+}
+
+function CorridorWall() {
+  // Two vertical walls forming the internal corridor on the right of
+  // Escenario 2. Left wall is broken by the entry door gap; right wall
+  // is solid. The corridor's top is open (handled by LobbyEsc2Wall);
+  // the bottom is closed by the outer container.
+  const doorTop = CORRIDOR_DOOR_GAP.y;
+  const doorBottom = CORRIDOR_DOOR_GAP.y + CORRIDOR_DOOR_GAP.height;
+  return (
+    <g aria-hidden="true" style={{ pointerEvents: "none" }}>
+      <line
+        x1={CORRIDOR_WALL_X}
+        y1={WALL_LOBBY_ESC2_Y}
+        x2={CORRIDOR_WALL_X}
+        y2={doorTop}
+        stroke="var(--color-primary)"
+        strokeWidth={4}
+        strokeLinecap="butt"
+      />
+      <line
+        x1={CORRIDOR_WALL_X}
+        y1={doorBottom}
+        x2={CORRIDOR_WALL_X}
+        y2={CORRIDOR_BOTTOM_Y}
+        stroke="var(--color-primary)"
+        strokeWidth={4}
+        strokeLinecap="butt"
+      />
+      <line
+        x1={CORRIDOR_RIGHT_WALL_X}
+        y1={WALL_LOBBY_ESC2_Y}
+        x2={CORRIDOR_RIGHT_WALL_X}
+        y2={CORRIDOR_BOTTOM_Y}
+        stroke="var(--color-primary)"
+        strokeWidth={4}
+        strokeLinecap="butt"
+      />
+    </g>
+  );
+}
+
+function AudienceGrid({ area, rows }: { area: BBox; rows: number }) {
   // Decorative "tipo escuela" seating: 3 distinct blocks separated by aisles.
-  // Matches the PPT floorplan that shows 3 seating columns facing the stage.
-  const area: BBox = { x: 260, y: 180, width: 480, height: 380 };
+  // Same layout primitives shared by Sala Greco and Escenario 2; only the
+  // outer area and row count differ.
   const blocks = 3;
   const colsPerBlock = 2;
-  const rows = 8;
   const aisleWidth = 30;
   const cellGapX = 3;
   const cellGapY = 5;

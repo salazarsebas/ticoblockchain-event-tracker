@@ -165,9 +165,11 @@ function buildGrecoContent(feature: GrecoFeature): Content {
   };
 
   if (feature.kind === "stage") {
+    const stage: "main" | "escenario-2" =
+      feature.id === "stage-2" ? "escenario-2" : "main";
     return {
       ...base,
-      extras: <StageSchedule />,
+      extras: <StageSchedule stage={stage} />,
     };
   }
 
@@ -276,15 +278,19 @@ function DataBlock({ label, value }: { label: string; value: string }) {
   );
 }
 
-// Resolves the Main Stage's current live or next scheduled session at the
-// moment the detail panel opens. Falls back to a static placeholder when
-// the day is over or hasn't started yet. Only the Main Stage is shown
-// here — the floorplan has one physical stage.
-function StageSchedule() {
+// Resolves the selected stage's current live or next scheduled session
+// at the moment the detail panel opens. "both"-stage sessions (ceremonies,
+// breaks) are shown on either stage. Falls back to a placeholder when the
+// day is over or hasn't started yet.
+function StageSchedule({ stage }: { stage: "main" | "escenario-2" }) {
   const now = new Date();
   const live = getLiveSessions(now);
+  const liveSession = stage === "main" ? live.main : live.escenario2;
   const upcoming: Session | undefined =
-    live.main ?? getNextSessions(5, now).find((s) => s.stage !== "escenario-2");
+    liveSession ??
+    getNextSessions(10, now).find(
+      (s) => s.stage === stage || s.stage === "both",
+    );
 
   if (!upcoming) {
     return <DataBlock label="Próxima charla" value="Por confirmar" />;
