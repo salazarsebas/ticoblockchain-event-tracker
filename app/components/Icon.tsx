@@ -29,7 +29,8 @@ export type IconName =
   | "my_location"
   | "mic"
   | "redeem"
-  | "graphic_eq";
+  | "graphic_eq"
+  | "local_parking";
 
 // All paths use fill="currentColor" so the icon tints via CSS `color`.
 // Exported so SVG contexts (see FloorplanSVG) can render the same glyphs
@@ -86,6 +87,9 @@ export const ICON_PATHS: Record<IconName, string> = {
   // Equalizer bars — represents audio/sound mixing.
   graphic_eq:
     "M7 18h2V6H7v12zm4 4h2V2h-2v20zm-8-8h2v-4H3v4zm12 4h2V6h-2v12zm4-8v4h2v-4h-2z",
+  // Parking — capital P inside an implied square.
+  local_parking:
+    "M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm.2 8H10V7h3.2c1.1 0 2 .9 2 2s-.9 2-2 2z",
 };
 
 type IconProps = Omit<SVGProps<SVGSVGElement>, "children"> & {

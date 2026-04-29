@@ -49,3 +49,6 @@ next-env.d.ts
 
 # forge pipeline artifacts — per-run plans are ephemeral.
 /plans
+
+public/images/qr-production-netlify.png
+public/images/qr-production.png

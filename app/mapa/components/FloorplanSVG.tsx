@@ -14,8 +14,31 @@ import type {
   Stand,
 } from "../types";
 
-const VIEWBOX_WIDTH = 1000;
+const VIEWBOX_WIDTH = 1200;
 const VIEWBOX_HEIGHT = 1300;
+
+// External (out-of-building) wayfinding zones drawn to the right of the
+// venue: parking lot at top, restaurant at bottom, with a narrow walking
+// lane between them that connects to the hotel entrance. All decorative —
+// not interactive, not filterable.
+const EXTERIOR_ZONE_X = 970;
+const EXTERIOR_ZONE_WIDTH = 210;
+const PARKING_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 40, width: EXTERIOR_ZONE_WIDTH, height: 400 };
+const RESTAURANT_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 900, width: EXTERIOR_ZONE_WIDTH, height: 380 };
+const WALKING_PATH_BBOX: BBox = { x: 1050, y: 440, width: 50, height: 460 };
+// Y-coordinate of the horizontal connector linking the lane to the
+// hotel entrance (matches the vertical center of the entrada bbox).
+const PATH_TO_ENTRANCE_Y = 815;
+// Half-height of the horizontal corridor that branches off the lane
+// toward the hotel entrance.
+const CORRIDOR_HALF_HEIGHT = 25;
+// Right edge of the unified venue outline (Sala Greco's right wall).
+// Derived from zone data so the lane stays anchored if the building is
+// ever resized.
+const BUILDING_RIGHT_X = (() => {
+  const g = ZONES.find((z) => z.id === "greco")!.bbox;
+  return g.x + g.width;
+})();
 
 // Wall between Sala Greco and the Lobby — has gaps where the entry doors sit.
 const WALL_Y = 620;
@@ -83,6 +106,18 @@ export default function FloorplanSVG({
       </desc>
 
       <ContainerOutline />
+      <ExteriorBlock
+        bbox={PARKING_BBOX}
+        iconName="local_parking"
+        label="PARKING"
+        decorations={<ParkingStalls bbox={PARKING_BBOX} />}
+      />
+      <ExteriorBlock
+        bbox={RESTAURANT_BBOX}
+        iconName="restaurant"
+        label="RESTAURANTE"
+      />
+      <WalkingPath />
       <AudienceGrid area={GRECO_AUDIENCE_AREA} rows={7} />
       <AudienceGrid area={ESC2_AUDIENCE_AREA} rows={3} />
       <Wall />
@@ -321,6 +356,169 @@ function CorridorWall() {
         strokeWidth={4}
         strokeLinecap="butt"
       />
+    </g>
+  );
+}
+
+// Decorative outlined block for an out-of-building zone (parking, restaurant).
+// Centered icon + label; optional decorations slot for zone-specific marks
+// like the parking stall ticks.
+function ExteriorBlock({
+  bbox,
+  iconName,
+  label,
+  decorations,
+}: {
+  bbox: BBox;
+  iconName: IconName;
+  label: string;
+  decorations?: ReactNode;
+}) {
+  const cx = bbox.x + bbox.width / 2;
+  const cy = bbox.y + bbox.height / 2;
+  return (
+    <g aria-hidden="true" style={{ pointerEvents: "none" }}>
+      <rect
+        x={bbox.x}
+        y={bbox.y}
+        width={bbox.width}
+        height={bbox.height}
+        fill="var(--color-surface-container-high)"
+        stroke="var(--color-primary)"
+        strokeWidth={4}
+      />
+      {decorations}
+      <POIIcon
+        iconName={iconName}
+        cx={cx}
+        cy={cy - 18}
+        size={56}
+        fill="var(--color-primary)"
+      />
+      <text
+        x={cx}
+        y={cy + 36}
+        className="font-display"
+        fontSize={20}
+        fontWeight={900}
+        letterSpacing="0.12em"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="var(--color-primary)"
+      >
+        {label}
+      </text>
+    </g>
+  );
+}
+
+// Short vertical ticks along the top and bottom edges of the parking
+// block — suggests parking stalls without being literal.
+function ParkingStalls({ bbox }: { bbox: BBox }) {
+  const stalls = 5;
+  const stallStep = bbox.width / stalls;
+  return (
+    <>
+      {Array.from({ length: stalls - 1 }, (_, i) => {
+        const tickX = bbox.x + stallStep * (i + 1);
+        return (
+          <g key={i}>
+            <line
+              x1={tickX}
+              y1={bbox.y}
+              x2={tickX}
+              y2={bbox.y + 22}
+              stroke="var(--color-primary)"
+              strokeWidth={2}
+            />
+            <line
+              x1={tickX}
+              y1={bbox.y + bbox.height - 22}
+              x2={tickX}
+              y2={bbox.y + bbox.height}
+              stroke="var(--color-primary)"
+              strokeWidth={2}
+            />
+          </g>
+        );
+      })}
+    </>
+  );
+}
+
+function WalkingPath() {
+  const { x, y, width, height } = WALKING_PATH_BBOX;
+  const laneCenterX = x + width / 2;
+  const laneRight = x + width;
+  const laneBottom = y + height;
+  const corridorTop = PATH_TO_ENTRANCE_Y - CORRIDOR_HALF_HEIGHT;
+  const corridorBottom = PATH_TO_ENTRANCE_Y + CORRIDOR_HALF_HEIGHT;
+  const wallStroke = {
+    stroke: "var(--color-primary)",
+    strokeWidth: 3,
+    strokeDasharray: "8 6",
+  };
+  const spineStroke = {
+    stroke: "var(--color-primary)",
+    strokeWidth: 2,
+    strokeDasharray: "6 6",
+    opacity: 0.45,
+  };
+
+  return (
+    <g aria-hidden="true" style={{ pointerEvents: "none" }}>
+      {/* Fills (no stroke) — walls drawn separately so we can leave a doorway
+          on the lane's left side where the corridor joins. */}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fill="var(--color-surface-container-low)"
+      />
+      <rect
+        x={BUILDING_RIGHT_X}
+        y={corridorTop}
+        width={x - BUILDING_RIGHT_X}
+        height={corridorBottom - corridorTop}
+        fill="var(--color-surface-container-low)"
+      />
+
+      {/* Vertical lane walls — top, right, bottom are continuous; the left
+          wall has a gap at the corridor entry so the path flows through. */}
+      <line x1={x} y1={y} x2={laneRight} y2={y} {...wallStroke} />
+      <line x1={laneRight} y1={y} x2={laneRight} y2={laneBottom} {...wallStroke} />
+      <line x1={x} y1={laneBottom} x2={laneRight} y2={laneBottom} {...wallStroke} />
+      <line x1={x} y1={y} x2={x} y2={corridorTop} {...wallStroke} />
+      <line x1={x} y1={corridorBottom} x2={x} y2={laneBottom} {...wallStroke} />
+
+      {/* Horizontal corridor walls — top + bottom only. No left wall (the
+          building's solid right wall already terminates the corridor) and
+          no right wall (the lane's left-wall gap opens into the corridor). */}
+      <line x1={BUILDING_RIGHT_X} y1={corridorTop} x2={x} y2={corridorTop} {...wallStroke} />
+      <line x1={BUILDING_RIGHT_X} y1={corridorBottom} x2={x} y2={corridorBottom} {...wallStroke} />
+
+      {/* Center spines — vertical runs full length, horizontal runs through
+          the corridor; they cross at the entry point forming a "+" so flow
+          reads as continuous in all four directions. */}
+      <line x1={laneCenterX} y1={y + 8} x2={laneCenterX} y2={laneBottom - 8} {...spineStroke} />
+      <line x1={BUILDING_RIGHT_X + 8} y1={PATH_TO_ENTRANCE_Y} x2={laneCenterX} y2={PATH_TO_ENTRANCE_Y} {...spineStroke} />
+
+      {/* Subtle label along the lane so the symbol is decoded at a glance */}
+      <text
+        x={laneRight + 8}
+        y={y + height / 2}
+        className="font-display"
+        fontSize={11}
+        fontWeight={700}
+        letterSpacing="0.18em"
+        textAnchor="start"
+        dominantBaseline="middle"
+        fill="var(--color-primary)"
+        transform={`rotate(90 ${laneRight + 8} ${y + height / 2})`}
+      >
+        ACCESO PEATONAL
+      </text>
     </g>
   );
 }

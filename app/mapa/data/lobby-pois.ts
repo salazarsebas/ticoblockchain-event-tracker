@@ -41,7 +41,7 @@ export const LOBBY_POIS: readonly LobbyPOI[] = [
   {
     id: "hotel-entrance",
     label: "Entrada Principal del Hotel",
-    shortLabel: "Entrada Hotel",
+    shortLabel: "Entrada",
     category: "entrance",
     iconName: "door_front",
     bbox: { x: 760, y: 770, width: 160, height: 90 },
