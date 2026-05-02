@@ -7,11 +7,8 @@ type MapEmbedProps = {
   src: string;
 };
 
-// Lazy-mount wrapper for the Google Maps iframe. The iframe is heavy (third-
-// party JS, network requests) and sits below the fold, so we delay mounting
-// until the section is ~200px from the viewport. Single-shot: once it mounts,
-// the observer is disconnected. Falls back to immediate mount on browsers
-// without IntersectionObserver support.
+// Defers mounting the heavy third-party iframe until the section is near
+// the viewport, so the home-page LCP isn't blocked on Google Maps payload.
 export default function MapEmbed({ title, src }: MapEmbedProps) {
   const placeholderRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState<boolean>(() => {

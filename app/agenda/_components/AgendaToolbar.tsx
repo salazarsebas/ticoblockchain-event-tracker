@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useOptimistic, useState, useTransition } from "react";
 import Icon from "../../components/Icon";
 
 type AgendaToolbarProps = {
@@ -15,6 +14,8 @@ const STAGES = [
   { id: "escenario-2", label: "Escenario 2", param: "escenario-2" },
 ] as const;
 
+type StageId = (typeof STAGES)[number]["id"];
+
 const CATEGORIES = [
   { id: "keynote", label: "Keynote" },
   { id: "panel", label: "Panel" },
@@ -24,9 +25,28 @@ const CATEGORIES = [
 ] as const;
 
 export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
+  const router = useRouter();
   const params = useSearchParams();
   const stageParam = params.get("stage");
-  const activeStage = stageParam === "main" || stageParam === "escenario-2" ? stageParam : "todo";
+  const urlStage: StageId =
+    stageParam === "main" || stageParam === "escenario-2" ? stageParam : "todo";
+
+  // Optimistic stage flips the active button instantly on click; the real URL
+  // (and server-side timeline rerender) updates in the background via a
+  // transition. Under Slow-4G this is the difference between a 1.7s blocked
+  // click and ~50ms of perceived feedback.
+  const [activeStage, setOptimisticStage] = useOptimistic(urlStage);
+  const [, startStageTransition] = useTransition();
+
+  const handleStageClick = (id: StageId, param: string | null) => {
+    if (id === activeStage) return;
+    startStageTransition(() => {
+      setOptimisticStage(id);
+      router.replace(param ? `/agenda?stage=${param}` : "/agenda", {
+        scroll: false,
+      });
+    });
+  };
 
   const [query, setQuery] = useState("");
   const [activeCategories, setActiveCategories] = useState<Set<string>>(new Set());
@@ -74,12 +94,13 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
         </span>
         <div className="flex flex-wrap gap-2">
           {STAGES.map((s) => {
-            const href = s.param ? `/agenda?stage=${s.param}` : "/agenda";
             const isActive = s.id === activeStage;
             return (
-              <Link
+              <button
                 key={s.id}
-                href={href}
+                type="button"
+                onClick={() => handleStageClick(s.id, s.param)}
+                aria-pressed={isActive}
                 className={[
                   "inline-flex items-center px-4 py-2 min-h-[40px] mono-data text-[11px] font-bold uppercase tracking-widest border-2 transition-colors duration-200",
                   isActive
@@ -88,7 +109,7 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
                 ].join(" ")}
               >
                 {s.label}
-              </Link>
+              </button>
             );
           })}
         </div>

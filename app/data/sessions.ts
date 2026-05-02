@@ -326,9 +326,6 @@ export const SESSIONS: readonly Session[] = [
   },
 ] as const;
 
-// Returns sessions with each `status` replaced by a time-derived status.
-// Pre/post event day, the literal "demo" status is preserved so the site
-// can be previewed with the intended "live" hero pre-launch.
 // Static lookup by id. Used by the sponsors page to resolve a sponsor's
 // session metadata (time, stage, title) without running the live status
 // pipeline — the sponsors page is purely informational and doesn't need
