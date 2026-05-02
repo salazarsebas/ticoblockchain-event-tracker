@@ -59,6 +59,7 @@ export default function ExponentesPage() {
               key={key}
               appearance={appearance}
               staggerClass={`stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
+              priority={i === 0}
             />
           );
         })}

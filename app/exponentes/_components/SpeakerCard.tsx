@@ -7,6 +7,9 @@ import type { SpeakerAppearance } from "../_lib/groupSpeakers";
 type SpeakerCardProps = {
   appearance: SpeakerAppearance;
   staggerClass?: string;
+  // Mark above-the-fold cards so the first portrait paints with eager
+  // loading + fetchpriority=high — fixes the LCP miss on /exponentes.
+  priority?: boolean;
 };
 
 function statusOf(appearance: SpeakerAppearance): Speaker["status"] {
@@ -21,7 +24,15 @@ function timeOf(appearance: SpeakerAppearance): string {
   return appearance.kind === "solo" ? appearance.speaker.time : appearance.time;
 }
 
-function Portrait({ speaker, size = "full" }: { speaker: Speaker; size?: "full" | "half" }) {
+function Portrait({
+  speaker,
+  size = "full",
+  priority = false,
+}: {
+  speaker: Speaker;
+  size?: "full" | "half";
+  priority?: boolean;
+}) {
   const sizesAttr = size === "full"
     ? "(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
     : "(min-width: 1024px) 192px, (min-width: 640px) 25vw, 50vw";
@@ -38,13 +49,14 @@ function Portrait({ speaker, size = "full" }: { speaker: Speaker; size?: "full" 
         sizes={sizesAttr}
         quality={90}
         unoptimized={!speaker.imageUrl.startsWith("/")}
+        priority={priority}
         className="object-cover"
       />
     </div>
   );
 }
 
-export default function SpeakerCard({ appearance, staggerClass }: SpeakerCardProps) {
+export default function SpeakerCard({ appearance, staggerClass, priority = false }: SpeakerCardProps) {
   const status = statusOf(appearance);
   const stage = stageOf(appearance);
   const time = timeOf(appearance);
@@ -67,11 +79,11 @@ export default function SpeakerCard({ appearance, staggerClass }: SpeakerCardPro
     <article className={rootClasses}>
       {/* Portrait block */}
       {appearance.kind === "solo" ? (
-        <Portrait speaker={appearance.speaker} />
+        <Portrait speaker={appearance.speaker} priority={priority} />
       ) : (
         <div className="grid grid-cols-2 gap-0">
           {appearance.speakers.slice(0, 2).map((s) => (
-            <Portrait key={s.id} speaker={s} size="half" />
+            <Portrait key={s.id} speaker={s} size="half" priority={priority} />
           ))}
         </div>
       )}
