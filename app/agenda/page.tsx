@@ -12,9 +12,12 @@ import DualTrackTimeline from "./_components/DualTrackTimeline";
 import JumpToNow from "./_components/JumpToNow";
 import { groupByTimeSlot } from "./_lib/groupSessions";
 
-// Dynamically rendered — consumes ?stage and ?now search params and serves
-// time-derived session statuses on each request.
-export const dynamic = "force-dynamic";
+// ISR-cached for 10s at the edge. LiveRefresh invalidates client-side at
+// exact session-boundary timestamps via router.refresh(), so the cache only
+// affects requests arriving between transitions. Reading ?stage or ?now=
+// forces per-request dynamic rendering, preserving filter and dev-mode
+// time-travel behavior.
+export const revalidate = 10;
 
 export const metadata: Metadata = {
   title: "Agenda",

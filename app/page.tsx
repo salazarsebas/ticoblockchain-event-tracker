@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import ArrivalStatBand from "./components/arrival/ArrivalStatBand";
+import MapEmbed from "./components/arrival/MapEmbed";
 import UtilityBar from "./components/arrival/UtilityBar";
 import DepartureRow from "./components/DepartureRow";
 import DevTimeBanner from "./components/DevTimeBanner";
@@ -31,10 +32,12 @@ import {
 import type { Session } from "./data/types";
 import { VENUE } from "./data/venue";
 
-// Dynamically rendered — the page is intentionally live and reads ?now=
-// for dev-mode time simulation. Smart client refresh (LiveRefresh) invalidates
-// at exact transition boundaries, so ISR-style caching would fight correctness.
-export const dynamic = "force-dynamic";
+// ISR-cached for 10s at the edge. LiveRefresh (mounted below) calls
+// router.refresh() at the exact session-boundary timestamp, so client-side
+// accuracy is preserved; the cache only smooths requests arriving between
+// transitions. Reading ?now= or other searchParams forces dynamic rendering
+// per-request, which is exactly what the dev-mode time-travel hook needs.
+export const revalidate = 10;
 
 // Sorted once per render pass — cheap for ~21 sessions.
 function sortByStartTime(sessions: readonly Session[]): Session[] {
@@ -370,15 +373,10 @@ export default async function EnVivoPage({
             />
             Ubicación · Hotel Barceló
           </div>
-          <div className="border-2 border-primary bg-primary">
-            <iframe
-              title={`Mapa · ${VENUE_DIRECTIONS.name}`}
-              src={`https://maps.google.com/maps?q=${VENUE_DIRECTIONS.gps.lat},${VENUE_DIRECTIONS.gps.lng}&z=15&output=embed`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-[320px] sm:h-[420px] md:h-[480px] block"
-            />
-          </div>
+          <MapEmbed
+            title={`Mapa · ${VENUE_DIRECTIONS.name}`}
+            src={`https://maps.google.com/maps?q=${VENUE_DIRECTIONS.gps.lat},${VENUE_DIRECTIONS.gps.lng}&z=15&output=embed`}
+          />
         </div>
 
         {/* Band 3 — Utility bar */}
