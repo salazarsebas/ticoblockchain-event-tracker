@@ -35,7 +35,12 @@ export default function EventJsonLd() {
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     inLanguage: "es-CR",
     url: SITE_URL,
-    image: `${SITE_URL}/opengraph-image.png`,
+    // Resolves to the route registered by app/opengraph-image.tsx, which
+    // returns image/png at 1200×630 — within Google's required dimensions
+    // for Event rich results. No `.png` suffix: Next.js's file-based
+    // metadata route is registered at `/opengraph-image` (verified against
+    // the prerendered <meta property="og:image"> output).
+    image: `${SITE_URL}/opengraph-image`,
     location: {
       "@type": "Place",
       name: VENUE_DIRECTIONS.name,
@@ -62,13 +67,17 @@ export default function EventJsonLd() {
     performer: performers,
   };
 
+  // Defense-in-depth: even though the schema is built from typed const data
+  // we control, escaping `<` to its unicode form prevents any future string
+  // (a speaker name, an org with markup, etc.) containing `</script>` from
+  // breaking out of the script tag. JSON.parse on the receiver decodes the
+  // escape transparently.
+  const json = JSON.stringify(eventLd).replace(/</g, "\\u003c");
+
   return (
     <script
       type="application/ld+json"
-      // Schema is built from typed const data above — no user input, no
-      // injection vector. dangerouslySetInnerHTML is the canonical pattern
-      // for emitting JSON-LD in Next.js App Router.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(eventLd) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   );
 }
