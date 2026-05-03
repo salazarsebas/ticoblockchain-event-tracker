@@ -7,7 +7,10 @@ import { groupAppearances } from "./_lib/groupSpeakers";
 export const metadata: Metadata = {
   title: "Exponentes",
   description:
-    "Conoce a los exponentes confirmados de TicoBlockchain 2026 — keynotes, paneles y charlas.",
+    "Conoce a los exponentes confirmados de TicoBlockchain 2026 — keynotes, paneles y charlas el 14 de mayo en Hotel Barceló San José, Costa Rica.",
+  alternates: {
+    canonical: "/exponentes",
+  },
 };
 
 export default function ExponentesPage() {

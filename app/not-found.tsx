@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   title: "404 · Página no encontrada",
   description:
     "La página que buscas no existe en el sitio oficial de TicoBlockchain 2026.",
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function NotFound() {

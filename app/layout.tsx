@@ -30,8 +30,11 @@ export const metadata: Metadata = {
     template: "%s · TicoBlockchain 2026",
   },
   description:
-    "Evento blockchain en vivo desde Costa Rica. 14 de mayo, Hotel Barceló San José. Main Stage + Escenario 2.",
+    "Tracker en vivo del TicoBlockchain 2026 — 14 de mayo en Hotel Barceló San José, Costa Rica. Sigue Main Stage y Escenario 2 en tiempo real.",
   applicationName: "TicoBlockchain 2026",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "TicoBlockchain",
     "blockchain",
@@ -73,7 +76,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="es"
+      lang="es-CR"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
       style={{ touchAction: "manipulation" }}
     >

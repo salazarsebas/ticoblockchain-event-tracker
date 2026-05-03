@@ -14,7 +14,10 @@ import {
 export const metadata: Metadata = {
   title: "Sponsors",
   description:
-    "Patrocinadores oficiales de TicoBlockchain 2026 — Diamante, Oro, Plata, Startup, Comunidad y Aliados.",
+    "Patrocinadores oficiales de TicoBlockchain 2026 — Diamante, Oro, Plata, Startup, Comunidad y Aliados: las marcas que sostienen el ecosistema blockchain de Costa Rica.",
+  alternates: {
+    canonical: "/sponsors",
+  },
 };
 
 // Animation timing — every tier block fades up STAGGER_TIER_MS later than
@@ -121,6 +124,7 @@ export default function SponsorsPage() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-20 gap-6">
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-black uppercase tracking-tighter text-primary leading-none animate-reveal-up">
             SPONSORS
+            <span className="sr-only"> oficiales de TicoBlockchain 2026</span>
           </h1>
           <div
             className="font-mono text-sm uppercase tracking-widest text-secondary border-l-4 border-secondary pl-4 animate-fade-up"

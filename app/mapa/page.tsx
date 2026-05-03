@@ -84,6 +84,7 @@ export default function MapaPage() {
         <div className="flex flex-col md:flex-row justify-between md:items-end gap-3 mb-6 pt-8">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-black uppercase tracking-tighter text-primary leading-none animate-reveal-up">
             MAPA
+            <span className="sr-only"> del recinto · TicoBlockchain 2026 · Hotel Barceló San José</span>
           </h1>
           <p className="mono-data text-[10px] sm:text-xs uppercase tracking-widest text-on-surface-variant max-w-md animate-fade-up stagger-2">
             Sala Greco + Lobby + Escenario 2. Tocá cualquier forma para ver detalles.

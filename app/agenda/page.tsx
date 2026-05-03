@@ -22,7 +22,10 @@ export const revalidate = 10;
 export const metadata: Metadata = {
   title: "Agenda",
   description:
-    "Cronograma oficial de TicoBlockchain 2026. Main Stage y Escenario 2 · 14 de mayo 2026.",
+    "Cronograma oficial de TicoBlockchain 2026: charlas, paneles y workshops del 14 de mayo en Main Stage y Escenario 2 — Hotel Barceló San José, Costa Rica.",
+  alternates: {
+    canonical: "/agenda",
+  },
 };
 
 type StageFilter = "todo" | "main" | "escenario-2";

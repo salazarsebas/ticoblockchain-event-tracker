@@ -5,6 +5,7 @@ import MapEmbed from "./components/arrival/MapEmbed";
 import UtilityBar from "./components/arrival/UtilityBar";
 import DepartureRow from "./components/DepartureRow";
 import DevTimeBanner from "./components/DevTimeBanner";
+import EventJsonLd from "./components/EventJsonLd";
 import EnParaleloSection from "./components/hero/EnParaleloSection";
 import HeroAfter from "./components/hero/HeroAfter";
 import HeroBefore from "./components/hero/HeroBefore";
@@ -160,6 +161,7 @@ export default async function EnVivoPage({
 
   return (
     <main id="main">
+      <EventJsonLd />
       <LiveRefresh
         nextTransitionAt={nextTransitionAt}
         simulated={simulated !== null}
