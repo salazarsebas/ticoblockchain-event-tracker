@@ -27,8 +27,10 @@ const PARKING_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 40, width: EXTERIOR_ZONE_WID
 const RESTAURANT_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 900, width: EXTERIOR_ZONE_WIDTH, height: 380 };
 const WALKING_PATH_BBOX: BBox = { x: 1050, y: 440, width: 50, height: 460 };
 // Y-coordinate of the horizontal connector linking the lane to the
-// hotel entrance (matches the vertical center of the entrada bbox).
-const PATH_TO_ENTRANCE_Y = 815;
+// hotel entrance. Sits in the upper-middle of the lobby's right side,
+// level with the ENTRADA title and well above the entrevistas zone in
+// the bottom row.
+const PATH_TO_ENTRANCE_Y = 710;
 // Half-height of the horizontal corridor that branches off the lane
 // toward the hotel entrance.
 const CORRIDOR_HALF_HEIGHT = 25;
@@ -63,6 +65,12 @@ const CORRIDOR_WALL_X = 740; // left corridor wall
 const CORRIDOR_RIGHT_WALL_X = 870; // right corridor wall (inside the building)
 const CORRIDOR_DOOR_GAP = { y: 970, height: 70 }; // matches esc2-entry-door bbox
 const CORRIDOR_BOTTOM_Y = 1280;
+
+// Toggle for the Escenario 2 zone (interior + corridor + features). When
+// false, the building outline ends at the lobby's bottom wall (single solid
+// wall), the corridor and esc2 features are not rendered, and the ESCENARIO 2
+// label is hidden. Flip to true to bring it all back.
+const SHOW_ESCENARIO_2 = false;
 
 // Audience grid configurations — Sala Greco (large) and Escenario 2 (smaller).
 const GRECO_AUDIENCE_AREA: BBox = { x: 260, y: 180, width: 480, height: 332 };
@@ -119,13 +127,16 @@ export default function FloorplanSVG({
       />
       <WalkingPath />
       <AudienceGrid area={GRECO_AUDIENCE_AREA} rows={7} />
-      <AudienceGrid area={ESC2_AUDIENCE_AREA} rows={3} />
+      {SHOW_ESCENARIO_2 && <AudienceGrid area={ESC2_AUDIENCE_AREA} rows={3} />}
       <Wall />
-      <LobbyEsc2Wall />
-      <CorridorWall />
+      {SHOW_ESCENARIO_2 && <LobbyEsc2Wall />}
+      {SHOW_ESCENARIO_2 && <CorridorWall />}
 
       {/* Greco interactive features */}
-      {GRECO_FEATURES.filter((f) => f.interactive).map((feature) => (
+      {GRECO_FEATURES
+        .filter((f) => f.interactive)
+        .filter((f) => SHOW_ESCENARIO_2 || f.bbox.y < WALL_LOBBY_ESC2_Y)
+        .map((feature) => (
         <GrecoFeatureShape
           key={feature.id}
           feature={feature}
@@ -171,26 +182,40 @@ function ContainerOutline() {
   const lobby = ZONES.find((z) => z.id === "lobby")!.bbox;
   const esc2 = ZONES.find((z) => z.id === "escenario-2")!.bbox;
 
-  // Unified outer boundary from top of Greco to bottom of Escenario 2.
+  // Unified outer boundary. When Escenario 2 is hidden the building ends at
+  // the lobby's bottom, giving the lobby a single solid bottom wall.
   const outer: BBox = {
     x: greco.x,
     y: greco.y,
     width: greco.width,
-    height: esc2.y + esc2.height - greco.y,
+    height: SHOW_ESCENARIO_2
+      ? esc2.y + esc2.height - greco.y
+      : lobby.y + lobby.height - greco.y,
   };
+
+  // Right-wall opening for the hotel entrance — matches the corridor
+  // connector coming in from the walking path lane.
+  const entranceTop = PATH_TO_ENTRANCE_Y - CORRIDOR_HALF_HEIGHT;
+  const entranceBottom = PATH_TO_ENTRANCE_Y + CORRIDOR_HALF_HEIGHT;
+  const right = outer.x + outer.width;
+  const bottom = outer.y + outer.height;
 
   return (
     <g>
-      {/* Unified container — single building */}
+      {/* Unified container — filled background, walls drawn as segments so we
+          can leave a gap on the right wall for the hotel entrance. */}
       <rect
         x={outer.x}
         y={outer.y}
         width={outer.width}
         height={outer.height}
         fill="var(--color-surface-container-lowest)"
-        stroke="var(--color-primary)"
-        strokeWidth={4}
       />
+      <line x1={outer.x} y1={outer.y} x2={right} y2={outer.y} stroke="var(--color-primary)" strokeWidth={4} />
+      <line x1={outer.x} y1={outer.y} x2={outer.x} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
+      <line x1={outer.x} y1={bottom} x2={right} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
+      <line x1={right} y1={outer.y} x2={right} y2={entranceTop} stroke="var(--color-primary)" strokeWidth={4} />
+      <line x1={right} y1={entranceBottom} x2={right} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
       {/* Subtle lobby tint for visual distinction without a hard border */}
       <rect
         x={lobby.x + 2}
@@ -199,16 +224,18 @@ function ContainerOutline() {
         height={lobby.height - 2}
         fill="var(--color-surface-container-low)"
       />
-      {/* Corridor tint — internal hallway between the two vertical walls.
-          Starts where the lobby tint ends so they meet seamlessly through
-          the open passage at the top of the corridor (no white sliver). */}
-      <rect
-        x={CORRIDOR_WALL_X + 2}
-        y={lobby.y + lobby.height - 2}
-        width={CORRIDOR_RIGHT_WALL_X - CORRIDOR_WALL_X - 4}
-        height={esc2.y + esc2.height - (lobby.y + lobby.height - 2) - 2}
-        fill="var(--color-surface-container-low)"
-      />
+      {SHOW_ESCENARIO_2 && (
+        /* Corridor tint — internal hallway between the two vertical walls.
+           Starts where the lobby tint ends so they meet seamlessly through
+           the open passage at the top of the corridor (no white sliver). */
+        <rect
+          x={CORRIDOR_WALL_X + 2}
+          y={lobby.y + lobby.height - 2}
+          width={CORRIDOR_RIGHT_WALL_X - CORRIDOR_WALL_X - 4}
+          height={esc2.y + esc2.height - (lobby.y + lobby.height - 2) - 2}
+          fill="var(--color-surface-container-low)"
+        />
+      )}
 
       {/* Zone labels — top-left corner of each area */}
       <text
@@ -233,17 +260,19 @@ function ContainerOutline() {
       >
         LOBBY
       </text>
-      <text
-        x={esc2.x + 16}
-        y={esc2.y + 36}
-        className="font-display"
-        fontSize={26}
-        fontWeight={700}
-        letterSpacing="0.08em"
-        fill="var(--color-primary)"
-      >
-        ESCENARIO 2
-      </text>
+      {SHOW_ESCENARIO_2 && (
+        <text
+          x={esc2.x + 16}
+          y={esc2.y + 36}
+          className="font-display"
+          fontSize={26}
+          fontWeight={700}
+          letterSpacing="0.08em"
+          fill="var(--color-primary)"
+        >
+          ESCENARIO 2
+        </text>
+      )}
     </g>
   );
 }
@@ -569,6 +598,10 @@ type InteractiveShapeProps = {
   onKeyDown: (e: KeyboardEvent<SVGGElement>) => void;
   extraClassName?: string;
   children?: ReactNode;
+  // When true, the click target is invisible (no fill, no stroke) and the
+  // shape opts out of the default crimson hover border. The visible content
+  // lives entirely in `children`.
+  borderless?: boolean;
 };
 
 function InteractiveShape({
@@ -582,7 +615,9 @@ function InteractiveShape({
   onKeyDown,
   extraClassName,
   children,
+  borderless,
 }: InteractiveShapeProps) {
+  const baseClass = borderless ? "map-shape-ghost" : "map-shape";
   return (
     <g
       role="button"
@@ -590,7 +625,7 @@ function InteractiveShape({
       aria-label={ariaLabel}
       onClick={() => onSelect(id)}
       onKeyDown={onKeyDown}
-      className={`map-shape cursor-pointer${extraClassName ? ` ${extraClassName}` : ""}`}
+      className={`${baseClass} cursor-pointer${extraClassName ? ` ${extraClassName}` : ""}`}
       style={{ opacity: dimmed ? 0.2 : 1 }}
     >
       <rect
@@ -598,9 +633,9 @@ function InteractiveShape({
         y={bbox.y}
         width={bbox.width}
         height={bbox.height}
-        fill={fill}
-        stroke={selected ? "var(--color-secondary)" : "var(--color-primary)"}
-        strokeWidth={selected ? 5 : 2}
+        fill={borderless ? "transparent" : fill}
+        stroke={borderless ? "none" : (selected ? "var(--color-secondary)" : "var(--color-primary)")}
+        strokeWidth={borderless ? 0 : (selected ? 5 : 2)}
       />
       {children}
     </g>
@@ -740,22 +775,47 @@ function LobbyPOIShape({
   ...handlers
 }: { poi: LobbyPOI } & ShapeHandlers) {
   const { bbox, label, shortLabel, category, iconName } = poi;
+  const isEntrance = category === "entrance";
   const cx = bbox.x + bbox.width / 2;
   const cy = bbox.y + bbox.height / 2;
+  const textFill = "var(--color-primary)";
+  const displayLabel = (shortLabel ?? label).toUpperCase();
+
+  // Entrance is rendered as a borderless title only — no icon, no rect, no
+  // door arc. The wall gap and the corridor coming in from parking are the
+  // visual cues; the label just names the spot.
+  if (isEntrance) {
+    return (
+      <InteractiveShape
+        id={poi.id}
+        bbox={bbox}
+        fill="transparent"
+        ariaLabel={label}
+        borderless
+        {...handlers}
+      >
+        <text
+          x={cx}
+          y={cy}
+          className="font-display"
+          fontSize={16}
+          fontWeight={900}
+          letterSpacing="0.12em"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill={textFill}
+          style={{ textTransform: "uppercase", pointerEvents: "none" }}
+        >
+          {displayLabel}
+        </text>
+      </InteractiveShape>
+    );
+  }
 
   const fill =
-    category === "entrance"
-      ? "var(--color-primary-container)"
-      : category === "food"
-        ? "var(--color-primary-fixed-dim)"
-        : "var(--color-surface-variant)"; // toilet
-
-  const textFill =
-    category === "entrance"
-      ? "var(--color-on-primary)"
-      : "var(--color-primary)";
-
-  const displayLabel = (shortLabel ?? label).toUpperCase();
+    category === "food"
+      ? "var(--color-primary-fixed-dim)"
+      : "var(--color-surface-variant)"; // toilet
 
   return (
     <InteractiveShape

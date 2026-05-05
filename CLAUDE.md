@@ -65,3 +65,13 @@ public/            # static assets
 3. `npm run lint` is clean for files you touched.
 4. For UI work, manually verify in `npm run dev` (golden path + an edge case).
 5. Brief summary of what changed and which files were touched.
+
+## Browser Automation
+
+Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
+
+Core workflow:
+1. `agent-browser open <url>` - Navigate to page
+2. `agent-browser snapshot -i` - Get interactive elements with refs (@e1, @e2)
+3. `agent-browser click @e1` / `fill @e2 "text"` - Interact using refs
+4. Re-snapshot after page changes

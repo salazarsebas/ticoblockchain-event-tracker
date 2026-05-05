@@ -15,7 +15,7 @@ export const LOBBY_POIS: readonly LobbyPOI[] = [
     label: "Entrevistas",
     category: "tables",
     iconName: "mic",
-    bbox: { x: 760, y: 650, width: 160, height: 70 },
+    bbox: { x: 760, y: 770, width: 160, height: 90 },
     description:
       "Zona de entrevistas del evento. Asistentes, speakers y sponsors comparten su experiencia en vivo durante la jornada.",
   },
@@ -25,7 +25,7 @@ export const LOBBY_POIS: readonly LobbyPOI[] = [
     shortLabel: "Sanitarios",
     category: "toilet",
     iconName: "wc",
-    bbox: { x: 80, y: 770, width: 140, height: 90 },
+    bbox: { x: 80, y: 780, width: 120, height: 70 },
     description:
       "Servicios sanitarios disponibles para todos los asistentes al evento.",
   },
@@ -34,7 +34,7 @@ export const LOBBY_POIS: readonly LobbyPOI[] = [
     label: "Food & Coffee",
     category: "food",
     iconName: "restaurant",
-    bbox: { x: 260, y: 770, width: 460, height: 90 },
+    bbox: { x: 220, y: 770, width: 380, height: 90 },
     description:
       "Zona de comida y café. Espacio principal de networking entre sesiones.",
   },
@@ -44,7 +44,7 @@ export const LOBBY_POIS: readonly LobbyPOI[] = [
     shortLabel: "Entrada",
     category: "entrance",
     iconName: "door_front",
-    bbox: { x: 760, y: 770, width: 160, height: 90 },
+    bbox: { x: 820, y: 698, width: 120, height: 24 },
     description:
       "Entrada principal del Hotel Barceló San José. Punto de llegada al evento.",
   },

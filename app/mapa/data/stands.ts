@@ -1,20 +1,22 @@
 import type { Stand } from "../types";
 
-// All 5 stands sit along the bottom of Sala Greco, distributed evenly across
-// the audience width (x=260..740) at y=540, just below the seating grid and
-// above the entry doors. Each stand is 80px wide with 20px gaps between.
+// 5 stands sit along the bottom of Sala Greco in a 2-1-2 cluster pattern
+// matching the venue floorplan: two clustered on the left, one centered,
+// two clustered on the right. The gaps between clusters line up with the
+// two entry doors in the bottom wall (x=280..360 and x=640..720). Each
+// stand is 80×50 at y=540, with 10px gaps inside each cluster.
 export const STANDS: readonly Stand[] = [
   {
     id: "stand-1",
     number: 1,
     wall: "left",
-    bbox: { x: 260, y: 540, width: 80, height: 50 },
+    bbox: { x: 100, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-2",
     number: 2,
     wall: "left",
-    bbox: { x: 360, y: 540, width: 80, height: 50 },
+    bbox: { x: 190, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-3",
@@ -25,13 +27,13 @@ export const STANDS: readonly Stand[] = [
   {
     id: "stand-4",
     number: 4,
-    wall: "left",
-    bbox: { x: 560, y: 540, width: 80, height: 50 },
+    wall: "right",
+    bbox: { x: 730, y: 540, width: 80, height: 50 },
   },
   {
     id: "stand-5",
     number: 5,
-    wall: "left",
-    bbox: { x: 660, y: 540, width: 80, height: 50 },
+    wall: "right",
+    bbox: { x: 820, y: 540, width: 80, height: 50 },
   },
 ] as const;

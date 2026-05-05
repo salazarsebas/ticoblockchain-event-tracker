@@ -483,6 +483,13 @@ textarea:focus-visible,
   stroke-width: 4;
 }
 
+/* Borderless variant — used by the hotel entrance, where the visible shape
+   is the door arc + label rather than a rectangle. No hover border, no
+   visible click target — only opacity transitions. */
+.map-shape-ghost {
+  transition: opacity 0.2s ease;
+}
+
 /* Subtle opacity pulse to mark the stage as the focal point */
 @keyframes stage-pulse {
   0%, 100% { opacity: 1; }
