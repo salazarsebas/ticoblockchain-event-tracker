@@ -222,6 +222,17 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
       "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
   },
   {
+    id: "mesa-cocktail-15",
+    kind: "mesas-cocteleras",
+    label: "Mesa Cocktail 15",
+    shortLabel: "Mesa",
+    category: "tables",
+    interactive: true,
+    bbox: { x: 790, y: 640, width: 60, height: 30 },
+    description:
+      "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
+  },
+  {
     id: "entry-door-left",
     kind: "entry-door",
     label: "Acceso Izquierdo",
