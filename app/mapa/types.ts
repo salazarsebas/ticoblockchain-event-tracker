@@ -19,7 +19,6 @@ export type Zone = {
 
 type GrecoFeatureKind =
   | "stage"
-  | "mesas-regalo"
   | "sonido"
   | "mesas-cocteleras"
   | "check-in"

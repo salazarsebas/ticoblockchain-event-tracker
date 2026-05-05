@@ -14,18 +14,6 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
       "Escenario principal de Sala Greco, patrocinado por VISA. Aquí ocurren las charlas y keynotes del evento.",
   },
   {
-    id: "mesas-regalo",
-    kind: "mesas-regalo",
-    label: "Mesas de Regalos",
-    shortLabel: "Regalos",
-    category: "tables",
-    interactive: true,
-    iconName: "redeem",
-    bbox: { x: 730, y: 70, width: 190, height: 70 },
-    description:
-      "Zona de swag y materiales del evento. Pasá a retirar tu kit de asistente.",
-  },
-  {
     id: "sonido",
     kind: "sonido",
     label: "Sonido",
@@ -231,6 +219,28 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     bbox: { x: 790, y: 640, width: 60, height: 30 },
     description:
       "Mesa coctelera de pie. Espacio informal para conversar con laptop en mano entre sesiones. Sin asientos.",
+  },
+  {
+    id: "mesa-cocktail-16",
+    kind: "mesas-cocteleras",
+    label: "Mesa Cocktail 16",
+    shortLabel: "Mesa",
+    category: "tables",
+    interactive: true,
+    bbox: { x: 965, y: 640, width: 60, height: 30 },
+    description:
+      "Mesa coctelera de pie en el pasillo de la entrada principal. Punto de networking justo al llegar al evento.",
+  },
+  {
+    id: "mesa-cocktail-17",
+    kind: "mesas-cocteleras",
+    label: "Mesa Cocktail 17",
+    shortLabel: "Mesa",
+    category: "tables",
+    interactive: true,
+    bbox: { x: 965, y: 755, width: 60, height: 30 },
+    description:
+      "Mesa coctelera de pie en el pasillo de la entrada principal. Punto de networking justo al llegar al evento.",
   },
   {
     id: "entry-door-left",

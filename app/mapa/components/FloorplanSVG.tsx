@@ -109,8 +109,7 @@ export default function FloorplanSVG({
         conectado, separados por paredes interiores con puertas de acceso. El
         Escenario 2 se ubica al sur del lobby y se accede por un corredor en
         el costado derecho. Incluye escenario principal, escenario 2, stands,
-        mesas de regalos, check-in, servicios sanitarios, zona de comida y
-        entrada del hotel.
+        check-in, servicios sanitarios, zona de comida y entrada del hotel.
       </desc>
 
       <ContainerOutline />
@@ -662,7 +661,7 @@ function GrecoFeatureShape({
       ? "var(--color-primary-container)"
       : kind === "check-in" || kind === "entry-door"
         ? "var(--color-secondary)"
-        : "var(--color-primary-fixed-dim)"; // mesas-regalo, sonido, mesas-cocteleras
+        : "var(--color-primary-fixed-dim)"; // sonido, mesas-cocteleras
 
   const textFill =
     kind === "stage" || kind === "check-in" || kind === "entry-door"

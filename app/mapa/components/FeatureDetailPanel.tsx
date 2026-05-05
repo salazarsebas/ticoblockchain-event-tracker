@@ -239,8 +239,6 @@ function grecoKindLabel(
   switch (kind) {
     case "stage":
       return "Escenario";
-    case "mesas-regalo":
-      return "Mesas";
     case "sonido":
       return "Sonido";
     case "mesas-cocteleras":
