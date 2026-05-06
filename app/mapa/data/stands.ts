@@ -23,6 +23,7 @@ export const STANDS: readonly Stand[] = [
     number: 3,
     wall: "left",
     bbox: { x: 460, y: 540, width: 80, height: 50 },
+    sponsorName: "Olanzo",
   },
   {
     id: "stand-4",
