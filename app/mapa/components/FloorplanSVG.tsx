@@ -29,10 +29,10 @@ const PARKING_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 40, width: EXTERIOR_ZONE_WID
 const RESTAURANT_BBOX: BBox = { x: 60, y: 1340, width: 880, height: 180 };
 const WALKING_PATH_BBOX: BBox = { x: 1050, y: 440, width: 50, height: 840 };
 // Y-coordinate of the horizontal connector linking the lane to the
-// hotel entrance. Sits in the upper-middle of the lobby's right side,
-// level with the ENTRADA title and well above the entrevistas zone in
-// the bottom row.
-const PATH_TO_ENTRANCE_Y = 710;
+// hotel entrance. Aligned with the ENTRADA title; sits below the
+// entrevistas zone in the lobby's top-right row so the label stays
+// clear of that rect.
+const PATH_TO_ENTRANCE_Y = 760;
 // Half-height of the horizontal corridor that branches off the lane
 // toward the hotel entrance.
 const CORRIDOR_HALF_HEIGHT = 25;

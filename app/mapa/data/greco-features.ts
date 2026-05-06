@@ -62,7 +62,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     shortLabel: "Mesa",
     category: "tables",
     interactive: true,
-    bbox: { x: 965, y: 640, width: 60, height: 30 },
+    bbox: { x: 965, y: 690, width: 60, height: 30 },
     description:
       "Mesa coctelera de pie en el pasillo de la entrada principal. Punto de networking justo al llegar al evento.",
   },
@@ -73,7 +73,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     shortLabel: "Mesa",
     category: "tables",
     interactive: true,
-    bbox: { x: 965, y: 755, width: 60, height: 30 },
+    bbox: { x: 965, y: 800, width: 60, height: 30 },
     description:
       "Mesa coctelera de pie en el pasillo de la entrada principal. Punto de networking justo al llegar al evento.",
   },
