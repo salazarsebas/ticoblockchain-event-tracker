@@ -1,11 +1,11 @@
 import { describe, expect, test } from "vitest";
+import { SESSIONS } from "./sessions";
 import {
   computeSessionStatuses,
   getLiveSessions,
   getNextSessions,
   getNextTransitionAt,
-  SESSIONS,
-} from "./sessions";
+} from "../lib/session-time";
 
 // Helper — builds a Date from a wall-clock time in Costa Rica. Since CR is
 // UTC-6 year-round (no DST), the explicit offset makes these tests unambiguous

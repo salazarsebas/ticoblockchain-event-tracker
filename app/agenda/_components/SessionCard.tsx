@@ -79,7 +79,7 @@ export default function SessionCard({ session, stageLabel, variant = "column" }:
       {/* Speaker */}
       {speakerLine && (
         <p
-          className={`mono-data text-[11px] uppercase tracking-widest font-bold ${
+          className={`label-meta text-[11px] font-bold ${
             isBreak ? "text-on-surface-variant" : "text-secondary"
           }`}
         >

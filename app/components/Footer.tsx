@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="text-lg font-bold text-surface font-display uppercase tracking-tight">
         TICOBLOCKCHAIN 2026
       </div>
-      <div className="mono-data text-xs uppercase tracking-widest opacity-80 text-center md:text-right">
+      <div className="label-meta text-xs opacity-80 text-center md:text-right">
         © 2026 TICOBLOCKCHAIN | HOTEL BARCELÓ SAN JOSÉ · 14 MAYO
       </div>
     </footer>

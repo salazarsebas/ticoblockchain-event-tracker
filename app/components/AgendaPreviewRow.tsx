@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatCountdown } from "../data/sessions";
+import { formatCountdown } from "../lib/session-time";
 import type { Session } from "../data/types";
 import { agendaHrefForStage } from "../data/venue";
 import Icon from "./Icon";

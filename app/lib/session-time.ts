@@ -1,0 +1,233 @@
+import { SESSIONS } from "../data/sessions";
+import type { Session, SessionStatus } from "../data/types";
+import { VENUE } from "../data/venue";
+
+// Static lookup by id. Used by the sponsors page to resolve a sponsor's
+// session metadata (time, stage, title) without running the live status
+// pipeline — the sponsors page is purely informational and doesn't need
+// past/live/next promotion.
+export function getSessionById(id: string): Session | undefined {
+  return SESSIONS.find((s) => s.id === id);
+}
+
+export function getSessionsAt(now: Date): Session[] {
+  const statuses = computeSessionStatuses(SESSIONS, now);
+  return SESSIONS.map((s) => ({
+    ...s,
+    status: statuses.get(s.id) ?? s.status,
+  }));
+}
+
+// Returns the current live session per physical stage. A "both"-stage
+// session (ceremony/break) is mirrored onto both keys so the home hero
+// never shows an empty state during Registro / Apertura / Cierre / Coctel.
+export function getLiveSessions(now: Date): {
+  main?: Session;
+  escenario2?: Session;
+} {
+  let main: Session | undefined;
+  let escenario2: Session | undefined;
+
+  for (const s of getSessionsAt(now)) {
+    if (s.status !== "live") continue;
+    if (s.stage === "both") {
+      main = main ?? s;
+      escenario2 = escenario2 ?? s;
+    } else if (s.stage === "main") {
+      main = main ?? s;
+    } else if (s.stage === "escenario-2") {
+      escenario2 = escenario2 ?? s;
+    }
+  }
+
+  return { main, escenario2 };
+}
+
+// Next upcoming sessions across both tracks, sorted chronologically.
+export function getNextSessions(count: number, now: Date): Session[] {
+  return getSessionsAt(now)
+    .filter((s) => s.status === "next" || s.status === "scheduled")
+    .sort((a, b) => a.startTime.localeCompare(b.startTime))
+    .slice(0, count);
+}
+
+// Discrete event lifecycle phase, derived from the wall clock in the event
+// timezone. Drives the home hero swap (countdown / live speaker / gratitude)
+// and hides during-only sections (parallel-live, "ahora" decorations) when
+// the event isn't actually running.
+type EventPhase = "before" | "during" | "after";
+
+// Event day runs 08:00–20:00 CRT. Registro opens at 08:00 and the Cóctel
+// de Cierre ends at 20:00 — the full window the live page should feel "hot."
+const EVENT_START_HHMM = "08:00";
+const EVENT_END_HHMM = "20:00";
+
+export function getEventPhase(now: Date): EventPhase {
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO < VENUE.eventDateISO) return "before";
+  if (nowLocal.dateISO > VENUE.eventDateISO) return "after";
+  if (nowLocal.hhmm < EVENT_START_HHMM) return "before";
+  if (nowLocal.hhmm >= EVENT_END_HHMM) return "after";
+  return "during";
+}
+
+// Whole days between today (event timezone) and event day. 0 once the page
+// has crossed into event-day but is still before 08:00 ("today").
+export function getDaysUntilEvent(now: Date): number {
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO >= VENUE.eventDateISO) return 0;
+  const a = new Date(`${nowLocal.dateISO}T00:00:00-06:00`).getTime();
+  const b = new Date(`${VENUE.eventDateISO}T00:00:00-06:00`).getTime();
+  return Math.max(0, Math.round((b - a) / 86_400_000));
+}
+
+// Minutes from `now` to a session's startTime on event day. Returns null
+// when the session is already past its start. CR runs UTC-6 year-round,
+// so the explicit offset is safe (same pattern used by getNextTransitionAt).
+export function getMinutesUntilStart(
+  startTime: string,
+  now: Date,
+): number | null {
+  const startMs = new Date(
+    `${VENUE.eventDateISO}T${startTime}:00-06:00`,
+  ).getTime();
+  const diffMs = startMs - now.getTime();
+  if (diffMs <= 0) return null;
+  return Math.floor(diffMs / 60000);
+}
+
+// Human-readable countdown chip: "en 12m", "en 1h", "en 1h 20m".
+export function formatCountdown(minutes: number): string {
+  if (minutes < 60) return `en ${minutes}m`;
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return m === 0 ? `en ${h}h` : `en ${h}h ${m}m`;
+}
+
+// Fraction (0..1) of elapsed time through a session's time window, computed
+// in the event timezone. Returns null when the session has no parseable
+// range or `now` is outside the window. Drives the hero progress bar.
+export function getSessionProgress(
+  session: Session,
+  now: Date,
+): number | null {
+  const range = parseTimeRange(session.time);
+  if (!range) return null;
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO !== VENUE.eventDateISO) return null;
+  if (nowLocal.hhmm < range.start || nowLocal.hhmm >= range.end) return null;
+
+  const toMin = (hhmm: string) => {
+    const [h, m] = hhmm.split(":").map(Number);
+    return h * 60 + m;
+  };
+  const total = toMin(range.end) - toMin(range.start);
+  if (total <= 0) return null;
+  const elapsed = toMin(nowLocal.hhmm) - toMin(range.start);
+  return Math.max(0, Math.min(1, elapsed / total));
+}
+
+// Returns the next moment the status map will change — i.e. the nearest
+// talk start or end after `now`, as an ISO UTC string. The client uses this
+// to schedule a single surgical refresh at the exact boundary instead of
+// polling. Returns null outside event day or after the last transition.
+export function getNextTransitionAt(now: Date): string | null {
+  const nowLocal = getEventLocalDateTime(now);
+  if (nowLocal.dateISO !== VENUE.eventDateISO) return null;
+
+  const times = new Set<string>();
+  for (const s of SESSIONS) {
+    const range = parseTimeRange(s.time);
+    if (!range) continue;
+    times.add(range.start);
+    times.add(range.end);
+  }
+
+  const nextHHMM = [...times].filter((t) => t > nowLocal.hhmm).sort()[0];
+  if (!nextHHMM) return null;
+
+  // CR is UTC-6 year-round (no DST) — the explicit offset makes this
+  // timestamp unambiguous regardless of server zone.
+  return new Date(
+    `${VENUE.eventDateISO}T${nextHHMM}:00-06:00`,
+  ).toISOString();
+}
+
+// Parses "09:10 — 09:55" into { start: "09:10", end: "09:55" }.
+// Returns null for formats we can't read (e.g. "Por anunciar").
+function parseTimeRange(time: string): { start: string; end: string } | null {
+  const match = time.match(/^(\d{2}:\d{2})\s*[—–-]\s*(\d{2}:\d{2})$/);
+  if (!match) return null;
+  return { start: match[1], end: match[2] };
+}
+
+// Projects `now` into the event's local timezone and returns the date and
+// time as plain strings. Using formatToParts keeps comparisons timezone-safe
+// regardless of the server's system zone.
+function getEventLocalDateTime(now: Date): {
+  dateISO: string;
+  hhmm: string;
+} {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: VENUE.timezoneName,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(now);
+  const get = (type: string) =>
+    parts.find((p) => p.type === type)?.value ?? "";
+  return {
+    dateISO: `${get("year")}-${get("month")}-${get("day")}`,
+    hhmm: `${get("hour")}:${get("minute")}`,
+  };
+}
+
+// Derives each session's status from the wall clock in the event timezone.
+// On pre/post event days, falls back to the literal demo status. On event
+// day, computes past/live/scheduled from session start/end, then promotes
+// the earliest "scheduled" per stage to "next".
+export function computeSessionStatuses(
+  sessions: readonly Session[],
+  now: Date,
+): Map<string, SessionStatus> {
+  const result = new Map<string, SessionStatus>();
+  const nowLocal = getEventLocalDateTime(now);
+
+  if (nowLocal.dateISO !== VENUE.eventDateISO) {
+    for (const s of sessions) result.set(s.id, s.status);
+    return result;
+  }
+
+  for (const s of sessions) {
+    const range = parseTimeRange(s.time);
+    if (!range) {
+      result.set(s.id, s.status);
+      continue;
+    }
+    if (nowLocal.hhmm >= range.end) {
+      result.set(s.id, "past");
+    } else if (nowLocal.hhmm >= range.start) {
+      result.set(s.id, "live");
+    } else {
+      result.set(s.id, "scheduled");
+    }
+  }
+
+  // Promote earliest "scheduled" per physical stage to "next".
+  const stages = ["main", "escenario-2"] as const;
+  for (const stage of stages) {
+    const firstScheduled = [...sessions]
+      .filter(
+        (s) =>
+          result.get(s.id) === "scheduled" &&
+          (s.stage === stage || s.stage === "both"),
+      )
+      .sort((a, b) => a.startTime.localeCompare(b.startTime))[0];
+    if (firstScheduled) result.set(firstScheduled.id, "next");
+  }
+
+  return result;
+}

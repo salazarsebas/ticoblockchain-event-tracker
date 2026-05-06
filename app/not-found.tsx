@@ -48,7 +48,7 @@ export default function NotFound() {
                 <span className="font-display text-2xl sm:text-4xl font-black uppercase tracking-tighter text-primary group-hover:translate-x-2 transition-transform duration-300">
                   {link.label}
                 </span>
-                <span className="mono-data text-xs uppercase tracking-widest text-primary/40 group-hover:text-secondary transition-colors duration-200">
+                <span className="label-meta text-xs text-primary/40 group-hover:text-secondary transition-colors duration-200">
                   Ir →
                 </span>
               </Link>

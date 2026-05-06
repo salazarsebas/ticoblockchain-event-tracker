@@ -270,6 +270,16 @@ textarea:focus-visible,
   font-family: var(--font-jetbrains-mono);
 }
 
+/* label-meta: meta-label idiom — JetBrains Mono, 10px, uppercase, wide tracking.
+   Default 10px; override with text-[11px] / text-xs / sm:text-xs as needed.
+   Compose with font-bold for the strong variant. */
+.label-meta {
+  font-family: var(--font-jetbrains-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
 /* No-scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

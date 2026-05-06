@@ -5,7 +5,7 @@ import DevTimeBanner from "../components/DevTimeBanner";
 import Icon from "../components/Icon";
 import LiveRefresh from "../components/LiveRefresh";
 import { resolveNow } from "../data/now";
-import { getNextTransitionAt, getSessionsAt } from "../data/sessions";
+import { getNextTransitionAt, getSessionsAt } from "../lib/session-time";
 import type { Stage } from "../data/types";
 import AgendaToolbar from "./_components/AgendaToolbar";
 import DualTrackTimeline from "./_components/DualTrackTimeline";
@@ -104,7 +104,7 @@ export default async function AgendaPage({
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 border-l-4 border-secondary bg-surface-container-highest px-4 py-3 animate-fade-up">
         <div className="flex items-center gap-2 shrink-0">
           <Icon name="restaurant" size={16} className="text-secondary" />
-          <span className="mono-data text-[10px] uppercase tracking-widest font-bold text-secondary">
+          <span className="label-meta font-bold text-secondary">
             Almuerzo
           </span>
           <span className="mono-data text-[11px] font-bold text-primary">
@@ -120,7 +120,7 @@ export default async function AgendaPage({
       {/* Dual-track timeline */}
       {slots.length === 0 ? (
         <div className="border-t-2 border-primary border-b-2 py-16 px-6 text-center animate-fade-up">
-          <div className="mono-data text-[10px] uppercase tracking-widest text-secondary font-bold mb-4">
+          <div className="label-meta text-secondary font-bold mb-4">
             Sin resultados
           </div>
           <h3 className="font-display text-2xl sm:text-4xl font-black uppercase tracking-tighter text-primary mb-4">

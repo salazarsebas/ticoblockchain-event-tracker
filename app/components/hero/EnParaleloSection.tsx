@@ -66,10 +66,10 @@ export default function EnParaleloSection({
 
           <div className="mt-6 md:mt-8">
             <div className="flex items-center justify-between mb-2">
-              <span className="mono-data text-[10px] uppercase tracking-widest font-black text-on-surface-variant">
+              <span className="label-meta font-black text-on-surface-variant">
                 PROGRESO · ESCENARIO 2
               </span>
-              <span className="mono-data text-[10px] uppercase tracking-widest font-black text-secondary tabular-nums">
+              <span className="label-meta font-black text-secondary tabular-nums">
                 {parallelProgressPct}%
               </span>
             </div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { SponsorCallout as SponsorCalloutData } from "../../data/home-content";
 import { HERO_CONTENT } from "../../data/home-content";
-import { getMinutesUntilStart } from "../../data/sessions";
+import { getMinutesUntilStart } from "../../lib/session-time";
 import type { Session } from "../../data/types";
 import { MAX_STAGGER_LEVEL } from "../../lib/stagger";
 import AgendaPreviewRow from "../AgendaPreviewRow";
@@ -93,7 +93,7 @@ export default function HeroDuring({
           </div>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div className="min-w-0 max-w-full md:max-w-[60%]">
-              <div className="mono-data text-[10px] sm:text-xs uppercase tracking-widest text-on-primary/60 mb-1">
+              <div className="label-meta sm:text-xs text-on-primary/60 mb-1">
                 PRÓXIMA EN MAIN STAGE
               </div>
               {nextUpSessions[0] ? (

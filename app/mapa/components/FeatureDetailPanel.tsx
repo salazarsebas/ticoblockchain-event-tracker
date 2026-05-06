@@ -2,8 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import Icon from "../../components/Icon";
-import { getLiveSessions, getNextSessions } from "../../data/sessions";
+import { getLiveSessions, getNextSessions } from "../../lib/session-time";
 import type { Session } from "../../data/types";
+import { isHttpUrl } from "../../lib/url";
 import type {
   GrecoFeature,
   LobbyPOI,
@@ -94,7 +95,7 @@ export default function FeatureDetailPanel({
         {/* Header */}
         <div className="flex items-start justify-between gap-4 p-6 border-b-2 border-primary">
           <div>
-            <p className="mono-data text-xs uppercase tracking-widest text-primary/60 mb-2">
+            <p className="label-meta text-xs text-primary/60 mb-2">
               {category}
             </p>
             <h2
@@ -220,11 +221,6 @@ function buildStandContent(stand: Stand): Content {
   };
 }
 
-function isHttpUrl(url: string | undefined): url is string {
-  if (!url) return false;
-  return url.startsWith("https://") || url.startsWith("http://");
-}
-
 function buildLobbyPOIContent(poi: LobbyPOI): Content {
   return {
     title: poi.label,
@@ -266,7 +262,7 @@ function lobbyCategoryLabel(category: LobbyPOI["category"]): string {
 function DataBlock({ label, value }: { label: string; value: string }) {
   return (
     <div className="border-l-4 border-secondary pl-4 py-1">
-      <p className="mono-data text-xs uppercase tracking-widest text-primary/60">
+      <p className="label-meta text-xs text-primary/60">
         {label}
       </p>
       <p className="font-display text-lg font-bold uppercase tracking-tight text-primary mt-1">

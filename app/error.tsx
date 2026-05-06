@@ -39,7 +39,7 @@ export default function GlobalRouteError({ error, reset }: ErrorProps) {
         </p>
 
         {error.digest && (
-          <p className="mt-4 mono-data text-xs uppercase tracking-widest text-primary/50">
+          <p className="mt-4 label-meta text-xs text-primary/50">
             Código de referencia: {error.digest}
           </p>
         )}

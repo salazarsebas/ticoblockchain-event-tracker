@@ -16,7 +16,7 @@ export default function HomeLoading() {
                 Cargando · TicoBlockchain 2026
               </span>
             </div>
-            <span className="mono-data text-[10px] sm:text-xs uppercase tracking-widest text-on-primary/40">
+            <span className="label-meta sm:text-xs text-on-primary/40">
               14.05.26 · GMT-6
             </span>
           </div>
@@ -42,7 +42,7 @@ export default function HomeLoading() {
                 key={i}
                 className={`py-3 px-1 ${i < 2 ? "border-r border-on-primary/15" : ""}`}
               >
-                <div className="mono-data text-[10px] uppercase tracking-widest text-on-primary/40 mb-2">
+                <div className="label-meta text-on-primary/40 mb-2">
                   &nbsp;
                 </div>
                 <div className="h-6 sm:h-8 md:h-10 w-20 sm:w-24 bg-on-primary/15 animate-pulse" />

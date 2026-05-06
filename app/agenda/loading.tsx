@@ -28,7 +28,7 @@ export default function AgendaLoading() {
 
       {/* Filter chip skeletons */}
       <section className="mb-8">
-        <div className="mono-data text-[10px] uppercase tracking-widest text-on-surface-variant mb-3">
+        <div className="label-meta text-on-surface-variant mb-3">
           Filtrar por escenario
         </div>
         <div className="flex flex-wrap gap-2">

@@ -4,8 +4,8 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
   {
     id: "stage",
     kind: "stage",
-    label: "Escenario Principal VISA",
-    shortLabel: "Escenario VISA",
+    label: "Escenario Principal",
+    shortLabel: "Escenario Principal",
     category: "stage",
     interactive: true,
     iconName: "mic",
@@ -103,9 +103,9 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     category: "stage",
     interactive: true,
     iconName: "mic",
-    bbox: { x: 320, y: 1180, width: 240, height: 70 },
+    bbox: { x: 320, y: 1110, width: 240, height: 60 },
     description:
-      "Segundo escenario del evento. Charlas y paneles en paralelo al Escenario VISA durante toda la jornada.",
+      "Segundo escenario del evento. Charlas y paneles en paralelo al Escenario Principal durante toda la jornada.",
   },
   {
     id: "audience-esc2",
@@ -113,7 +113,7 @@ export const GRECO_FEATURES: readonly GrecoFeature[] = [
     label: "Butacas Escenario 2",
     category: "stage",
     interactive: false,
-    bbox: { x: 170, y: 940, width: 480, height: 180 },
+    bbox: { x: 170, y: 920, width: 480, height: 130 },
   },
   {
     id: "esc2-entry-door",

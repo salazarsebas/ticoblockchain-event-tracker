@@ -38,7 +38,7 @@ export default function HeroBefore({
               PRÓXIMO EVENTO · SAN JOSÉ
             </span>
           </div>
-          <span className="mono-data text-[10px] sm:text-xs uppercase tracking-widest text-on-primary/60">
+          <span className="label-meta sm:text-xs text-on-primary/60">
             14.05.26 · GMT-6
           </span>
         </div>
@@ -74,7 +74,7 @@ export default function HeroBefore({
         <div className="mt-auto space-y-6 animate-fade-up stagger-4">
           <div className="grid grid-cols-3 gap-0 border-y-2 border-on-primary/20">
             <div className="py-3 px-1 border-r border-on-primary/15">
-              <div className="mono-data text-[10px] uppercase tracking-widest text-on-primary/50 mb-1">
+              <div className="label-meta text-on-primary/50 mb-1">
                 Fecha
               </div>
               <div className="mono-data text-base sm:text-xl md:text-2xl font-black text-on-primary tracking-tighter">
@@ -82,7 +82,7 @@ export default function HeroBefore({
               </div>
             </div>
             <div className="py-3 px-1 border-r border-on-primary/15">
-              <div className="mono-data text-[10px] uppercase tracking-widest text-on-primary/50 mb-1">
+              <div className="label-meta text-on-primary/50 mb-1">
                 Inicio
               </div>
               <div className="mono-data text-base sm:text-xl md:text-2xl font-black text-on-primary tracking-tighter">
@@ -90,7 +90,7 @@ export default function HeroBefore({
               </div>
             </div>
             <div className="py-3 px-1">
-              <div className="mono-data text-[10px] uppercase tracking-widest text-on-primary/50 mb-1">
+              <div className="label-meta text-on-primary/50 mb-1">
                 Venue
               </div>
               <div className="mono-data text-base sm:text-xl md:text-2xl font-black text-on-primary tracking-tighter">
@@ -166,7 +166,7 @@ export default function HeroBefore({
               className="group-hover/link:translate-x-1 transition-transform duration-200"
             />
           </div>
-          <p className="mono-data text-[10px] uppercase tracking-widest text-primary/50 mt-2">
+          <p className="label-meta text-primary/50 mt-2">
             {HERO_CONTENT.capacityLabel}
           </p>
         </Link>

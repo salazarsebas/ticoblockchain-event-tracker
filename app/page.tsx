@@ -29,7 +29,7 @@ import {
   getNextTransitionAt,
   getSessionProgress,
   getSessionsAt,
-} from "./data/sessions";
+} from "./lib/session-time";
 import type { Session } from "./data/types";
 import { VENUE } from "./data/venue";
 
@@ -299,7 +299,7 @@ export default async function EnVivoPage({
             <br />
             PRÁCTICA
           </h2>
-          <div className="mono-data text-[10px] sm:text-xs uppercase tracking-widest text-on-primary/60 max-w-xs md:text-right animate-fade-up stagger-2">
+          <div className="label-meta sm:text-xs text-on-primary/60 max-w-xs md:text-right animate-fade-up stagger-2">
             Todo lo que necesitás para el 14 de mayo, en una sola línea de tiempo.
           </div>
         </div>
@@ -310,7 +310,7 @@ export default async function EnVivoPage({
               key={item.id}
               className={`grid grid-cols-[auto_1fr] md:grid-cols-[3rem_5fr_6fr] gap-x-4 md:gap-x-8 gap-y-3 py-6 sm:py-8 md:py-10 border-b border-on-primary/15 items-start animate-fade-up stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
             >
-              <div className="mono-data text-[11px] sm:text-xs uppercase tracking-widest font-bold text-secondary pt-2 md:pt-4 row-span-2 md:row-span-1">
+              <div className="label-meta text-[11px] sm:text-xs font-bold text-secondary pt-2 md:pt-4 row-span-2 md:row-span-1">
                 {String(i + 1).padStart(2, "0")}
               </div>
 
@@ -350,7 +350,7 @@ export default async function EnVivoPage({
             LLEGAR
           </h2>
           <div className="max-w-md animate-fade-up stagger-2">
-            <div className="mono-data text-[10px] sm:text-xs uppercase tracking-widest font-bold text-secondary mb-2 flex items-center gap-2">
+            <div className="label-meta sm:text-xs font-bold text-secondary mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-secondary shrink-0" aria-hidden="true" />
               Dossier de Llegada
             </div>
@@ -368,7 +368,7 @@ export default async function EnVivoPage({
 
         {/* Band 2 — Map preview */}
         <div className="mt-10 md:mt-14 animate-fade-up stagger-3">
-          <div className="mono-data text-[10px] sm:text-xs uppercase tracking-widest font-bold text-primary mb-4 flex items-center gap-2">
+          <div className="label-meta sm:text-xs font-bold text-primary mb-4 flex items-center gap-2">
             <span
               className="w-1.5 h-1.5 bg-secondary shrink-0"
               aria-hidden="true"

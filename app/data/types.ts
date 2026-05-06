@@ -41,6 +41,8 @@ export type Speaker = {
   // Render the portrait in grayscale until hovered. Used when an official
   // portrait is stylistically mismatched and would break the editorial tone.
   monochrome?: boolean;
+  linkedinUrl?: string;
+  companyUrl?: string;
 };
 
 // Single row of the "Información Práctica" manifest. Designed around an

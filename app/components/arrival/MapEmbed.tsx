@@ -61,7 +61,7 @@ export default function MapEmbed({ title, src }: MapEmbedProps) {
           aria-hidden="true"
           className="w-full h-[320px] sm:h-[420px] md:h-[480px] block flex items-end justify-start p-4"
         >
-          <span className="mono-data text-[10px] uppercase tracking-widest font-bold text-on-primary/40">
+          <span className="label-meta font-bold text-on-primary/40">
             Cargando mapa…
           </span>
         </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { getSessionById } from "../data/sessions";
+import { getSessionById } from "../lib/session-time";
 import {
   getSponsorsByTier,
   TIER_LABELS,

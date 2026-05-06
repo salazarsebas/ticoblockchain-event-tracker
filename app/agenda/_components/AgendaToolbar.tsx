@@ -89,7 +89,7 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
     <section aria-label="Filtros de agenda" className="mb-6 flex flex-col gap-5 animate-fade-up">
       {/* Stage filter — URL driven */}
       <div className="flex flex-wrap items-center gap-3">
-        <span className="mono-data text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">
+        <span className="label-meta text-on-surface-variant font-bold">
           Escenario
         </span>
         <div className="flex flex-wrap gap-2">
@@ -117,7 +117,7 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
 
       {/* Category chips — client filter */}
       <div className="flex flex-wrap items-center gap-3">
-        <span className="mono-data text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">
+        <span className="label-meta text-on-surface-variant font-bold">
           Categoría
         </span>
         <div className="flex flex-wrap gap-2">
@@ -160,13 +160,13 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar exponente o charla..."
-            className="w-full pl-10 pr-3 py-2.5 bg-surface-container-low border-2 border-primary/20 text-primary placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none mono-data text-xs uppercase tracking-widest"
+            className="w-full pl-10 pr-3 py-2.5 bg-surface-container-low border-2 border-primary/20 text-primary placeholder:text-on-surface-variant/60 focus:border-primary focus:outline-none label-meta text-xs"
           />
         </div>
 
         <div className="flex items-center gap-3">
           <span
-            className="mono-data text-[10px] uppercase tracking-widest font-bold text-on-surface-variant"
+            className="label-meta font-bold text-on-surface-variant"
             aria-live="polite"
           >
             {visibleCount} de {totalSlots} slots
@@ -175,7 +175,7 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
             <button
               type="button"
               onClick={clearAll}
-              className="mono-data text-[10px] uppercase tracking-widest font-bold text-secondary hover:text-primary underline underline-offset-2"
+              className="label-meta font-bold text-secondary hover:text-primary underline underline-offset-2"
             >
               Limpiar
             </button>

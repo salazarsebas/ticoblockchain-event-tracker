@@ -33,7 +33,7 @@ export default function ExponentesPage() {
           <br />
           <span className="text-secondary">2026</span>
         </h1>
-        <div className="mt-6 flex flex-wrap items-center gap-3 mono-data text-[10px] uppercase tracking-widest font-bold">
+        <div className="mt-6 flex flex-wrap items-center gap-3 label-meta font-bold">
           <span className="bg-primary text-on-primary px-3 py-1">
             {totalSpeakers} voces
           </span>

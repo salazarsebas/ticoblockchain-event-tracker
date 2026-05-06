@@ -23,7 +23,12 @@ export function groupAppearances(
   const indexByKey = new Map<string, number>();
 
   for (const speaker of speakers) {
-    const key = `${speaker.time}|${speaker.stage}`;
+    // Unscheduled speakers ("Por anunciar") never share a real slot, so
+    // group them per-id to keep each as a solo card.
+    const key =
+      speaker.time === "Por anunciar"
+        ? `tba|${speaker.id}`
+        : `${speaker.time}|${speaker.stage}`;
     const existingIdx = indexByKey.get(key);
     if (existingIdx === undefined) {
       indexByKey.set(key, result.length);

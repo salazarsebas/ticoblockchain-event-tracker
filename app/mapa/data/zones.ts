@@ -19,6 +19,6 @@ export const ZONES: readonly Zone[] = [
   {
     id: "escenario-2",
     label: "ESCENARIO 2",
-    bbox: { x: 60, y: 884, width: 880, height: 396 },
+    bbox: { x: 60, y: 884, width: 880, height: 316 },
   },
 ] as const;

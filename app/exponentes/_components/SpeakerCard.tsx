@@ -2,6 +2,8 @@ import Image from "next/image";
 import type { Speaker } from "../../data/types";
 import { stageLabel, stageShort } from "../../data/venue";
 import StatusBadge from "../../components/StatusBadge";
+import Icon from "../../components/Icon";
+import { isHttpUrl } from "../../lib/url";
 import type { SpeakerAppearance } from "../_lib/groupSpeakers";
 
 type SpeakerCardProps = {
@@ -22,6 +24,36 @@ function stageOf(appearance: SpeakerAppearance): Speaker["stage"] {
 
 function timeOf(appearance: SpeakerAppearance): string {
   return appearance.kind === "solo" ? appearance.speaker.time : appearance.time;
+}
+
+function ExternalLinkChip({
+  href,
+  label,
+  speakerName,
+  variant = "card",
+}: {
+  href: string;
+  label: string;
+  speakerName: string;
+  variant?: "card" | "inline";
+}) {
+  const className =
+    variant === "card"
+      ? "border-2 border-primary/30 text-primary px-2 py-1 label-meta font-bold inline-flex items-center gap-1.5 hover:bg-primary hover:text-on-primary hover:border-primary transition-colors duration-200"
+      : "label-meta text-[9px] font-bold text-on-surface-variant hover:text-primary inline-flex items-center gap-1 transition-colors";
+  const iconSize = variant === "card" ? 12 : 11;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      <Icon name="north_east" size={iconSize} />
+      {label}
+      <span className="sr-only"> de {speakerName}</span>
+    </a>
+  );
 }
 
 function Portrait({
@@ -110,12 +142,35 @@ export default function SpeakerCard({ appearance, staggerClass, priority = false
             <h3 className="font-display font-black uppercase tracking-tighter text-primary text-2xl md:text-3xl leading-[0.95]">
               {appearance.speaker.name}
             </h3>
-            <p className="mono-data text-[11px] uppercase tracking-widest font-bold text-on-primary-container line-clamp-2">
+            <p className="label-meta text-[11px] font-bold text-on-primary-container line-clamp-2">
               {appearance.speaker.org}
             </p>
             <p className="text-sm font-bold uppercase text-primary leading-snug mt-1 line-clamp-3">
               {appearance.speaker.talk}
             </p>
+            {(isHttpUrl(appearance.speaker.linkedinUrl) ||
+              isHttpUrl(appearance.speaker.companyUrl)) && (
+              <ul className="flex flex-wrap gap-2 mt-1">
+                {isHttpUrl(appearance.speaker.linkedinUrl) && (
+                  <li>
+                    <ExternalLinkChip
+                      href={appearance.speaker.linkedinUrl}
+                      label="LinkedIn"
+                      speakerName={appearance.speaker.name}
+                    />
+                  </li>
+                )}
+                {isHttpUrl(appearance.speaker.companyUrl) && (
+                  <li>
+                    <ExternalLinkChip
+                      href={appearance.speaker.companyUrl}
+                      label="Sitio"
+                      speakerName={appearance.speaker.name}
+                    />
+                  </li>
+                )}
+              </ul>
+            )}
           </>
         ) : (
           <>
@@ -125,12 +180,36 @@ export default function SpeakerCard({ appearance, staggerClass, priority = false
             <ul className="flex flex-col gap-2 mt-1">
               {appearance.speakers.map((s) => (
                 <li key={s.id} className="flex flex-col gap-0.5">
-                  <span className="mono-data text-[11px] uppercase tracking-widest font-bold text-primary">
+                  <span className="label-meta text-[11px] font-bold text-primary">
                     {s.name}
                   </span>
-                  <span className="mono-data text-[10px] uppercase tracking-widest text-on-surface-variant line-clamp-1">
-                    {s.org}
-                  </span>
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                    <span className="label-meta text-on-surface-variant line-clamp-1">
+                      {s.org}
+                    </span>
+                    {isHttpUrl(s.linkedinUrl) && (
+                      <>
+                        <span aria-hidden className="text-on-surface-variant/40 mono-data text-[10px]">·</span>
+                        <ExternalLinkChip
+                          href={s.linkedinUrl}
+                          label="LinkedIn"
+                          speakerName={s.name}
+                          variant="inline"
+                        />
+                      </>
+                    )}
+                    {isHttpUrl(s.companyUrl) && (
+                      <>
+                        <span aria-hidden className="text-on-surface-variant/40 mono-data text-[10px]">·</span>
+                        <ExternalLinkChip
+                          href={s.companyUrl}
+                          label="Sitio"
+                          speakerName={s.name}
+                          variant="inline"
+                        />
+                      </>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
