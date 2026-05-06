@@ -89,7 +89,7 @@ export default function TimeSlotRow({ slot, staggerClass, singleStage = null }: 
           {showMain && (
             <div className="flex flex-col">
               {/* Mobile-only stage label */}
-              <div className="md:hidden mono-data text-[10px] font-bold uppercase tracking-widest text-secondary mb-1 flex items-center gap-1.5">
+              <div className="md:hidden label-meta font-bold text-secondary mb-1 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-secondary shrink-0" aria-hidden="true" />
                 Main Stage
               </div>
@@ -98,7 +98,7 @@ export default function TimeSlotRow({ slot, staggerClass, singleStage = null }: 
               ) : (
                 <div className="h-full min-h-[80px] flex items-center justify-center bg-surface-container-low/50 border-2 border-dashed border-outline-variant/30">
                   <span
-                    className="mono-data text-xs text-on-surface-variant/50 uppercase tracking-widest"
+                    className="label-meta text-xs text-on-surface-variant/50"
                     aria-label="Sin sesión en Main Stage"
                   >
                     —
@@ -110,7 +110,7 @@ export default function TimeSlotRow({ slot, staggerClass, singleStage = null }: 
 
           {showEsc2 && (
             <div className="flex flex-col">
-              <div className="md:hidden mono-data text-[10px] font-bold uppercase tracking-widest text-primary mt-2 mb-1 flex items-center gap-1.5">
+              <div className="md:hidden label-meta font-bold text-primary mt-2 mb-1 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-primary shrink-0" aria-hidden="true" />
                 Escenario 2
               </div>
@@ -119,7 +119,7 @@ export default function TimeSlotRow({ slot, staggerClass, singleStage = null }: 
               ) : (
                 <div className="h-full min-h-[80px] flex items-center justify-center bg-surface-container-low/50 border-2 border-dashed border-outline-variant/30">
                   <span
-                    className="mono-data text-xs text-on-surface-variant/50 uppercase tracking-widest"
+                    className="label-meta text-xs text-on-surface-variant/50"
                     aria-label="Sin sesión en Escenario 2"
                   >
                     —

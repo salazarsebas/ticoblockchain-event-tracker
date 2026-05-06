@@ -43,7 +43,7 @@ export default function NowScrubLine({ now, phase }: NowScrubLineProps) {
       />
       <div className="relative flex items-center">
         <span
-          className="mono-data text-[10px] sm:text-xs uppercase font-bold tracking-widest bg-secondary text-on-secondary px-3 py-1 animate-live-glow"
+          className="label-meta sm:text-xs font-bold bg-secondary text-on-secondary px-3 py-1 animate-live-glow"
         >
           {label}
         </span>

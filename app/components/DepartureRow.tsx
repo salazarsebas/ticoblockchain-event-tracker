@@ -68,7 +68,7 @@ export default function DepartureRow({
     : session.speakerOrg;
 
   const speakerClasses = [
-    "mono-data text-[10px] sm:text-[11px] uppercase tracking-widest font-bold mt-2",
+    "label-meta sm:text-[11px] font-bold mt-2",
     isLive ? "text-on-primary/80" : "text-on-surface-variant",
   ].join(" ");
 

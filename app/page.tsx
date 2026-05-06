@@ -221,10 +221,10 @@ export default async function EnVivoPage({
               {agendaBlurb}
             </p>
             <div className="mt-6 flex gap-4">
-              <span className="bg-primary text-on-primary px-3 py-1 mono-data text-[10px] uppercase font-bold tracking-widest">
+              <span className="bg-primary text-on-primary px-3 py-1 label-meta font-bold">
                 {dateBadge}
               </span>
-              <span className="bg-surface-container-highest px-3 py-1 mono-data text-[10px] uppercase font-bold tracking-widest">
+              <span className="bg-surface-container-highest px-3 py-1 label-meta font-bold">
                 {VENUE.timezone}
               </span>
             </div>
@@ -277,7 +277,7 @@ export default async function EnVivoPage({
           <span className="font-display font-black uppercase tracking-tighter text-xl sm:text-2xl md:text-3xl">
             AGENDA COMPLETA · 14 MAYO
           </span>
-          <span className="mono-data text-[10px] sm:text-xs uppercase font-bold tracking-widest flex items-center gap-3">
+          <span className="label-meta sm:text-xs font-bold flex items-center gap-3">
             Ver las {sortedSessions.length} sesiones
             <Icon
               name="arrow_forward"
@@ -318,7 +318,7 @@ export default async function EnVivoPage({
                 <div className="mono-data font-black uppercase tracking-tighter text-on-primary text-[clamp(1.75rem,5vw,4rem)] leading-[0.9] break-words">
                   {item.hook}
                 </div>
-                <div className="mono-data text-[11px] uppercase font-bold tracking-widest text-on-primary/70 mt-3 md:mt-4 flex items-center gap-2">
+                <div className="label-meta text-[11px] font-bold text-on-primary/70 mt-3 md:mt-4 flex items-center gap-2">
                   <span
                     className="w-1.5 h-1.5 bg-secondary shrink-0"
                     aria-hidden="true"

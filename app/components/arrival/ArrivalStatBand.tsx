@@ -24,7 +24,7 @@ export default function ArrivalStatBand({ stats }: ArrivalStatBandProps) {
           <div className="mono-data font-black uppercase tracking-tighter text-primary text-[clamp(2rem,5vw,3.75rem)] leading-[0.9] break-words">
             {stat.hook}
           </div>
-          <div className="mono-data text-[11px] uppercase font-bold tracking-widest text-primary mt-4 flex items-center gap-2">
+          <div className="label-meta text-[11px] font-bold text-primary mt-4 flex items-center gap-2">
             <span
               className="w-1.5 h-1.5 bg-secondary shrink-0"
               aria-hidden="true"

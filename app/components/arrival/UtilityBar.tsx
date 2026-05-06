@@ -61,7 +61,7 @@ export default function UtilityBar({
         <button
           type="button"
           onClick={handleCopy}
-          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] mono-data text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-primary hover:bg-secondary transition-colors duration-200"
+          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] label-meta sm:text-xs font-bold text-on-primary hover:bg-secondary transition-colors duration-200"
           aria-live="polite"
         >
           <Icon
@@ -74,7 +74,7 @@ export default function UtilityBar({
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] mono-data text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-primary hover:bg-secondary transition-colors duration-200"
+          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] label-meta sm:text-xs font-bold text-on-primary hover:bg-secondary transition-colors duration-200"
         >
           <Icon name="north_east" size={14} />
           WhatsApp
@@ -83,7 +83,7 @@ export default function UtilityBar({
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] mono-data text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-primary hover:bg-secondary transition-colors duration-200"
+          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] label-meta sm:text-xs font-bold text-on-primary hover:bg-secondary transition-colors duration-200"
         >
           <Icon name="location_on" size={14} />
           Google Maps
@@ -92,7 +92,7 @@ export default function UtilityBar({
           href={wazeUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] mono-data text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-primary hover:bg-secondary transition-colors duration-200"
+          className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] label-meta sm:text-xs font-bold text-on-primary hover:bg-secondary transition-colors duration-200"
         >
           <Icon name="north_east" size={14} />
           Waze
@@ -101,7 +101,7 @@ export default function UtilityBar({
           href={appleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="col-span-2 md:col-span-1 flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] mono-data text-[10px] sm:text-xs font-bold uppercase tracking-widest text-on-primary hover:bg-secondary transition-colors duration-200"
+          className="col-span-2 md:col-span-1 flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] label-meta sm:text-xs font-bold text-on-primary hover:bg-secondary transition-colors duration-200"
         >
           <Icon name="location_on" size={14} />
           Apple Maps

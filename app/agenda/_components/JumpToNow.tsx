@@ -37,7 +37,7 @@ export default function JumpToNow() {
       type="button"
       onClick={handleClick}
       aria-label="Saltar a la sesión en vivo"
-      className="fixed z-40 bg-secondary text-on-secondary px-4 py-3 shadow-lg hover:bg-primary hover:text-on-primary transition-colors duration-200 mono-data text-[11px] font-bold uppercase tracking-widest flex items-center gap-2 animate-fade-up border-2 border-on-secondary/20"
+      className="fixed z-40 bg-secondary text-on-secondary px-4 py-3 shadow-lg hover:bg-primary hover:text-on-primary transition-colors duration-200 label-meta text-[11px] font-bold flex items-center gap-2 animate-fade-up border-2 border-on-secondary/20"
       style={{
         bottom: "calc(1.5rem + env(safe-area-inset-bottom))",
         right: "calc(1.5rem + env(safe-area-inset-right))",

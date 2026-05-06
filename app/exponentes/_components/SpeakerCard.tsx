@@ -228,7 +228,7 @@ export default function SpeakerCard({ appearance, staggerClass, priority = false
             {time}
           </span>
           <span
-            className="mono-data text-[10px] font-bold uppercase tracking-widest px-2 py-1 bg-primary/10 text-primary"
+            className="label-meta font-bold px-2 py-1 bg-primary/10 text-primary"
             title={stageLabel(stage)}
           >
             {stageShort(stage)}

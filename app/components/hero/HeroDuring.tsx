@@ -194,7 +194,7 @@ export default function HeroDuring({
           </Link>
         )}
 
-        <div className="mono-data text-[10px] uppercase font-black tracking-widest text-primary/60 mb-1">
+        <div className="label-meta font-black text-primary/60 mb-1">
           A CONTINUACIÓN
         </div>
         <div className="flex flex-col">

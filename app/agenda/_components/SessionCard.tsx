@@ -49,19 +49,19 @@ export default function SessionCard({ session, stageLabel, variant = "column" }:
       <div className={`flex flex-wrap items-center gap-2 ${variant === "wide" ? "md:justify-center" : ""}`}>
         {isLive && (
           <span
-            className="mono-data text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest bg-secondary text-on-secondary animate-live-glow"
+            className="label-meta font-bold px-2 py-0.5 bg-secondary text-on-secondary animate-live-glow"
             aria-live="polite"
           >
             AHORA
           </span>
         )}
         {chip && (
-          <span className={`mono-data text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest ${chip.className}`}>
+          <span className={`label-meta font-bold px-2 py-0.5 ${chip.className}`}>
             {chip.label}
           </span>
         )}
         {stageLabel && !isBreak && (
-          <span className="mono-data text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest bg-primary/10 text-primary">
+          <span className="label-meta font-bold px-2 py-0.5 bg-primary/10 text-primary">
             {stageLabel}
           </span>
         )}

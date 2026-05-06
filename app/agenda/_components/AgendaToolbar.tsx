@@ -102,7 +102,7 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
                 onClick={() => handleStageClick(s.id, s.param)}
                 aria-pressed={isActive}
                 className={[
-                  "inline-flex items-center px-4 py-2 min-h-[40px] mono-data text-[11px] font-bold uppercase tracking-widest border-2 transition-colors duration-200",
+                  "inline-flex items-center px-4 py-2 min-h-[40px] label-meta text-[11px] font-bold border-2 transition-colors duration-200",
                   isActive
                     ? "bg-primary text-on-primary border-primary"
                     : "bg-transparent text-primary border-primary/30 hover:border-primary hover:bg-surface-container-high",
@@ -130,7 +130,7 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
                 onClick={() => toggleCategory(c.id)}
                 aria-pressed={active}
                 className={[
-                  "inline-flex items-center px-3 py-1.5 min-h-[36px] mono-data text-[11px] font-bold uppercase tracking-widest border-2 transition-colors duration-200",
+                  "inline-flex items-center px-3 py-1.5 min-h-[36px] label-meta text-[11px] font-bold border-2 transition-colors duration-200",
                   active
                     ? "bg-secondary text-on-secondary border-secondary"
                     : "bg-transparent text-primary border-primary/20 hover:border-primary hover:bg-surface-container-high",

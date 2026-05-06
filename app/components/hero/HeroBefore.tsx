@@ -45,7 +45,7 @@ export default function HeroBefore({
 
         <div className="flex-1 flex flex-col justify-center py-10 md:py-14">
           <div className="animate-fade-up stagger-1 mb-6 md:mb-8">
-            <span className="bg-secondary text-on-secondary mono-data text-[11px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1.5 inline-flex items-center gap-2">
+            <span className="bg-secondary text-on-secondary label-meta text-[11px] sm:text-xs font-bold px-3 py-1.5 inline-flex items-center gap-2">
               <span
                 className="w-1.5 h-1.5 bg-on-secondary shrink-0"
                 aria-hidden="true"
@@ -139,7 +139,7 @@ export default function HeroBefore({
           AGENDA DEL DÍA
           <Icon name="sensors" size={22} />
         </h3>
-        <p className="mono-data text-[10px] font-bold uppercase tracking-widest text-primary/60 mb-6 animate-fade-up stagger-2">
+        <p className="label-meta font-bold text-primary/60 mb-6 animate-fade-up stagger-2">
           14 MAYO · DOS ESCENARIOS
         </p>
 
