@@ -15,17 +15,19 @@ import type {
 } from "../types";
 
 const VIEWBOX_WIDTH = 1200;
-const VIEWBOX_HEIGHT = 1300;
+const VIEWBOX_HEIGHT = 1540;
 
-// External (out-of-building) wayfinding zones drawn to the right of the
-// venue: parking lot at top, restaurant at bottom, with a narrow walking
-// lane between them that connects to the hotel entrance. All decorative —
-// not interactive, not filterable.
+// External (out-of-building) wayfinding zones. Parking sits at the top-right
+// of the venue; the restaurant has been relocated to the bottom of the map,
+// directly under Escenario 2. The walking lane on the right keeps its full
+// length for visual continuity but no longer terminates at the restaurant —
+// it simply dead-ends past the entrance corridor. All decorative — not
+// interactive, not filterable.
 const EXTERIOR_ZONE_X = 970;
 const EXTERIOR_ZONE_WIDTH = 210;
 const PARKING_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 40, width: EXTERIOR_ZONE_WIDTH, height: 400 };
-const RESTAURANT_BBOX: BBox = { x: EXTERIOR_ZONE_X, y: 900, width: EXTERIOR_ZONE_WIDTH, height: 380 };
-const WALKING_PATH_BBOX: BBox = { x: 1050, y: 440, width: 50, height: 460 };
+const RESTAURANT_BBOX: BBox = { x: 60, y: 1340, width: 880, height: 180 };
+const WALKING_PATH_BBOX: BBox = { x: 1050, y: 440, width: 50, height: 840 };
 // Y-coordinate of the horizontal connector linking the lane to the
 // hotel entrance. Sits in the upper-middle of the lobby's right side,
 // level with the ENTRADA title and well above the entrevistas zone in
@@ -58,19 +60,19 @@ const LOBBY_ESC2_DOOR_GAPS: readonly { x: number; width: number }[] = [
 ];
 
 // Internal corridor on the right side of Escenario 2 — formed by two
-// vertical walls. Top is open (matches LOBBY_ESC2_DOOR_GAPS), bottom is
-// closed by the outer building. Left wall has a door gap (entrance into
-// the main stage area).
+// vertical walls. Top is open (matches LOBBY_ESC2_DOOR_GAPS), bottom now
+// extends past the building's south wall into the restaurant entrance.
+// Left wall has a door gap (entrance into the main stage area).
 const CORRIDOR_WALL_X = 740; // left corridor wall
 const CORRIDOR_RIGHT_WALL_X = 870; // right corridor wall (inside the building)
 const CORRIDOR_DOOR_GAP = { y: 970, height: 70 }; // matches esc2-entry-door bbox
-const CORRIDOR_BOTTOM_Y = 1280;
+const CORRIDOR_BOTTOM_Y = 1340; // extends down to top of restaurant
 
 // Toggle for the Escenario 2 zone (interior + corridor + features). When
 // false, the building outline ends at the lobby's bottom wall (single solid
 // wall), the corridor and esc2 features are not rendered, and the ESCENARIO 2
 // label is hidden. Flip to true to bring it all back.
-const SHOW_ESCENARIO_2 = false;
+const SHOW_ESCENARIO_2 = true;
 
 // Audience grid configurations — Sala Greco (large) and Escenario 2 (smaller).
 const GRECO_AUDIENCE_AREA: BBox = { x: 260, y: 180, width: 480, height: 332 };
@@ -102,14 +104,16 @@ export default function FloorplanSVG({
       aria-labelledby="mapa-title mapa-desc"
       className="w-full h-auto select-none"
     >
-      <title id="mapa-title">Mapa de Sala Greco, Lobby y Escenario 2</title>
+      <title id="mapa-title">Mapa de Sala Greco, Lobby, Escenario 2 y Restaurante</title>
       <desc id="mapa-desc">
         Mapa interactivo del recinto TicoBlockchain 2026 en Hotel Barceló San
         José. Sala Greco, el lobby y el Escenario 2 forman un solo espacio
         conectado, separados por paredes interiores con puertas de acceso. El
         Escenario 2 se ubica al sur del lobby y se accede por un corredor en
-        el costado derecho. Incluye escenario principal, escenario 2, stands,
-        check-in, servicios sanitarios, zona de comida y entrada del hotel.
+        el costado derecho. El restaurante está al sur del Escenario 2 y se
+        conecta al recinto a través de ese mismo corredor. Incluye escenario
+        principal, escenario 2, stands, check-in, servicios sanitarios, zona
+        de comida, restaurante y entrada del hotel.
       </desc>
 
       <ContainerOutline />
@@ -119,11 +123,7 @@ export default function FloorplanSVG({
         label="PARKING"
         decorations={<ParkingStalls bbox={PARKING_BBOX} />}
       />
-      <ExteriorBlock
-        bbox={RESTAURANT_BBOX}
-        iconName="restaurant"
-        label="RESTAURANTE"
-      />
+      <RestaurantRoom bbox={RESTAURANT_BBOX} />
       <WalkingPath />
       <AudienceGrid area={GRECO_AUDIENCE_AREA} rows={7} />
       {SHOW_ESCENARIO_2 && <AudienceGrid area={ESC2_AUDIENCE_AREA} rows={3} />}
@@ -212,7 +212,17 @@ function ContainerOutline() {
       />
       <line x1={outer.x} y1={outer.y} x2={right} y2={outer.y} stroke="var(--color-primary)" strokeWidth={4} />
       <line x1={outer.x} y1={outer.y} x2={outer.x} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
-      <line x1={outer.x} y1={bottom} x2={right} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
+      {/* Bottom wall — when esc2 is shown, leave a gap at the corridor's x
+          range so the hallway can continue out through the building's south
+          wall toward the restaurant. Otherwise draw it solid. */}
+      {SHOW_ESCENARIO_2 ? (
+        <>
+          <line x1={outer.x} y1={bottom} x2={CORRIDOR_WALL_X} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
+          <line x1={CORRIDOR_RIGHT_WALL_X} y1={bottom} x2={right} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
+        </>
+      ) : (
+        <line x1={outer.x} y1={bottom} x2={right} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
+      )}
       <line x1={right} y1={outer.y} x2={right} y2={entranceTop} stroke="var(--color-primary)" strokeWidth={4} />
       <line x1={right} y1={entranceBottom} x2={right} y2={bottom} stroke="var(--color-primary)" strokeWidth={4} />
       {/* Subtle lobby tint for visual distinction without a hard border */}
@@ -226,12 +236,14 @@ function ContainerOutline() {
       {SHOW_ESCENARIO_2 && (
         /* Corridor tint — internal hallway between the two vertical walls.
            Starts where the lobby tint ends so they meet seamlessly through
-           the open passage at the top of the corridor (no white sliver). */
+           the open passage at the top of the corridor (no white sliver) and
+           continues past the building's south wall down to the restaurant
+           entrance, giving the through-corridor a single continuous floor. */
         <rect
           x={CORRIDOR_WALL_X + 2}
           y={lobby.y + lobby.height - 2}
           width={CORRIDOR_RIGHT_WALL_X - CORRIDOR_WALL_X - 4}
-          height={esc2.y + esc2.height - (lobby.y + lobby.height - 2) - 2}
+          height={CORRIDOR_BOTTOM_Y - (lobby.y + lobby.height - 2)}
           fill="var(--color-surface-container-low)"
         />
       )}
@@ -351,8 +363,9 @@ function LobbyEsc2Wall() {
 function CorridorWall() {
   // Two vertical walls forming the internal corridor on the right of
   // Escenario 2. Left wall is broken by the entry door gap; right wall
-  // is solid. The corridor's top is open (handled by LobbyEsc2Wall);
-  // the bottom is closed by the outer container.
+  // is solid. The corridor's top is open (handled by LobbyEsc2Wall) and
+  // its bottom extends past the building's south wall down to the
+  // restaurant entrance.
   const doorTop = CORRIDOR_DOOR_GAP.y;
   const doorBottom = CORRIDOR_DOOR_GAP.y + CORRIDOR_DOOR_GAP.height;
   return (
@@ -435,6 +448,59 @@ function ExteriorBlock({
         fill="var(--color-primary)"
       >
         {label}
+      </text>
+    </g>
+  );
+}
+
+// Restaurant rendered as a room (white interior, like Sala Greco / Esc2)
+// connected to the building via the corridor extension. Top wall has a gap
+// at the corridor's x range so the hallway flows continuously into the
+// space, with a small secondary-colored door marker straddling the threshold.
+function RestaurantRoom({ bbox }: { bbox: BBox }) {
+  const cx = bbox.x + bbox.width / 2;
+  const cy = bbox.y + bbox.height / 2;
+  const right = bbox.x + bbox.width;
+  const bottomY = bbox.y + bbox.height;
+  return (
+    <g aria-hidden="true" style={{ pointerEvents: "none" }}>
+      <rect
+        x={bbox.x}
+        y={bbox.y}
+        width={bbox.width}
+        height={bbox.height}
+        fill="var(--color-surface-container-lowest)"
+      />
+      {SHOW_ESCENARIO_2 ? (
+        <>
+          <line x1={bbox.x} y1={bbox.y} x2={CORRIDOR_WALL_X} y2={bbox.y} stroke="var(--color-primary)" strokeWidth={4} />
+          <line x1={CORRIDOR_RIGHT_WALL_X} y1={bbox.y} x2={right} y2={bbox.y} stroke="var(--color-primary)" strokeWidth={4} />
+        </>
+      ) : (
+        <line x1={bbox.x} y1={bbox.y} x2={right} y2={bbox.y} stroke="var(--color-primary)" strokeWidth={4} />
+      )}
+      <line x1={bbox.x} y1={bbox.y} x2={bbox.x} y2={bottomY} stroke="var(--color-primary)" strokeWidth={4} />
+      <line x1={right} y1={bbox.y} x2={right} y2={bottomY} stroke="var(--color-primary)" strokeWidth={4} />
+      <line x1={bbox.x} y1={bottomY} x2={right} y2={bottomY} stroke="var(--color-primary)" strokeWidth={4} />
+      <POIIcon
+        iconName="restaurant"
+        cx={cx}
+        cy={cy - 18}
+        size={56}
+        fill="var(--color-primary)"
+      />
+      <text
+        x={cx}
+        y={cy + 32}
+        className="font-display"
+        fontSize={22}
+        fontWeight={900}
+        letterSpacing="0.08em"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="var(--color-primary)"
+      >
+        RESTAURANTE
       </text>
     </g>
   );
