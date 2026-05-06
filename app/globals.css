@@ -375,6 +375,12 @@ textarea:focus-visible,
   60% { transform: translateY(-4px); }
 }
 
+@keyframes heartbeat {
+  0%, 28%, 70%, 100% { transform: scale(1); }
+  14% { transform: scale(1.25); }
+  42% { transform: scale(1.18); }
+}
+
 @keyframes menu-slide-down {
   from {
     opacity: 0;
@@ -390,6 +396,11 @@ textarea:focus-visible,
 .animate-fade-up {
   animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: var(--delay, 0ms);
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.4s ease-in-out infinite;
+  transform-origin: center;
 }
 
 .animate-fade-in {
