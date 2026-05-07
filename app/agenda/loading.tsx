@@ -10,7 +10,7 @@ export default function AgendaLoading() {
       aria-busy="true"
     >
       {/* Hero header skeleton */}
-      <section className="mb-16 border-l-8 border-primary pl-6 pt-8 animate-slide-left">
+      <section className="mb-16 border-l-8 border-primary pl-6 pt-8">
         <div className="mono-data text-secondary font-bold tracking-widest text-sm uppercase">
           Cronograma Oficial · 14 MAYO 2026
         </div>
