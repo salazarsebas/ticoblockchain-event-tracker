@@ -63,15 +63,9 @@ export const HERO_CONTENT = {
 export const PRACTICAL_INFO: readonly PracticalInfoItem[] = [
   {
     id: "checkin",
-    hook: "07:30",
+    hook: "08:00",
     label: "Check-in",
     body: "Presenta tu QR de confirmación en la entrada principal para recibir tu gafete oficial y kit de bienvenida.",
-  },
-  {
-    id: "wifi",
-    hook: "TicoBlockchain",
-    label: "Red · WiFi",
-    body: "Conectividad simétrica de alta velocidad. La contraseña de acceso está impresa al reverso de tu gafete.",
   },
   {
     id: "parking",
@@ -81,9 +75,9 @@ export const PRACTICAL_INFO: readonly PracticalInfoItem[] = [
   },
   {
     id: "lunch",
-    hook: "11:00 / 12:30",
-    label: "Almuerzo · Dos turnos",
-    body: "Revisa el color de tu tiquete para confirmar tu horario. Servicio con tiquete incluido en tu registro.",
+    hook: "11:30 — 13:30",
+    label: "Almuerzo",
+    body: "Servicio con tiquete incluido en tu registro. Acceso libre durante la ventana de almuerzo.",
   },
   {
     id: "dresscode",
@@ -93,9 +87,9 @@ export const PRACTICAL_INFO: readonly PracticalInfoItem[] = [
   },
   {
     id: "contact",
-    hook: "Negro",
+    hook: "Azul oscuro",
     label: "Staff · Soporte",
-    body: "Equipo identificado con camiseta negra en lobby y ambos escenarios. Soporte logístico y técnico durante todo el día.",
+    body: "Equipo identificado con camiseta azul oscuro en lobby y ambos escenarios. Soporte logístico y técnico durante todo el día.",
   },
 ] as const;
 
