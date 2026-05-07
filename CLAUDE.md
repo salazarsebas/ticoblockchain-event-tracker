@@ -59,6 +59,20 @@ public/            # static assets
 ### Git
 - Feature branches; conventional commits (`feat:`/`fix:`/`refactor:`/...). Never force-push `main`.
 
+## Updating the agenda or speakers as the event evolves
+
+The agenda and speaker roster will keep changing in the run-up to May 14 (and may need hot-fixes during the event). Both are static TypeScript and sync into the live UI automatically as long as you follow these rules:
+
+- **Source of truth** lives in two files: `app/data/sessions.ts` (the agenda timeline) and `app/data/speakers.ts` (the cards on `/exponentes`).
+- **Edit `sessions.ts`** for any time, title, description, or session-speaker change; for added/removed/relocated talks. The home hero, agenda timeline, and live status engine all read from this file.
+- **Edit `speakers.ts`** for added/removed speakers or when a speaker's slot moves. Each speaker entry's `time` and `stage` should match a session entry in `sessions.ts` — that's what drives their live status on `/exponentes`.
+- **Keep `time` strings in sync verbatim.** Use the canonical em-dash format `"HH:MM — HH:MM"` (e.g. `"10:00 — 10:25"`). Speakers and sessions match on literal string equality of the `time` field plus stage compatibility (`speaker.stage === session.stage` OR `session.stage === "both"`).
+- **For TBD speakers**, set `time: "Por anunciar"`. They'll fall back to their literal `status` (typically `"scheduled"`) and won't break anything; they just won't auto-flip to live.
+- **For "both"-stage sessions** (ceremonies, joint keynotes, breaks), leave `stage: "both"` in `sessions.ts` — speakers on either physical stage at that time inherit the status correctly.
+- **No reseed needed.** The status field hard-coded in each entry is only a fallback for off-event-day rendering. On May 14, the live engine recomputes everything from `time` + the wall clock; you don't need to update `status` fields manually.
+- **When new agenda PDFs / source docs arrive**, drop them in the repo root or `docs/venue/`. Read the PDF (use `pypdf` for hyperlink annotations if speakers carry LinkedIn / company URLs), diff against `sessions.ts` + `speakers.ts`, and apply only the deltas.
+- **After any change**: `npm run build` + `npm run lint` + `npm test` (the speaker-status tests in `app/exponentes/_lib/speakerStatus.test.ts` and the session-engine tests in `app/data/sessions.test.ts` will catch most regressions). Spot-check via `?now=2026-05-14T<HH:MM>:00-06:00` on `/`, `/agenda`, and `/exponentes` for any moment that materially changed.
+
 ## Before declaring a task done
 1. Real code changes are in (not just a plan).
 2. `npm run build` passes.

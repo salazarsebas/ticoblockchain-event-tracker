@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import DevTimeBanner from "../components/DevTimeBanner";
+import LiveRefresh from "../components/LiveRefresh";
+import { resolveNow } from "../data/now";
 import { SPEAKERS } from "../data/speakers";
+import { getNextTransitionAt } from "../lib/session-time";
 import { MAX_STAGGER_LEVEL } from "../lib/stagger";
 import SpeakerCard from "./_components/SpeakerCard";
 import { groupAppearances } from "./_lib/groupSpeakers";
+import { applyLiveStatus } from "./_lib/speakerStatus";
 
 export const metadata: Metadata = {
   title: "Exponentes",
@@ -13,13 +19,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ExponentesPage() {
-  const appearances = groupAppearances(SPEAKERS);
-  const totalSpeakers = SPEAKERS.length;
+export default async function ExponentesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ now?: string | string[] }>;
+}) {
+  const { now, simulated } = resolveNow((await searchParams).now);
+  const liveSpeakers = applyLiveStatus(SPEAKERS, now);
+  const nextTransitionAt = getNextTransitionAt(now);
+  const appearances = groupAppearances(liveSpeakers);
+  const totalSpeakers = liveSpeakers.length;
   const panelCount = appearances.filter((a) => a.kind === "panel").length;
 
   return (
     <main id="main" className="pb-20 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto w-full">
+      <LiveRefresh
+        nextTransitionAt={nextTransitionAt}
+        simulated={simulated !== null}
+      />
+      {simulated && (
+        <Suspense fallback={null}>
+          <DevTimeBanner simulated={simulated} />
+        </Suspense>
+      )}
+
       {/* Hero */}
       <section className="mb-10 border-l-8 border-primary pl-6 pt-8 animate-slide-left">
         <span className="mono-data text-secondary font-bold tracking-widest text-sm uppercase">

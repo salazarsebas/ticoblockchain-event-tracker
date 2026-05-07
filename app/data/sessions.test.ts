@@ -70,7 +70,7 @@ describe("computeSessionStatuses — event day", () => {
   test("at 17:30 — Ecosistemas y CRTW just started on Main", () => {
     const statuses = computeSessionStatuses(SESSIONS, crDate("17:30"));
     // The 16:45–17:25 Main panel ended; CRTW panel runs 17:30–17:55.
-    expect(statuses.get("blockchain-ciudadania-main")).toBe("past");
+    expect(statuses.get("panel-fia-ecosistemas-main")).toBe("past");
     expect(statuses.get("ecosistemas-crtw-main")).toBe("live");
   });
 
