@@ -71,7 +71,7 @@ export const PRACTICAL_INFO: readonly PracticalInfoItem[] = [
     id: "parking",
     hook: "Gratis",
     label: "Parqueo",
-    body: "Estacionamiento gratuito y vigilado en las instalaciones del hotel para todos los asistentes registrados.",
+    body: "Estacionamiento gratuito y vigilado en las instalaciones del hotel. Cupo limitado. Además está a disposición un parqueo privado al lado del hotel con ingreso directo.",
   },
   {
     id: "lunch",
