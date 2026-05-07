@@ -37,33 +37,93 @@ export default function ExponentesLoading() {
         </p>
       </section>
 
-      {/* Same grid shape as the live page (1/2/3 cols at sm/lg). Six tiles
-          covers the typical above-the-fold viewport on the affected devices. */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <article
-            key={i}
-            className="flex flex-col bg-surface-container-low border-2 border-transparent animate-pulse"
-            style={{ animationDelay: `${i * 80}ms` }}
-          >
-            {/* Portrait — matches SpeakerCard's 4/5 aspect so the swap
-                doesn't reflow card heights. */}
-            <div className="relative w-full aspect-[4/5] bg-surface-container-highest" />
-            <div className="flex items-center gap-2 px-5 pt-4">
-              <div className="h-5 w-20 bg-primary/20" />
-            </div>
-            <div className="flex flex-col gap-3 px-5 pb-5 pt-3">
-              <div className="h-7 w-3/4 bg-primary/15" />
-              <div className="h-3 w-1/2 bg-on-surface-variant/15" />
-              <div className="h-4 w-5/6 bg-primary/10" />
-              <div className="mt-4 pt-4 border-t-2 border-primary/10 flex items-center justify-between">
-                <div className="h-5 w-28 bg-primary/15" />
-                <div className="h-6 w-12 bg-primary/10" />
+      {/* Featured section header + 1-2 hero card placeholders. Mirrors the
+          partition the real page produces (live + next-up). */}
+      <section className="mb-12">
+        <div className="mb-5 flex items-center gap-3">
+          <span className="w-1.5 h-1.5 bg-secondary shrink-0" aria-hidden="true" />
+          <div className="h-3 w-44 bg-secondary/40 animate-pulse" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <article
+              key={i}
+              className="flex flex-col bg-surface-container-low border-2 border-transparent animate-pulse"
+              style={{ animationDelay: `${i * 80}ms` }}
+            >
+              <div className="relative w-full aspect-[4/5] bg-surface-container-highest" />
+              <div className="flex items-center gap-2 px-5 pt-4">
+                <div className="h-5 w-20 bg-primary/20" />
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+              <div className="flex flex-col gap-3 px-5 pb-5 pt-3">
+                <div className="h-7 w-3/4 bg-primary/15" />
+                <div className="h-3 w-1/2 bg-on-surface-variant/15" />
+                <div className="h-4 w-5/6 bg-primary/10" />
+                <div className="mt-4 pt-4 border-t-2 border-primary/10 flex items-center justify-between">
+                  <div className="h-5 w-28 bg-primary/15" />
+                  <div className="h-6 w-12 bg-primary/10" />
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* Rest section — compact rows on mobile, card grid on sm+, matching
+          the real page's responsive shape so the swap doesn't reflow. */}
+      <section>
+        <div className="mb-5 flex items-center gap-3">
+          <span className="w-1.5 h-1.5 bg-primary shrink-0" aria-hidden="true" />
+          <div className="h-3 w-40 bg-primary/30 animate-pulse" />
+        </div>
+
+        {/* Row placeholders (mobile only) */}
+        <div className="flex flex-col gap-2 sm:hidden">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <article
+              key={i}
+              className="flex items-stretch gap-3 px-3 py-3 bg-surface-container-low border-l-4 border-transparent animate-pulse"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              <div className="w-20 h-20 shrink-0 bg-surface-container-highest" />
+              <div className="flex-1 min-w-0 flex flex-col justify-between gap-1">
+                <div className="h-4 w-20 bg-primary/15" />
+                <div className="h-5 w-3/4 bg-primary/15" />
+                <div className="h-3 w-1/2 bg-on-surface-variant/15" />
+                <div className="flex items-center justify-between gap-2 pt-0.5">
+                  <div className="h-4 w-24 bg-primary/15" />
+                  <div className="h-5 w-12 bg-primary/10" />
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Card placeholders (sm+ only) */}
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <article
+              key={i}
+              className="flex flex-col bg-surface-container-low border-2 border-transparent animate-pulse"
+              style={{ animationDelay: `${i * 80}ms` }}
+            >
+              <div className="relative w-full aspect-[4/5] bg-surface-container-highest" />
+              <div className="flex items-center gap-2 px-5 pt-4">
+                <div className="h-5 w-20 bg-primary/20" />
+              </div>
+              <div className="flex flex-col gap-3 px-5 pb-5 pt-3">
+                <div className="h-7 w-3/4 bg-primary/15" />
+                <div className="h-3 w-1/2 bg-on-surface-variant/15" />
+                <div className="h-4 w-5/6 bg-primary/10" />
+                <div className="mt-4 pt-4 border-t-2 border-primary/10 flex items-center justify-between">
+                  <div className="h-5 w-28 bg-primary/15" />
+                  <div className="h-6 w-12 bg-primary/10" />
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
