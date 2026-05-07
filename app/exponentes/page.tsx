@@ -100,7 +100,7 @@ export default async function ExponentesPage({
       )}
 
       {/* Hero */}
-      <section className="mb-10 border-l-8 border-primary pl-6 pt-8">
+      <section className="mb-10 border-l-8 border-primary pl-6 pt-8 animate-slide-left">
         <span className="mono-data text-secondary font-bold tracking-widest text-sm uppercase">
           Cartelera Oficial · 14 MAYO 2026
         </span>
