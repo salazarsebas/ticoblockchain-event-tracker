@@ -49,9 +49,9 @@ describe("applyLiveStatus — event day", () => {
     const result = applyLiveStatus(SPEAKERS, crDate("16:20"));
     expect(findSpeaker(result, "carlos-rene").status).toBe("live");
     expect(findSpeaker(result, "cristian-guillen").status).toBe("live");
-    // Roberto Ponce remains a confirmed event participant on time "Por
+    // Rogelio Martínez remains a confirmed event participant on time "Por
     // anunciar", so he retains his seed "scheduled" status.
-    expect(findSpeaker(result, "roberto-ponce-romay").status).toBe("scheduled");
+    expect(findSpeaker(result, "rogelio-martinez").status).toBe("scheduled");
   });
 
   test("after the last keyed talk (19:00) — Por-anunciar speakers fall back to their seed status", () => {
