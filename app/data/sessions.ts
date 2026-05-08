@@ -61,7 +61,7 @@ export const SESSIONS: readonly Session[] = [
     title: "Crea una Crypto App y gana hasta $10k con Nimiq",
     speakerOrg: "Nimiq",
     description:
-      "Reto patrocinado — construye una app de pagos peer-to-peer con Nimiq y compite por hasta $10k en premios.",
+      "Construye una app de pagos peer-to-peer con Nimiq y compite por hasta $10k en premios.",
     stage: "escenario-2",
     category: "sponsor-slot",
     status: "live",
@@ -93,7 +93,7 @@ export const SESSIONS: readonly Session[] = [
     title: "Olanzo",
     speakerOrg: "Olanzo",
     description:
-      "Presentación patrocinada — infraestructura para pagos y liquidación on-chain.",
+      "Infraestructura para pagos y liquidación on-chain.",
     stage: "escenario-2",
     category: "sponsor-slot",
     status: "scheduled",
@@ -105,7 +105,7 @@ export const SESSIONS: readonly Session[] = [
     title: "Lulubit",
     speakerOrg: "Lulubit",
     description:
-      "Taller patrocinado — herramientas para integrar pagos cripto en comercios tradicionales.",
+      "Herramientas para integrar pagos cripto en comercios tradicionales.",
     stage: "escenario-2",
     category: "workshop",
     status: "scheduled",
@@ -184,7 +184,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: 'Jesús "Chuy" Cepeda',
     speakerOrg: "Sovra.io",
     description:
-      "Cómo blockchain puede usarse como infraestructura de transparencia y rendición de cuentas frente a la corrupción en el sector público costarricense.",
+      "En un gold rush, vendes palas. En un AI rush, vendes confianza. Cryptografía es confianza, verificable. AI genera contenido, decisiones, transacciones — pero no puede probar que algo es real. Provenance es la capa que falta: verificar quién creó qué, cuándo, y si fue alterado. No es un feature — es infraestructura. Esta plática conecta los puntos entre AI generativa, identidad digital y la confianza institucional que hace que todo funcione a escala.",
     stage: "main",
     category: "keynote",
     status: "scheduled",
