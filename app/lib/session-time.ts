@@ -10,6 +10,20 @@ export function getSessionById(id: string): Session | undefined {
   return SESSIONS.find((s) => s.id === id);
 }
 
+// Resolves the session a panelist's row in `speakers.ts` belongs to. Match
+// rule mirrors `applyLiveStatus`: literal `time` equality plus stage match
+// (with `stage === "both"` ceremonies acting as a wildcard). Returns
+// undefined for "Por anunciar" speakers and any speaker whose time/stage
+// pair has no matching session row.
+export function findSessionByTimeStage(
+  time: string,
+  stage: Session["stage"],
+): Session | undefined {
+  return SESSIONS.find(
+    (s) => s.time === time && (s.stage === stage || s.stage === "both"),
+  );
+}
+
 export function getSessionsAt(now: Date): Session[] {
   const statuses = computeSessionStatuses(SESSIONS, now);
   return SESSIONS.map((s) => ({

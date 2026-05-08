@@ -5,6 +5,7 @@ import StatusBadge from "../../components/StatusBadge";
 import Icon from "../../components/Icon";
 import { isHttpUrl } from "../../lib/url";
 import type { SpeakerAppearance } from "../_lib/groupSpeakers";
+import PanelChip from "./PanelChip";
 
 type SpeakerCardProps = {
   appearance: SpeakerAppearance;
@@ -13,18 +14,6 @@ type SpeakerCardProps = {
   // loading + fetchpriority=high — fixes the LCP miss on /exponentes.
   priority?: boolean;
 };
-
-function statusOf(appearance: SpeakerAppearance): Speaker["status"] {
-  return appearance.kind === "solo" ? appearance.speaker.status : appearance.status;
-}
-
-function stageOf(appearance: SpeakerAppearance): Speaker["stage"] {
-  return appearance.kind === "solo" ? appearance.speaker.stage : appearance.stage;
-}
-
-function timeOf(appearance: SpeakerAppearance): string {
-  return appearance.kind === "solo" ? appearance.speaker.time : appearance.time;
-}
 
 function ExternalLinkChip({
   href,
@@ -58,16 +47,11 @@ function ExternalLinkChip({
 
 function Portrait({
   speaker,
-  size = "full",
   priority = false,
 }: {
   speaker: Speaker;
-  size?: "full" | "half";
   priority?: boolean;
 }) {
-  const sizesAttr = size === "full"
-    ? "(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
-    : "(min-width: 1024px) 192px, (min-width: 640px) 25vw, 50vw";
   return (
     <div
       className={`relative w-full aspect-[4/5] overflow-hidden bg-surface-container-highest ${
@@ -78,7 +62,7 @@ function Portrait({
         src={speaker.imageUrl}
         alt={speaker.name}
         fill
-        sizes={sizesAttr}
+        sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
         quality={90}
         unoptimized={!speaker.imageUrl.startsWith("/")}
         priority={priority}
@@ -89,18 +73,31 @@ function Portrait({
 }
 
 export default function SpeakerCard({ appearance, staggerClass, priority = false }: SpeakerCardProps) {
-  const status = statusOf(appearance);
-  const stage = stageOf(appearance);
-  const time = timeOf(appearance);
+  const { speaker, panelContext, additionalSlot } = appearance;
+  const status = speaker.status;
+  const stage = speaker.stage;
+  const time = speaker.time;
   const isLive = status === "live";
   const isPast = status === "past";
   const isTBD = time === "Por anunciar";
+  const isPanelLead = panelContext?.indexInPanel === 0;
+  const isPanelMember = panelContext !== undefined;
+
+  // Top-border accent threads cards from the same panel together regardless
+  // of their position in the responsive grid — first panelist gets full
+  // primary, the rest get a faded variant. Plain cards have no top accent.
+  const topBorderClass = isPanelLead
+    ? "border-t-4 border-t-primary"
+    : isPanelMember
+      ? "border-t-4 border-t-primary/30"
+      : "";
 
   const rootClasses = [
     "group relative flex flex-col bg-surface-container-low border-2 transition-colors duration-200 animate-fade-up",
     isLive
       ? "border-secondary animate-border-breathe"
       : "border-transparent hover:border-primary/30",
+    topBorderClass,
     isPast ? "opacity-50" : "",
     staggerClass ?? "",
   ]
@@ -109,25 +106,12 @@ export default function SpeakerCard({ appearance, staggerClass, priority = false
 
   return (
     <article className={rootClasses}>
-      {/* Portrait block */}
-      {appearance.kind === "solo" ? (
-        <Portrait speaker={appearance.speaker} priority={priority} />
-      ) : (
-        <div className="grid grid-cols-2 gap-0">
-          {appearance.speakers.slice(0, 2).map((s) => (
-            <Portrait key={s.id} speaker={s} size="half" priority={priority} />
-          ))}
-        </div>
-      )}
+      {/* Portrait block — one face per card, always. */}
+      <Portrait speaker={speaker} priority={priority} />
 
-      {/* Meta strip: status + (panel/TBD chips) */}
+      {/* Meta strip: status + (TBD chip) */}
       <div className="flex flex-wrap items-center gap-2 px-5 pt-4">
         <StatusBadge status={status} size="sm" />
-        {appearance.kind === "panel" && (
-          <span className="mono-data text-[9px] font-bold px-2 py-0.5 uppercase tracking-widest bg-primary-container text-on-primary-container">
-            Panel
-          </span>
-        )}
         {isTBD && (
           <span className="mono-data text-[9px] font-bold px-2 py-0.5 uppercase tracking-widest border-2 border-outline-variant text-on-surface-variant">
             Por anunciar
@@ -137,83 +121,52 @@ export default function SpeakerCard({ appearance, staggerClass, priority = false
 
       {/* Body */}
       <div className="flex flex-col gap-3 px-5 pb-5 pt-3">
-        {appearance.kind === "solo" ? (
-          <>
-            <h3 className="font-display font-black uppercase tracking-tighter text-primary text-2xl md:text-3xl leading-[0.95]">
-              {appearance.speaker.name}
-            </h3>
-            <p className="label-meta text-[11px] font-bold text-on-primary-container line-clamp-2">
-              {appearance.speaker.org}
+        {panelContext && (
+          <PanelChip context={panelContext} stage={stage} variant="card" />
+        )}
+        <h3 className="font-display font-black uppercase tracking-tighter text-primary text-2xl md:text-3xl leading-[0.95]">
+          {speaker.name}
+        </h3>
+        <p className="label-meta text-[11px] font-bold text-on-primary-container line-clamp-2">
+          {speaker.org}
+        </p>
+        <p className="text-sm font-bold uppercase text-primary leading-snug mt-1 line-clamp-3">
+          {speaker.talk}
+        </p>
+        {additionalSlot && (
+          <div className="mt-1 border-l-2 border-primary/30 pl-2">
+            <span className="mono-data text-[9px] font-bold uppercase tracking-widest text-on-surface-variant">
+              También presenta
+            </span>
+            <p className="text-xs font-bold uppercase text-primary leading-snug mt-0.5">
+              {additionalSlot.talk}
             </p>
-            <p className="text-sm font-bold uppercase text-primary leading-snug mt-1 line-clamp-3">
-              {appearance.speaker.talk}
-            </p>
-            {(isHttpUrl(appearance.speaker.linkedinUrl) ||
-              isHttpUrl(appearance.speaker.companyUrl)) && (
-              <ul className="flex flex-wrap gap-2 mt-1">
-                {isHttpUrl(appearance.speaker.linkedinUrl) && (
-                  <li>
-                    <ExternalLinkChip
-                      href={appearance.speaker.linkedinUrl}
-                      label="LinkedIn"
-                      speakerName={appearance.speaker.name}
-                    />
-                  </li>
-                )}
-                {isHttpUrl(appearance.speaker.companyUrl) && (
-                  <li>
-                    <ExternalLinkChip
-                      href={appearance.speaker.companyUrl}
-                      label="Sitio"
-                      speakerName={appearance.speaker.name}
-                    />
-                  </li>
-                )}
-              </ul>
+            <span className="mono-data text-[10px] text-on-surface-variant/80 italic">
+              {additionalSlot.time}
+            </span>
+          </div>
+        )}
+        {(isHttpUrl(speaker.linkedinUrl) || isHttpUrl(speaker.companyUrl)) && (
+          <ul className="flex flex-wrap gap-2 mt-1">
+            {isHttpUrl(speaker.linkedinUrl) && (
+              <li>
+                <ExternalLinkChip
+                  href={speaker.linkedinUrl}
+                  label="LinkedIn"
+                  speakerName={speaker.name}
+                />
+              </li>
             )}
-          </>
-        ) : (
-          <>
-            <h3 className="font-display font-black uppercase tracking-tighter text-primary text-xl md:text-2xl leading-[0.95]">
-              Panel: {appearance.speakers[0].talk.replace(/ \(.*\)$/, "")}
-            </h3>
-            <ul className="flex flex-col gap-2 mt-1">
-              {appearance.speakers.map((s) => (
-                <li key={s.id} className="flex flex-col gap-0.5">
-                  <span className="label-meta text-[11px] font-bold text-primary">
-                    {s.name}
-                  </span>
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                    <span className="label-meta text-on-surface-variant line-clamp-1">
-                      {s.org}
-                    </span>
-                    {isHttpUrl(s.linkedinUrl) && (
-                      <>
-                        <span aria-hidden className="text-on-surface-variant/40 mono-data text-[10px]">·</span>
-                        <ExternalLinkChip
-                          href={s.linkedinUrl}
-                          label="LinkedIn"
-                          speakerName={s.name}
-                          variant="inline"
-                        />
-                      </>
-                    )}
-                    {isHttpUrl(s.companyUrl) && (
-                      <>
-                        <span aria-hidden className="text-on-surface-variant/40 mono-data text-[10px]">·</span>
-                        <ExternalLinkChip
-                          href={s.companyUrl}
-                          label="Sitio"
-                          speakerName={s.name}
-                          variant="inline"
-                        />
-                      </>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </>
+            {isHttpUrl(speaker.companyUrl) && (
+              <li>
+                <ExternalLinkChip
+                  href={speaker.companyUrl}
+                  label="Sitio"
+                  speakerName={speaker.name}
+                />
+              </li>
+            )}
+          </ul>
         )}
 
         {/* Footer: time + stage */}

@@ -6,9 +6,12 @@ import { resolveNow } from "../data/now";
 import { SPEAKERS } from "../data/speakers";
 import { getNextTransitionAt } from "../lib/session-time";
 import { MAX_STAGGER_LEVEL } from "../lib/stagger";
+import RestLineup from "./_components/RestLineup";
 import SpeakerCard from "./_components/SpeakerCard";
-import SpeakerRow from "./_components/SpeakerRow";
-import { groupAppearances, type SpeakerAppearance } from "./_lib/groupSpeakers";
+import {
+  expandAppearances,
+  type SpeakerAppearance,
+} from "./_lib/groupSpeakers";
 import { applyLiveStatus } from "./_lib/speakerStatus";
 
 export const metadata: Metadata = {
@@ -23,18 +26,12 @@ export const metadata: Metadata = {
 // Editorial hero treatment is reserved for the moments people care about most
 // — anyone live right now plus the next two slots about to take the stage.
 // Pre-event we promote the first two scheduled appearances so the page still
-// has an anchor; post-event there's nothing to feature and `rest` carries
-// the full lineup as compact rows.
+// has an anchor; post-event there's nothing to feature and the rest section
+// carries the full lineup as compact rows.
 const FEATURED_NEXT_LIMIT = 2;
 
-function statusOf(a: SpeakerAppearance) {
-  return a.kind === "solo" ? a.speaker.status : a.status;
-}
-
 function appearanceKey(a: SpeakerAppearance): string {
-  return a.kind === "solo"
-    ? `solo|${a.speaker.id}`
-    : `panel|${a.speakers.map((s) => s.id).join("+")}`;
+  return `solo|${a.speaker.id}`;
 }
 
 function partitionAppearances(appearances: SpeakerAppearance[]): {
@@ -42,9 +39,9 @@ function partitionAppearances(appearances: SpeakerAppearance[]): {
   rest: SpeakerAppearance[];
   featuredKind: "live-or-next" | "scheduled-fallback" | "none";
 } {
-  const live = appearances.filter((a) => statusOf(a) === "live");
+  const live = appearances.filter((a) => a.speaker.status === "live");
   const next = appearances
-    .filter((a) => statusOf(a) === "next")
+    .filter((a) => a.speaker.status === "next")
     .slice(0, FEATURED_NEXT_LIMIT);
   let featured = [...live, ...next];
   let featuredKind: "live-or-next" | "scheduled-fallback" | "none" =
@@ -52,7 +49,7 @@ function partitionAppearances(appearances: SpeakerAppearance[]): {
 
   if (featured.length === 0) {
     featured = appearances
-      .filter((a) => statusOf(a) === "scheduled")
+      .filter((a) => a.speaker.status === "scheduled")
       .slice(0, FEATURED_NEXT_LIMIT);
     featuredKind = featured.length > 0 ? "scheduled-fallback" : "none";
   }
@@ -71,6 +68,17 @@ function featuredHeading(
   return "";
 }
 
+// Counts unique panel sessions in a list of appearances — used in the
+// hero stat strip ("N paneles") so the data shape change doesn't lose
+// the panel count it surfaces.
+function countUniquePanels(appearances: SpeakerAppearance[]): number {
+  const ids = new Set<string>();
+  for (const a of appearances) {
+    if (a.panelContext?.sessionId) ids.add(a.panelContext.sessionId);
+  }
+  return ids.size;
+}
+
 export default async function ExponentesPage({
   searchParams,
 }: {
@@ -79,12 +87,15 @@ export default async function ExponentesPage({
   const { now, simulated } = resolveNow((await searchParams).now);
   const liveSpeakers = applyLiveStatus(SPEAKERS, now);
   const nextTransitionAt = getNextTransitionAt(now);
-  const appearances = groupAppearances(liveSpeakers);
-  const totalSpeakers = liveSpeakers.length;
-  const panelCount = appearances.filter((a) => a.kind === "panel").length;
+  const appearances = expandAppearances(liveSpeakers);
+  // Count actual cards rendered, not raw data rows. Same-name TBA
+  // duplicates collapse into one card via expandAppearances, so reading
+  // from `appearances` keeps the hero stat consistent with what scrolls.
+  const totalSpeakers = appearances.length;
+  const panelCount = countUniquePanels(appearances);
 
   const { featured, rest, featuredKind } = partitionAppearances(appearances);
-  const hasLive = featured.some((a) => statusOf(a) === "live");
+  const hasLive = featured.some((a) => a.speaker.status === "live");
   const featuredLabel = featuredHeading(featuredKind, hasLive);
 
   return (
@@ -130,7 +141,9 @@ export default async function ExponentesPage({
       </section>
 
       {/* Featured — full editorial cards for live + next-up speakers, so the
-          live-tracker emphasis lands at the top of the screen on every device. */}
+          live-tracker emphasis lands at the top of the screen on every device.
+          When a panel is live, all panelists land here individually so every
+          face is visible. */}
       {featured.length > 0 && (
         <section className="mb-12">
           <div className="mb-5 flex items-center gap-3">
@@ -159,50 +172,9 @@ export default async function ExponentesPage({
         </section>
       )}
 
-      {/* Rest of the lineup — section header anchors the change in cadence. */}
+      {/* Rest of the lineup — owns its stage-filter state client-side. */}
       {rest.length > 0 && (
-        <section>
-          <div className="mb-5 flex items-center gap-3">
-            <span
-              className="w-1.5 h-1.5 bg-primary shrink-0"
-              aria-hidden="true"
-            />
-            <span className="mono-data text-primary font-bold tracking-widest text-xs sm:text-sm uppercase">
-              {featured.length > 0
-                ? `Cartel completo · ${rest.length} más`
-                : `Cartel completo · ${rest.length} voces`}
-            </span>
-          </div>
-
-          {/* Mobile: compact rows. Tap-target height ~104px (80px portrait
-              + 12px padding × 2), well over the 44px minimum. The grid below
-              is hidden on the same breakpoint so each appearance only paints
-              once visually; the duplicate React tree exists in the DOM but
-              its lazy <Image> elements never load while their container is
-              display:none. */}
-          <div className="flex flex-col gap-2 sm:hidden">
-            {rest.map((appearance, i) => (
-              <SpeakerRow
-                key={`row-${appearanceKey(appearance)}`}
-                appearance={appearance}
-                staggerClass={`stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
-              />
-            ))}
-          </div>
-
-          {/* Tablet/desktop: keep the existing card grid — there's enough
-              horizontal real estate that scrolling 28 viewports isn't a
-              problem and the editorial impact reads better. */}
-          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {rest.map((appearance, i) => (
-              <SpeakerCard
-                key={`card-${appearanceKey(appearance)}`}
-                appearance={appearance}
-                staggerClass={`stagger-${Math.min(i + 1, MAX_STAGGER_LEVEL)}`}
-              />
-            ))}
-          </div>
-        </section>
+        <RestLineup appearances={rest} hasFeatured={featured.length > 0} />
       )}
     </main>
   );

@@ -44,7 +44,7 @@ export default function SessionCard({ session, stageLabel, variant = "column" }:
     .join(" ");
 
   return (
-    <article className={rootClasses}>
+    <article id={`session-${session.id}`} className={`scroll-mt-24 ${rootClasses}`}>
       {/* Top meta row: live chip + category + stage short-label */}
       <div className={`flex flex-wrap items-center gap-2 ${variant === "wide" ? "md:justify-center" : ""}`}>
         {isLive && (
