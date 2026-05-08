@@ -55,6 +55,8 @@ public/            # static assets
 - Keep components small and colocated under `app/components/` (or a route's local folder when single-use).
 - TypeScript strict — no `any` escapes; extend types in `app/data/types.ts` when adding new content shapes.
 - Don't introduce new top-level dirs without reason — prefer `app/<segment>/` or `app/components/`.
+- **Tailwind v4 / CSS-var pitfall**: Lightning CSS tree-shakes custom CSS variables that aren't registered as theme tokens, even when declared in `:root` or `@theme`. Don't try to centralize a layout literal (e.g. nav height) via `--my-var` and reference it from `h-[var(--my-var)]` — the variable definition gets stripped from the bundle and the utility resolves to nothing. Use a literal + documented multi-site contract instead (see the 4-site `72px` note in `app/components/NavBar.tsx`).
+- **Brand hex outside browser CSS**: Edge-runtime surfaces (Next.js `ImageResponse` for `/opengraph-image`, the PWA `themeColor` viewport entry) can't read CSS vars. Source those values from `app/data/brand-colors.ts` (`BRAND.primary` / `BRAND.secondary` / `BRAND.surface`) and keep that file in sync with the `:root` tokens in `app/globals.css`.
 
 ### Git
 - Feature branches; conventional commits (`feat:`/`fix:`/`refactor:`/...). Never force-push `main`.
@@ -63,11 +65,14 @@ public/            # static assets
 
 The agenda and speaker roster will keep changing in the run-up to May 14 (and may need hot-fixes during the event). Both are static TypeScript and sync into the live UI automatically as long as you follow these rules:
 
-- **Source of truth** lives in two files: `app/data/sessions.ts` (the agenda timeline) and `app/data/speakers.ts` (the cards on `/exponentes`).
+- **Client-published roster** is the **Speakers section at https://www.ticoblockchain.cr/** — that page is the canonical list of who's confirmed. When the client says "we updated the speakers," fetch that URL, diff against `app/data/speakers.ts`, and apply only the deltas (add/remove/rename, photo + LinkedIn updates).
+- **In-app source of truth** lives in two files: `app/data/sessions.ts` (the agenda timeline) and `app/data/speakers.ts` (the cards on `/exponentes`).
 - **Edit `sessions.ts`** for any time, title, description, or session-speaker change; for added/removed/relocated talks. The home hero, agenda timeline, and live status engine all read from this file.
 - **Edit `speakers.ts`** for added/removed speakers or when a speaker's slot moves. Each speaker entry's `time` and `stage` should match a session entry in `sessions.ts` — that's what drives their live status on `/exponentes`.
 - **Keep `time` strings in sync verbatim.** Use the canonical em-dash format `"HH:MM — HH:MM"` (e.g. `"10:00 — 10:25"`). Speakers and sessions match on literal string equality of the `time` field plus stage compatibility (`speaker.stage === session.stage` OR `session.stage === "both"`).
 - **For TBD speakers**, set `time: "Por anunciar"`. They'll fall back to their literal `status` (typically `"scheduled"`) and won't break anything; they just won't auto-flip to live.
+- **Multi-appearance speakers** (someone on more than one panel — e.g. Karla moderating Perspectivas at 10:55 *and* the closing CRTW panel at 17:30): each `Speaker` only has one `time`, so add a second entry with an `-cierre` (or analogous) suffix on the id and the second slot's `time`/`stage`. Name/org/photo/LinkedIn stay identical. Both cards render on `/exponentes`, each flipping live at the correct moment.
+- **Photo URLs from the official site CDN can be mislabeled** (Webflow CMS quirk — the file named `Diego%20Perez.png` may be served for a different speaker, or two speakers may share one URL). Trust what the page actually renders, but spot-check `/exponentes` after edits and fall back to `IMG_TBA` for any portrait that's clearly the wrong face.
 - **For "both"-stage sessions** (ceremonies, joint keynotes, breaks), leave `stage: "both"` in `sessions.ts` — speakers on either physical stage at that time inherit the status correctly.
 - **No reseed needed.** The status field hard-coded in each entry is only a fallback for off-event-day rendering. On May 14, the live engine recomputes everything from `time` + the wall clock; you don't need to update `status` fields manually.
 - **When new agenda PDFs / source docs arrive**, drop them in the repo root or `docs/venue/`. Read the PDF (use `pypdf` for hyperlink annotations if speakers carry LinkedIn / company URLs), diff against `sessions.ts` + `speakers.ts`, and apply only the deltas.
