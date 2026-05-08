@@ -306,6 +306,19 @@ export const SPEAKERS: readonly Speaker[] = [
     imageUrl: `${CDN}/69fccde3a48d091d953d89b8_Cristian%20Guillen.jpeg`,
     linkedinUrl: "https://www.linkedin.com/in/cristian-guillen-men/",
   },
+  // Second appearance for Gianina — also keeps her solo "Por anunciar"
+  // card below so /exponentes shows both her panel slot and her individual
+  // entry (each Speaker can only carry one `time` value).
+  {
+    id: "gianina-redondo-agentes",
+    name: "Gianina Redondo",
+    org: "Project Manager @ Ncubo",
+    talk: "Agentes Autónomos (Panel)",
+    time: "16:00 — 16:40",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/69fcea8335e1df81f740c852_Geaninna%20Redondo.jpeg`,
+  },
 
   // ─── 16:30 — Convergencia AI/Blockchain/Quantum (esc-2) ───
   {
