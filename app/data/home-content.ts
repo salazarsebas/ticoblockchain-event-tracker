@@ -116,12 +116,6 @@ export const VENUE_DIRECTIONS: VenueDirections = {
       label: "Centro · San José",
       body: "10 minutos en vehículo por la Autopista General Cañas. Ideal si te hospedás en el casco central de la capital.",
     },
-    {
-      id: "parking",
-      hook: "GRATIS",
-      label: "Parqueo · Vigilado",
-      body: "Estacionamiento cubierto y vigilado del hotel incluido para todos los asistentes registrados del evento.",
-    },
   ],
   mapsUrl: "https://maps.app.goo.gl/BBFHKXZaz3c9iFjw5",
   wazeUrl: "https://www.waze.com/ul?ll=9.9454534,-84.105194&navigate=yes",

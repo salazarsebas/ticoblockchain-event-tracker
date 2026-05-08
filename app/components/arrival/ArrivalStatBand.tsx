@@ -5,13 +5,15 @@ type ArrivalStatBandProps = {
   stats: readonly ArrivalStat[];
 };
 
-// 3-up hook band for the Cómo Llegar section. Mirrors the editorial
-// pattern from the "Información Práctica" manifest (oversized mono hook,
-// crimson-dotted label, prose body) so the spatial dossier inherits the
-// same voice as the temporal one.
+// Hook band for the Cómo Llegar section. Mirrors the editorial pattern
+// from the "Información Práctica" manifest (oversized mono hook, crimson-
+// dotted label, prose body) so the spatial dossier inherits the same
+// voice as the temporal one. Grid lays out one column per stat — works
+// for 2 or 3 entries; the parking row was removed because it duplicates
+// the Información Práctica row.
 export default function ArrivalStatBand({ stats }: ArrivalStatBandProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 border-y-4 border-primary">
+    <div className="grid grid-cols-1 md:grid-cols-2 border-y-4 border-primary">
       {stats.map((stat, i) => (
         <div
           key={stat.id}
