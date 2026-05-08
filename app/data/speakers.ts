@@ -347,18 +347,6 @@ export const SPEAKERS: readonly Speaker[] = [
     linkedinUrl: "https://www.linkedin.com/in/jose-miguel-z-52638932/",
   },
   {
-    id: "rafael-robinson",
-    name: "Rafael Robinson",
-    org: "President · Cámara Fintech Panamá",
-    talk: "PANEL FIA — Ecosistemas Regional (Panel)",
-    time: "16:45 — 17:25",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: `${CDN}/69f6302b31a22f075107680b_Rafael%20Robinson.png`,
-    linkedinUrl:
-      "https://www.linkedin.com/in/rafael-robinson-85013264/",
-  },
-  {
     id: "enrique-galdamez",
     name: "Enrique Galdámez",
     org: "Executive Director · Fintech Association of Guatemala",

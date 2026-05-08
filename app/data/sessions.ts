@@ -294,7 +294,7 @@ export const SESSIONS: readonly Session[] = [
     startTime: "16:45",
     title: "PANEL FIA — Ecosistemas de Brasil, Panamá y Guatemala",
     speakerName:
-      "Diego Pérez · Rafael Robinson · Enrique Galdámez · Mod: José M. Zamora",
+      "Diego Pérez · Enrique Galdámez · Mod: José M. Zamora",
     description:
       "Retos, oportunidades y la visión regional sobre el ecosistema de Costa Rica.",
     stage: "main",
