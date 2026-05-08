@@ -180,7 +180,7 @@ export const SESSIONS: readonly Session[] = [
     id: "keynote-2-identidad",
     time: "13:35 — 14:15",
     startTime: "13:35",
-    title: "Blockchain como Herramienta Anticorrupción en Costa Rica",
+    title: "Provenance: por qué la próxima gran infraestructura no es AI — es confianza verificable",
     speakerName: 'Jesús "Chuy" Cepeda',
     speakerOrg: "Sovra.io",
     description:

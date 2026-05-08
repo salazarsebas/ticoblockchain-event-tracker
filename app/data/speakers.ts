@@ -174,7 +174,7 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "chuy-cepeda",
     name: 'Jesús "Chuy" Cepeda',
     org: "Co-founder & CSO @ Sovra",
-    talk: "Blockchain como Herramienta Anticorrupción en Costa Rica",
+    talk: "Provenance: por qué la próxima gran infraestructura no es AI — es confianza verificable",
     time: "13:35 — 14:15",
     stage: "main",
     status: "scheduled",

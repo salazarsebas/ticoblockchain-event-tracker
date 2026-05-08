@@ -30,7 +30,7 @@ function readMeta(appearance: SpeakerAppearance) {
     time: appearance.time,
     lead,
     headline: `Panel: ${lead.talk.replace(/ \(.*\)$/, "")}`,
-    subline: `${appearance.speakers.length} ponentes`,
+    subline: `${appearance.speakers.length} exponentes`,
     panelCount: appearance.speakers.length,
   };
 }
