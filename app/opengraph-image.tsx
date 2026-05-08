@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { BRAND } from "./data/brand-colors";
 
 // Dynamic Open Graph / social card. Rendered at build time to a PNG
 // and served at /opengraph-image.png. Twitter falls back to this too
@@ -10,13 +11,6 @@ export const alt =
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Tokens pulled from the Horizonte Cobalt design system. Hex values
-// instead of CSS vars because ImageResponse does not have access to
-// the browser CSS context.
-const PRIMARY = "#000d33"; // cobalt
-const SECONDARY = "#ba002e"; // crimson
-const SURFACE = "#fbf9f5"; // warm paper
-
 export default function OpenGraphImage() {
   return new ImageResponse(
     (
@@ -24,8 +18,8 @@ export default function OpenGraphImage() {
         style={{
           width: "100%",
           height: "100%",
-          background: PRIMARY,
-          color: SURFACE,
+          background: BRAND.primary,
+          color: BRAND.surface,
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -49,7 +43,7 @@ export default function OpenGraphImage() {
               display: "flex",
               width: 16,
               height: 16,
-              background: SECONDARY,
+              background: BRAND.secondary,
             }}
           />
           <span style={{ opacity: 0.8 }}>
@@ -90,7 +84,7 @@ export default function OpenGraphImage() {
               lineHeight: 0.82,
               letterSpacing: -6,
               textTransform: "uppercase",
-              color: SECONDARY,
+              color: BRAND.secondary,
             }}
           >
             BLOCKCHAIN
@@ -109,7 +103,7 @@ export default function OpenGraphImage() {
             style={{
               height: 6,
               width: "100%",
-              background: SECONDARY,
+              background: BRAND.secondary,
             }}
           />
           <div

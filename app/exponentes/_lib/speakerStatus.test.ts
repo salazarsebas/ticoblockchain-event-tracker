@@ -27,8 +27,6 @@ describe("applyLiveStatus — event day", () => {
     expect(findSpeaker(result, "carlo-blasio").status).toBe("live");
     expect(findSpeaker(result, "ileana-atan-chan").status).toBe("live");
     expect(findSpeaker(result, "jose-miguel-alfaro").status).toBe("live");
-    // Niklas Lind is on Olanzo (10:55 — 11:20 escenario-2) — also live.
-    expect(findSpeaker(result, "niklas-lind").status).toBe("live");
     // WINK ended at 10:25 — Diego is past.
     expect(findSpeaker(result, "diego-loaiza-centeno").status).toBe("past");
   });
@@ -51,11 +49,9 @@ describe("applyLiveStatus — event day", () => {
     const result = applyLiveStatus(SPEAKERS, crDate("16:20"));
     expect(findSpeaker(result, "carlos-rene").status).toBe("live");
     expect(findSpeaker(result, "cristian-guillen").status).toBe("live");
-    // Roberto Ponce and Carlos R. Cerrato dropped off this panel per the latest
-    // agenda PDF — they remain confirmed event participants on time "Por
-    // anunciar" so they retain their seed "scheduled" status.
+    // Roberto Ponce remains a confirmed event participant on time "Por
+    // anunciar", so he retains his seed "scheduled" status.
     expect(findSpeaker(result, "roberto-ponce-romay").status).toBe("scheduled");
-    expect(findSpeaker(result, "carlos-r-cerrato").status).toBe("scheduled");
   });
 
   test("after the last keyed talk (19:00) — Por-anunciar speakers fall back to their seed status", () => {

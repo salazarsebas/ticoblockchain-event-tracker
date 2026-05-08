@@ -6,12 +6,14 @@ import { usePathname } from "next/navigation";
 import { NAV_LINKS, type NavLink } from "../lib/nav-links";
 import Icon from "./Icon";
 
-// Nav height is a three-site contract — Tailwind v4 JIT needs static class
-// strings, so the raw `72px` is duplicated across the call sites below.
-// When changing the height, update ALL THREE:
+// Nav height is a four-site contract — Tailwind v4's CSS pipeline tree-shakes
+// custom CSS variables that aren't registered theme tokens, so the raw `72px`
+// is duplicated across the call sites below.
+// When changing the height, update ALL FOUR:
 //   1. NAV_HEIGHT here (inner row height)
-//   2. the backdrop's `top-[72px]` on the {menuOpen && <div />} further down
-//   3. `pt-[72px]` in app/layout.tsx on the div wrapping {children}
+//   2. the backdrop's `top: calc(72px + ...)` on the {menuOpen && <div />} below
+//   3. `pt-[calc(72px+env(safe-area-inset-top))]` in app/layout.tsx
+//   4. `top-[72px]` in app/agenda/_components/DualTrackTimeline.tsx (sticky header)
 // 72px fits a 44px min-h button + breathing room.
 const NAV_HEIGHT = "h-[72px]";
 

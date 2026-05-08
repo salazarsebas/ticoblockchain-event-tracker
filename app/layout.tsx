@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import { BRAND } from "./data/brand-colors";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbf9f5",
+  themeColor: BRAND.surface,
   // Let the app paint into the iOS notch / Dynamic Island area so safe-area
   // insets actually resolve to a non-zero value. Without this, env(safe-area-*)
   // always returns 0 on iPhones and fixed elements would still clip.

@@ -1,43 +1,39 @@
 import type { Speaker } from "./types";
 
-// Confirmed speakers for TicoBlockchain 2026 — 14 MAYO.
-// Ordered chronologically by appearance, with "Por anunciar" at the tail.
+// Source of truth: ticoblockchain.cr Speakers section (May 14, 2026 lineup).
+// Confirmed roster — 54 speakers as published by the client. Ordered by:
+//   1. Agenda time (chronological).
+//   2. "Por anunciar" tail — speakers without a pinned slot. They keep their
+//      seed status and never auto-flip during the event because no session row
+//      matches "Por anunciar".
 //
-// Portrait URLs are pulled from the official ticoblockchain.cr site
+// Portrait URLs are pulled from the official site CDN
 // (cdn.prod.website-files.com). Whitelisted in next.config.ts.
 
 const CDN = "https://cdn.prod.website-files.com/6744c862a5d9324c919d6b4d";
 
-// Official portraits — one per confirmed speaker on ticoblockchain.cr
-const IMG_DIEGO_LOAIZA = `${CDN}/67d6c54fe994495169f9271e_Diego%20Loaiza%20Centeno%202.avif`;
-const IMG_KARLA_CORDOBA = `${CDN}/675c37edeca90d4c739eee46_KarlaC_JTS-22%20(p).avif`;
-const IMG_ROGELIO_MARTINEZ = `${CDN}/69b1647566e862a48f42e86e_rogelio%20martinez.jpg`;
-const IMG_JADDY_FERNANDEZ = `${CDN}/69b164ddcdb2ae14a989d05a_Jaddy%20Fernandez.jpg`;
-const IMG_STEPHANIE_SANCHEZ = `${CDN}/67dd4ba9bd7e331b594ea0bf_Screenshot4.avif`;
-const IMG_JOSE_MIGUEL_ZAMORA = `${CDN}/675c3780bd959b632317034d_jose%20miguel%20zamora.avif`;
-const IMG_ROBERTO_PONCE = `${CDN}/69b165f3ed6981db28554231_roberto%20ponce%20romay.jpg`;
-const IMG_CARLOS_RENE = `${CDN}/69adda1a8b7cb04006a35843_Carlos.png`;
-const IMG_ANDY_GUZMAN = `${CDN}/69b1632ad8361e61e604f16a_Andy%20Guzman.jpeg`;
-const IMG_JORGE_MORA = `${CDN}/69b166db6b3cda83debb0b55_jorge%20mora%20flores.jpg`;
-
-// Speakers without a real portrait on the official site — official site
-// uses a generic placeholder for these as well.
+// Generic placeholder used when the official site does not show a real
+// portrait for a confirmed speaker (e.g. roberto-grella), or when the
+// site's photo attribution is ambiguous.
 const IMG_TBA = `${CDN}/67e29d86c819abd198b2e8cc_Screenshot%20(25).avif`;
 
 export const SPEAKERS: readonly Speaker[] = [
+  // ─── 09:15 — Keynote VISA ───
   {
     id: "rodrigo-barros-de-paula",
     name: "Rodrigo Barros de Paula",
-    org: "VISA",
+    org: "VP of Products · VISA Centroamérica & Caribe",
     talk:
       "Tendencias de Pago y la Modernización del Ecosistema de Servicios Financieros",
     time: "09:15 — 09:55",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f6271c4264d974a7e8f714_rodrigo.png`,
     linkedinUrl:
       "https://www.linkedin.com/in/rodrigo-barros-de-paula-b243ba4/",
   },
+
+  // ─── 10:00 — Sponsor slots (Wink + Nimiq) ───
   {
     id: "diego-loaiza-centeno",
     name: "Diego Loaiza Centeno",
@@ -46,18 +42,22 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "10:00 — 10:25",
     stage: "main",
     status: "live",
-    imageUrl: IMG_DIEGO_LOAIZA,
+    imageUrl: `${CDN}/67d6c54fe994495169f9271e_Diego%20Loaiza%20Centeno%202.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/diego-loaiza-a4561027/",
   },
   {
     id: "ricardo-barquero",
     name: "Ricardo Barquero",
-    org: "Nimiq",
+    org: "Communications Manager @ Nimiq",
     talk: "Crea una Crypto App y gana hasta $10k con Nimiq",
     time: "10:00 — 10:25",
     stage: "escenario-2",
     status: "live",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f6323e348244fb7e89fa16_Ricardo%20Barquero%20Carranza.png`,
+    linkedinUrl: "https://www.linkedin.com/in/ricardo-barquero/",
   },
+
+  // ─── 10:55 — Perspectivas de Inversión 2026 (panel main) ───
   {
     id: "karla-cordoba-brenes",
     name: "Karla Córdoba Brenes",
@@ -66,66 +66,57 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "10:55 — 11:35",
     stage: "main",
     status: "next",
-    imageUrl: IMG_KARLA_CORDOBA,
-    linkedinUrl: "https://cr.linkedin.com/in/muguika",
+    imageUrl: `${CDN}/675c37edeca90d4c739eee46_KarlaC_JTS-22%20(p).avif`,
+    linkedinUrl: "https://www.linkedin.com/in/muguika",
   },
   {
     id: "walter-montes",
     name: "Walter Montes",
-    org: "TriGen Ventures / Octus",
+    org: "Angel Investor · Engineering Director @ Octus",
     talk: "Perspectivas de Inversión 2026 (Panel)",
     time: "10:55 — 11:35",
     stage: "main",
     status: "next",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69dfe2458c10e3dbe5207908_Walter%20Montes.png`,
     linkedinUrl: "https://www.linkedin.com/in/waltermontes/",
   },
   {
     id: "carlo-blasio",
     name: "Carlo Blasio",
-    org: "InstaCredit Ventures",
+    org: "Venture Capital @ InstaCredit",
     talk: "Perspectivas de Inversión 2026 (Panel)",
     time: "10:55 — 11:35",
     stage: "main",
     status: "next",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f62adf06eece1d1ee43884_c%20arlos.png`,
     linkedinUrl: "https://www.linkedin.com/in/cblasio/",
   },
   {
     id: "ileana-atan-chan",
     name: "Ileana Atán Chan",
-    org: "BN Fondos",
+    org: "General Manager @ BN Fondos",
     talk: "Perspectivas de Inversión 2026 (Panel)",
     time: "10:55 — 11:35",
     stage: "main",
     status: "next",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69fccea6166af72c5f9f49eb_Screenshot%20(8).png`,
     linkedinUrl:
       "https://www.linkedin.com/in/ileana-atan-chan-abb1714a/",
   },
   {
     id: "jose-miguel-alfaro",
     name: "José Miguel Alfaro",
-    org: "iitos",
+    org: "Partner @ iitos",
     talk: "Perspectivas de Inversión 2026 (Panel)",
     time: "10:55 — 11:35",
     stage: "main",
     status: "next",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f62fb27621c1fce04b1453_Jos%C3%A9%20Miguel%20Alfaro.png`,
     linkedinUrl:
       "https://cr.linkedin.com/in/jos%C3%A9-miguel-alfaro-g%C3%B3mez-6a491529",
   },
-  {
-    id: "niklas-lind",
-    name: "Niklas Lind",
-    org: "COO @ Olanzo",
-    talk: "Fintech for Good / Pagos Digitales",
-    time: "10:55 — 11:20",
-    stage: "escenario-2",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
-    linkedinUrl: "https://www.linkedin.com/in/niklaslind/",
-  },
+
+  // ─── 11:40 — Fintech for Good ───
   {
     id: "steven-cabrera",
     name: "Steven Cabrera",
@@ -134,13 +125,14 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "11:40 — 12:05",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
-    linkedinUrl: "https://www.linkedin.com/in/stevencabrera/",
+    imageUrl: `${CDN}/69dfdfe396fe7ef28d86f859_Steven%20Cabrera.jpeg`,
   },
+
+  // ─── 12:10 — Regen District ───
   {
     id: "franz-tunez",
     name: "Franz Tuñez",
-    org: "Net X Gen",
+    org: "CEO & Co-founder @ NetX Gen",
     talk: "Regen District en Próspera",
     time: "12:10 — 12:35",
     stage: "main",
@@ -148,6 +140,8 @@ export const SPEAKERS: readonly Speaker[] = [
     imageUrl: IMG_TBA,
     linkedinUrl: "https://www.linkedin.com/in/francisco-tu%C3%B1ez/",
   },
+
+  // ─── 12:40 — Privacidad Programable ───
   {
     id: "andy-guzman-toledo",
     name: "Andy Guzmán Toledo",
@@ -157,9 +151,11 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "12:40 — 13:05",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_ANDY_GUZMAN,
+    imageUrl: `${CDN}/69b1632ad8361e61e604f16a_Andy%20Guzman.jpeg`,
     linkedinUrl: "https://www.linkedin.com/in/andyguzmantoledo/",
   },
+
+  // ─── 13:10 — Del Código a la Ley ───
   {
     id: "stephanie-sanchez",
     name: "Stephanie Sánchez",
@@ -168,25 +164,30 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "13:10 — 13:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_STEPHANIE_SANCHEZ,
+    imageUrl: `${CDN}/67dd4ba9bd7e331b594ea0bf_Screenshot4.avif`,
     linkedinUrl:
       "https://www.linkedin.com/in/stephanie-s%C3%A1nchez-misscryptolawyer-b512aa14b/",
   },
+
+  // ─── 13:35 — Keynote Sovra (Anti-corrupción) ───
   {
     id: "chuy-cepeda",
     name: 'Jesús "Chuy" Cepeda',
-    org: "Sovra.io",
+    org: "Co-founder & CSO @ Sovra",
     talk: "Blockchain como Herramienta Anticorrupción en Costa Rica",
     time: "13:35 — 14:15",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69dfd56f01845b6f1e8af5df_chuy%20cepeda.jpg`,
     linkedinUrl: "https://www.linkedin.com/in/chuycepeda/",
+    companyUrl: "https://chuycepeda.com",
   },
+
+  // ─── 14:20 — Charla Citi ───
   {
     id: "carolina-marino",
     name: "Carolina Mariño",
-    org: "Citi",
+    org: "LATAM Client & Market Integration Head · Citi",
     talk: "Charla Citi — Digital Assets y Pagos Tokenizados",
     time: "14:20 — 14:45",
     stage: "main",
@@ -195,32 +196,34 @@ export const SPEAKERS: readonly Speaker[] = [
     linkedinUrl:
       "https://www.linkedin.com/in/carolina-mari%C3%B1o-rehbein-b0796a65/",
   },
+
+  // ─── 14:50 — Pagos y Stablecoins (panel main) ───
   {
     id: "javier-buitrago",
     name: "Javier Buitrago",
-    org: "Cámara Fintech de Panamá",
+    org: "Co-founder · Cámara Fintech de Panamá",
     talk: "Pagos y Stablecoins (Moderador)",
     time: "14:50 — 15:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f62ded5913d16a699d9f0c_Javier%20Buitrago.png`,
     linkedinUrl: "https://www.linkedin.com/in/jbuitrago/",
   },
   {
     id: "daniel-calderon-serna",
     name: "Daniel Calderón Serna",
-    org: "VISA",
+    org: "Business Development Manager · VISA Centroamérica & Caribe",
     talk: "Pagos y Stablecoins (Panel)",
     time: "14:50 — 15:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/67d6c61eee11dca78ec6021b_Screenshot2.avif`,
     linkedinUrl: "https://cr.linkedin.com/in/daniel-calder%C3%B3n-ey",
   },
   {
     id: "renato-carvajal",
     name: "Renato Carvajal",
-    org: "Teledólar",
+    org: "Regional Commercial Head · Teledólar — Monis",
     talk: "Pagos y Stablecoins (Panel)",
     time: "14:50 — 15:30",
     stage: "main",
@@ -231,12 +234,12 @@ export const SPEAKERS: readonly Speaker[] = [
   {
     id: "jorge-neyra",
     name: "Jorge Neyra",
-    org: "Cámara Fintech Panamá",
+    org: "Vice President · Cámara Fintech Panamá",
     talk: "Pagos y Stablecoins (Panel)",
     time: "14:50 — 15:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f62ee8784d9fb985d57099_Jorge%20Neyra.png`,
     linkedinUrl:
       "https://www.linkedin.com/in/jorge-adan-neyra-loaisiga-794a49125/",
   },
@@ -248,64 +251,77 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "14:50 — 15:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69fccf2b23ed1b3481f61906_Screenshot%20(9).png`,
     linkedinUrl: "https://www.linkedin.com/in/karol-zuniga-516922177/",
   },
+
+  // ─── 14:55 — IoT / Obra Pública (esc-2) ───
   {
     id: "juan-alejandro-herrera",
     name: "Juan Alejandro Herrera",
-    org: "Contraloría General de la República",
+    org: "Asesor · Contraloría General de la República",
     talk: "Red de Monitoreo de Obra Pública — IoT, IA y Blockchain",
     time: "14:55 — 15:15",
     stage: "escenario-2",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f636d45ccf95fbb0e40b55_Juan%20Alejandro%20Herrera%20L%C3%B3pez.png`,
     linkedinUrl: "https://www.linkedin.com/in/alejandro-herreracr/",
   },
+
+  // ─── 15:15 — Identidad Digital (esc-2) ───
   {
     id: "andres-gomez",
     name: "Andrés Gómez",
-    org: "Sakundi",
+    org: "CEO & Co-founder @ Sakundi",
     talk: "Identidad Digital en Blockchain — Privacidad y Regulación",
     time: "15:15 — 15:35",
     stage: "escenario-2",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/67b70e12f953d3095dc31151_WhatsApp%20Image%202025-02-19%20at%2012.54.12.avif`,
     linkedinUrl:
       "https://www.linkedin.com/in/andres-gomez-ramirez-bb7226156/",
   },
+
+  // ─── 16:00 — Agentes Autónomos (panel main) ───
   {
     id: "carlos-rene",
     name: "Carlos René",
-    org: "CEO & Founder @ DESA",
+    org: "CEO & Founder @ DEGA",
     talk: "Agentes Autónomos (Panel)",
     time: "16:00 — 16:40",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_CARLOS_RENE,
+    imageUrl: `${CDN}/69adda1a8b7cb04006a35843_Carlos.png`,
+    linkedinUrl: "https://www.linkedin.com/in/ccerrato147/",
+    companyUrl: "https://www.dega.org/",
   },
   {
     id: "cristian-guillen",
     name: "Cristian Guillén",
-    org: "Por anunciar",
+    org: "Advisory Delivery Consultant @ IBM",
     talk: "Agentes Autónomos (Panel)",
     time: "16:00 — 16:40",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69fccde3a48d091d953d89b8_Cristian%20Guillen.jpeg`,
+    linkedinUrl: "https://www.linkedin.com/in/cristian-guillen-men/",
   },
+
+  // ─── 16:30 — Convergencia AI/Blockchain/Quantum (esc-2) ───
   {
     id: "ranulfo-paiva-barbosa",
     name: "Ranulfo Paiva Barbosa",
-    org: "CofiBlocks",
+    org: "Co-founder @ CofiBlocks",
     talk:
       "Convergencia: Cuando Agentes AI, Blockchain y Quantum Computing Crean (y Pueden Destruir) Riqueza",
     time: "16:30 — 16:55",
     stage: "escenario-2",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/67d6c44f3308e481191fce7a_1516577422716.jpg`,
     linkedinUrl: "https://www.linkedin.com/in/ranulfosobrinho/",
   },
+
+  // ─── 16:45 — PANEL FIA (panel main) ───
   {
     id: "jose-miguel-zamora",
     name: "José Miguel Zamora Barquero",
@@ -314,175 +330,174 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_JOSE_MIGUEL_ZAMORA,
+    imageUrl: `${CDN}/675c3780bd959b632317034d_jose%20miguel%20zamora.avif`,
     linkedinUrl: "https://www.linkedin.com/in/jose-miguel-z-52638932/",
   },
   {
     id: "rafael-robinson",
     name: "Rafael Robinson",
-    org: "Cámara Fintech Panamá",
+    org: "President · Cámara Fintech Panamá",
     talk: "PANEL FIA — Ecosistemas Regional (Panel)",
     time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f6302b31a22f075107680b_Rafael%20Robinson.png`,
     linkedinUrl:
-      "https://www.linkedin.com/in/rafael-robinson-380b2626/",
+      "https://www.linkedin.com/in/rafael-robinson-85013264/",
   },
   {
     id: "enrique-galdamez",
     name: "Enrique Galdámez",
-    org: "Fintech Guatemala",
+    org: "Executive Director · Fintech Association of Guatemala",
     talk: "PANEL FIA — Ecosistemas Regional (Panel)",
     time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f62d0c5b614afed62689dc_Enrique%20Gald%C3%A1mez.png`,
     linkedinUrl: "https://www.linkedin.com/in/enriquegaldamez28/",
   },
+
+  // ─── 17:00 — Finanzas Regenerativas (esc-2) ───
   {
     id: "stefan-fiedler",
     name: "Stefan Fiedler",
-    org: "ReFi Costa Rica",
+    org: "Co-Director @ ReFi Costa Rica",
     talk: "Sobre el Ecosistema de Finanzas Regenerativas",
     time: "17:00 — 17:25",
     stage: "escenario-2",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f6362260eea17234867b6b_Stefan%20Fiedler%20Alvarado.png`,
     linkedinUrl:
       "https://www.linkedin.com/in/stefan-fiedler-alvarado-0269a0178/",
   },
-  // Por anunciar — confirmed speakers without a pinned slot. They keep their
-  // seed status and never auto-flip during the event because no session row
-  // matches "Por anunciar".
+
+  // ─── 17:30 — Ecosistemas y CRTW (closing panel main) ───
+  // Karla & José Miguel are duplicated entries: they're already anchored
+  // to earlier panels (10:55 and 16:45 respectively), and we need a second
+  // entry to auto-flip them live again at 17:30 since each Speaker can only
+  // hold one `time` value.
+  {
+    id: "karla-cordoba-brenes-cierre",
+    name: "Karla Córdoba Brenes",
+    org: "Presidenta @ AsoBlockchain",
+    talk: "Ecosistemas y CRTW (Panel)",
+    time: "17:30 — 17:55",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/675c37edeca90d4c739eee46_KarlaC_JTS-22%20(p).avif`,
+    linkedinUrl: "https://www.linkedin.com/in/muguika",
+  },
+  {
+    id: "jose-miguel-zamora-cierre",
+    name: "José Miguel Zamora Barquero",
+    org: "Presidente @ AsoFintech",
+    talk: "Ecosistemas y CRTW (Panel)",
+    time: "17:30 — 17:55",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/675c3780bd959b632317034d_jose%20miguel%20zamora.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/jose-miguel-z-52638932/",
+  },
+  {
+    id: "nelson-irias",
+    name: "Nelson Irías",
+    org: "Por confirmar",
+    talk: "Ecosistemas y CRTW (Panel)",
+    time: "17:30 — 17:55",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: IMG_TBA,
+  },
+
+  // ─── Por anunciar — speakers confirmed on the official site without
+  //     a pinned slot in sessions.ts. Each gets a solo card on /exponentes.
   {
     id: "rogelio-martinez",
     name: "Rogelio Martínez",
-    org: "Inversor Ángel · Fundador @ Blockchain Guard Labs",
+    org: "Angel Investor · Founder @ BlockchainGuard",
     talk: "Pitch Session",
     time: "Por anunciar",
-    stage: "escenario-2",
+    stage: "main",
     status: "scheduled",
-    imageUrl: IMG_ROGELIO_MARTINEZ,
+    imageUrl: `${CDN}/69b1647566e862a48f42e86e_rogelio%20martinez.jpg`,
+    linkedinUrl: "https://www.linkedin.com/in/rogeliomartinez/",
   },
   {
     id: "jaddy-fernandez",
     name: "Jaddy Fernández",
-    org: "Alianzas Estratégicas @ LNET Global (Perú)",
-    talk: "Tokenización y Agronegocios — Credenciales Digitales",
+    org: "Strategic Alliances · LNET Global",
+    talk: "Web3 y Agronegocios — Credenciales Digitales",
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_JADDY_FERNANDEZ,
+    imageUrl: `${CDN}/69b164ddcdb2ae14a989d05a_Jaddy%20Fernandez.jpg`,
+    linkedinUrl: "https://www.linkedin.com/in/jaddyfernandez/",
   },
   {
     id: "roberto-ponce-romay",
     name: "Roberto Ponce Romay",
     org: "Managing Director @ Invermaster Ventures",
-    talk: "Agentes Autónomos en Cripto (Panel)",
+    talk: "Agentes Autónomos en Cripto",
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_ROBERTO_PONCE,
+    imageUrl: `${CDN}/69b165f3ed6981db28554231_roberto%20ponce%20romay.jpg`,
     linkedinUrl: "https://www.linkedin.com/in/ponceromay/",
     companyUrl: "https://www.invermaster.com/",
   },
   {
-    id: "carlos-r-cerrato",
-    name: "Carlos R. Cerrato",
-    org: "DEGA",
-    talk: "Agentes Autónomos en Cripto (Panel)",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
-    linkedinUrl: "https://www.linkedin.com/in/ccerrato147/",
-    companyUrl: "https://www.dega.org/",
-  },
-  {
-    id: "rodolfo-grella",
-    name: "Rodolfo Grella",
+    id: "roberto-grella",
+    name: "Roberto Grella",
     org: "Fintech Uruguay",
-    talk: "Ecosistema Regional (Panel)",
+    talk: "Ecosistema Regional Fintech",
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
     imageUrl: IMG_TBA,
-    linkedinUrl: "https://www.linkedin.com/in/rodolfo-grela-0992b514/",
   },
   {
     id: "diego-perez",
     name: "Diego Perez",
-    org: "AB Fintechs / Global Fintech Alliance",
-    talk: "Panel FIA — Ecosistema Regional",
-    time: "Por anunciar",
+    org: "Board Member · ABFintechs",
+    talk: "PANEL FIA — Ecosistemas Regional (Panel)",
+    time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69f62c803aea82102c7fc3b5_Diego%20Perez.png`,
     linkedinUrl: "https://www.linkedin.com/in/diegoperezsmu/",
-  },
-  {
-    id: "ricardo-irias",
-    name: "Ricardo Irías",
-    org: "Asociación Fintech Honduras",
-    talk: "Panel FIA — Ecosistema Regional",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
-    linkedinUrl: "https://www.linkedin.com/in/ricardo-irias/",
   },
   {
     id: "narve-hansen",
     name: "Narve Hansen",
-    org: "DeepXL",
-    talk: "Ciberseguridad / IA / Prevención de Fraude",
+    org: "COO @ Mayanor Ventures · CEO LATAM",
+    talk: "Métodos de Pago — Experiencia Nórdica & Oportunidades SINPE",
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/67c840d49bf384a22f7e1895_Narve%20Hansen.avif`,
     linkedinUrl: "https://www.linkedin.com/in/narveh/",
-    companyUrl: "https://deepxl.ai/",
   },
   {
-    id: "rocelo-lopes",
-    name: "Rocelo Lopes",
-    org: "Truther",
-    talk: "Stablecoins (Potencial Keynote)",
+    id: "gianina-redondo",
+    name: "Gianina Redondo",
+    org: "Project Manager @ Ncubo",
+    talk: "Agentes Autónomos y Dinero Digital",
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
-  },
-  {
-    id: "geaninna-redondo",
-    name: "Geaninna Redondo",
-    org: "Panelista",
-    talk: "Agentes Autónomos en Cripto (Panel)",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/69fcea8335e1df81f740c852_Geaninna%20Redondo.jpeg`,
   },
   {
     id: "pamela-mendez",
     name: "Pamela Méndez",
-    org: "Sugeval",
-    talk: "Innovación",
+    org: "Centro de Innovación Financiera (CIF)",
+    talk: "Innovación Financiera",
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
-  },
-  {
-    id: "francisco-carvalho",
-    name: "Francisco Carvalho",
-    org: "Blockchain Rio",
-    talk: "Por anunciar",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: `${CDN}/67dd4bac670368a65e2a96a4_Foto%20Pamela%20M%C3%A9ndez.avif`,
+    linkedinUrl:
+      "https://www.linkedin.com/in/pamela-m%C3%A9ndez-rodr%C3%ADguez-267065242/",
   },
   {
     id: "jorge-mora-flores",
@@ -492,6 +507,197 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "Por anunciar",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_JORGE_MORA,
+    imageUrl: `${CDN}/69b166db6b3cda83debb0b55_jorge%20mora%20flores.jpg`,
+    linkedinUrl: "https://www.linkedin.com/in/jorgemoraflores/",
+  },
+
+  // ─── New additions from the official site (May 2026 confirmation pass) ───
+  {
+    id: "ljubica-vodanovic",
+    name: "Dra. Ljubica Vodanovic",
+    org: "Founding Partner @ Vodanovic",
+    talk: "Open Finance",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d32d08ea0f8f29e863710f_Ljubica%20Vodanovic.%20Foto%20(003)1.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/ljubicavodanovic/",
+  },
+  {
+    id: "carlos-jose-pardo",
+    name: "Carlos José Pardo",
+    org: "General Manager · VISA Costa Rica",
+    talk: "Pagos Digitales",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/69f62b57dd7cdadd0f7f10ba_Screenshot12.png`,
+    linkedinUrl:
+      "https://www.linkedin.com/in/carlos-jos%C3%A9-pardo-32819162/",
+  },
+  {
+    id: "diego-szteinhendler",
+    name: "Diego Szteinhendler",
+    org: "SVP Fintechs · Mastercard LATAM & Caribe",
+    talk: "Innovación en Pagos Digitales",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d6c74b67d27d30b8d2be12_Diego%20Szteinhendler_Color%20MASTERCARD.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/dsztein/",
+  },
+  {
+    id: "edgar-fernandez",
+    name: "Edgar Fernandez",
+    org: "Partner @ Edenia",
+    talk: "Por anunciar",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d6c6b5f2037b1bb6272de8_Screenshot3.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/edgarafernandez/",
+  },
+  {
+    id: "esteban-rodriguez",
+    name: "Esteban Rodríguez",
+    org: "Essets",
+    talk: "Custodia Digital",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67dd4bd095e8dcb7a13e20ed_Screenshot5.avif`,
+  },
+  {
+    id: "jonathan-chaverri",
+    name: "Jonathan Chaverri",
+    org: "Dojo Coding",
+    talk: "Democracia Inteligente — IA en la Participación Ciudadana",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67c9f52a89d7441bf1109307_jonatan%20chaverri.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/jonatan-chaverri/",
+  },
+  {
+    id: "kimberly-rosales",
+    name: "Kimberly Rosales",
+    org: "CEO @ ChainMyne",
+    talk: "Empoderando la Revolución de Activos Digitales desde Costa Rica",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67ba1ab98a1ade4bcb3625a1_WhatsApp%20Image%202025-02-21%20at%2019.28.0333.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/kimberly-rosales",
+  },
+  {
+    id: "luiz-hadad",
+    name: "Luiz Hadad",
+    org: "Surfer & Community Builder · Gnars DAO",
+    talk: "Surf y Creator Economy",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/675c38176e38fabcd015d982_Luiz%20Hadad%20(p).avif`,
+    linkedinUrl: "https://www.linkedin.com/in/luiz-hadad/",
+  },
+  {
+    id: "marcela-ledezma",
+    name: "Marcela Ledezma",
+    org: "Senior Business Development · Novopayment Centroamérica",
+    talk: "Por anunciar",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d6c864de4010172fc4824a_Marcela%20Ledezma.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/marcelaledezmac/",
+  },
+  {
+    id: "mauricio-arroyo-herrera",
+    name: "Mauricio Arroyo Herrera",
+    org: "Profesor-Investigador · TEC Costa Rica",
+    talk: "Tokenización Inmobiliaria para la Revitalización Urbana",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/675c378013a7e92e5184d19a_mauricio%20tec.avif`,
+    linkedinUrl: "https://linkedin.com/in/mauricio-arroyo-8500b81a",
+  },
+  {
+    id: "moncho-santos-dios",
+    name: "Moncho Santos Dios",
+    org: "CTO @ Cumulo Pro",
+    talk: "Blockchain Modular",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/675c3780221e713e405860f9_Mon%20Cumulo%20Pro.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/santosdios/",
+  },
+  {
+    id: "randall-barquero",
+    name: "Randall Barquero",
+    org: "Partner @ Consortium Legal · Board @ AsoFintech",
+    talk: "Regulación Fintech — Estado Actual y Perspectivas",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d029a93702b2c591a8ce34_Randall%20Barquero%202025.avif`,
+    linkedinUrl: "https://linkedin.com/in/randall-barquero",
+  },
+  {
+    id: "robert-ramirez-marin",
+    name: "Robert Ramirez Marín",
+    org: "Founder @ Hallos",
+    talk: "Democracia Inteligente — IA en la Participación Ciudadana",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67cb060e5820a5db37452f07_WhatsApp%20Image%202025-03-07%20at%2000.35.57.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/robert-ramirez-marin/",
+  },
+  {
+    id: "roberto-cruz-volio",
+    name: "Roberto Cruz Volio",
+    org: "Business Development @ Nimiq",
+    talk: "Por anunciar",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/675c378025042df1cd38da4e_roberto%20cruz%20volio.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/roberto-cruz-7b2ab4246/",
+  },
+  {
+    id: "soren-azorian",
+    name: "Soren Azorian",
+    org: "CEO @ Redline Blockchain",
+    talk:
+      "Revolucionando las Finanzas con Blockchain, Tokenización y Activos Digitales",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d8109660a124c3ab80f7f6_Screenshot%20(25).avif`,
+    linkedinUrl: "https://www.linkedin.com/in/sorenazorian/",
+  },
+  {
+    id: "steven-clarke-martin",
+    name: "Steven Clarke-Martin",
+    org: "CEO & Founder @ Tesseras Labs",
+    talk:
+      "Dos Tokens, Un Futuro — La Evolución de la Tokenización de Activos del Mundo Real",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67dd4ba8174803d74af9b2c6_steven%20clarke.avif`,
+    linkedinUrl: "https://www.linkedin.com/in/stevenclarkemartin/",
+  },
+  {
+    id: "leonardo-barquero",
+    name: "Leonardo Barquero",
+    org: "Market Development Leader · Mastercard Centroamérica",
+    talk: "Pagos Digitales y Transformación Financiera",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/67d810501b1da69a3254d8a4_Screenshot%20(24).avif`,
   },
 ] as const;
