@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   title: "Sponsors",
   description:
-    "Patrocinadores oficiales de TicoBlockchain 2026 — Diamante, Oro, Plata, Startup, Comunidad y Aliados: las marcas que sostienen el ecosistema blockchain de Costa Rica.",
+    "Patrocinadores oficiales de TicoBlockchain 2026 — Diamante, Oro, Plata, Startup, Comunidad, Aliados, Media Partners y Patrocinador del Coctel Oficial: las marcas que sostienen el ecosistema blockchain de Costa Rica.",
   alternates: {
     canonical: "/sponsors",
   },
@@ -107,12 +107,34 @@ const TIER_STYLES: Record<SponsorTier, TierStyle> = {
     digit: "text-5xl md:text-6xl text-primary",
     label: "text-xl md:text-2xl text-primary",
     caption: "text-primary",
-    containerSpacing: "",
+    containerSpacing: "mb-20 md:mb-24",
+    tileBg: "bg-surface-container-low",
+    tileHeight: "h-40 md:h-44",
+    tilePadding: "p-8",
+    tileBorder: "",
+    gridCols: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  },
+  media: {
+    digit: "text-5xl md:text-6xl text-primary",
+    label: "text-xl md:text-2xl text-primary",
+    caption: "text-primary",
+    containerSpacing: "mb-20 md:mb-24",
     tileBg: "bg-surface-container-low",
     tileHeight: "h-40 md:h-44",
     tilePadding: "p-8",
     tileBorder: "",
     gridCols: "grid-cols-1 sm:grid-cols-2",
+  },
+  coctel: {
+    digit: "text-6xl md:text-7xl text-primary",
+    label: "text-2xl md:text-3xl text-primary",
+    caption: "text-primary",
+    containerSpacing: "",
+    tileBg: "bg-surface-container-lowest",
+    tileHeight: "h-44 md:h-48",
+    tilePadding: "p-10",
+    tileBorder: "border-2 border-primary/60",
+    gridCols: "grid-cols-1",
   },
 };
 
