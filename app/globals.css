@@ -392,6 +392,17 @@ textarea:focus-visible,
   }
 }
 
+/* One-shot landing pulse for deep-linked agenda sessions. Animates
+   outline-color (not border) so it never fights the live-state's
+   `animate-border-breathe`. Inset outline sits 4px inside the card edge
+   so it reads as a deliberate accent, not a stray ring around the box. */
+@keyframes session-pulse {
+  0%   { outline-color: transparent; }
+  18%  { outline-color: var(--color-secondary); }
+  72%  { outline-color: color-mix(in srgb, var(--color-secondary) 55%, transparent); }
+  100% { outline-color: transparent; }
+}
+
 /* Utility classes for animations */
 .animate-fade-up {
   animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -447,6 +458,12 @@ textarea:focus-visible,
 
 .animate-menu-slide-down {
   animation: menu-slide-down 0.2s ease-out both;
+}
+
+.animate-session-pulse {
+  animation: session-pulse 2.5s ease-out 1;
+  outline: 4px solid transparent;
+  outline-offset: -4px;
 }
 
 /* Stagger delay helpers via inline --delay */

@@ -154,7 +154,7 @@ export default function HeroDuring({
 
         {mainLive && (
           <Link
-            href="/agenda?stage=main"
+            href={`/agenda?stage=main#session-${mainLive.id}`}
             className="block mb-5 pb-5 border-b-2 border-primary/15 group animate-fade-up stagger-3"
             aria-label={`Ahora en ${mainLive.stage === "main" ? "Main Stage" : "ambos escenarios"}: ${mainLive.title}`}
           >

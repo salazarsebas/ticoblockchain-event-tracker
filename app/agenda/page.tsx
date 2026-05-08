@@ -10,6 +10,7 @@ import type { Stage } from "../data/types";
 import AgendaToolbar from "./_components/AgendaToolbar";
 import DualTrackTimeline from "./_components/DualTrackTimeline";
 import JumpToNow from "./_components/JumpToNow";
+import SessionFocus from "./_components/SessionFocus";
 import { groupByTimeSlot } from "./_lib/groupSessions";
 
 // ISR-cached for 10s at the edge. LiveRefresh invalidates client-side at
@@ -144,6 +145,9 @@ export default async function AgendaPage({
 
       {/* Floating jump-to-now (client) */}
       <JumpToNow />
+
+      {/* Deep-link focus: opens <details> + pulses the targeted session */}
+      <SessionFocus />
     </main>
   );
 }

@@ -30,7 +30,7 @@ export default function AgendaPreviewRow({
 
   return (
     <Link
-      href={agendaHrefForStage(session.stage)}
+      href={`${agendaHrefForStage(session.stage)}#session-${session.id}`}
       aria-label={`Ver en agenda: ${session.title}`}
       className={`group relative block py-3 border-b border-primary/10 border-l-[3px] border-l-transparent pl-4 -ml-4 hover:border-l-secondary hover:translate-x-1 transition-all duration-200 cursor-pointer animate-fade-up ${staggerClass ?? ""}`}
     >

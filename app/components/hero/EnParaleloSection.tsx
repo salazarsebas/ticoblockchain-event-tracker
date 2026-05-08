@@ -56,7 +56,7 @@ export default function EnParaleloSection({
               )}
             </div>
             <Link
-              href="/agenda?stage=escenario-2"
+              href={`/agenda?stage=escenario-2#session-${distinctParallel.id}`}
               className="bg-secondary text-on-secondary px-6 py-3 sm:px-8 sm:py-4 font-display font-bold uppercase tracking-widest text-xs inline-flex items-center justify-center gap-2 btn-shine hover:scale-105 transition-transform duration-200 min-h-[48px] shrink-0"
             >
               <Icon name="north_east" size={14} />
@@ -113,7 +113,7 @@ export default function EnParaleloSection({
             </span>
           </div>
           <Link
-            href="/agenda?stage=escenario-2"
+            href={`/agenda?stage=escenario-2#session-${nextParallel.id}`}
             className="border-2 border-primary text-primary px-6 py-3 font-display font-bold uppercase tracking-widest text-xs inline-flex items-center gap-2 hover:bg-primary hover:text-on-primary transition-colors duration-200 min-h-[48px] shrink-0"
           >
             <Icon name="north_east" size={14} />

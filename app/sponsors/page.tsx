@@ -390,7 +390,7 @@ function SponsorActivity({
             return (
               <li key={session.id}>
                 <Link
-                  href={`/agenda${stageQuery}#${session.id}`}
+                  href={`/agenda${stageQuery}#session-${session.id}`}
                   className={`group flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 ${
                     variant === "diamante"
                       ? "hover:text-secondary-fixed-dim"
