@@ -87,7 +87,7 @@ export default function HeroBefore({
             </div>
             <div className="py-3 px-1 border-r border-on-primary/15">
               <div className="label-meta text-on-primary/50 mb-1">
-                Inicio
+                Check-in
               </div>
               <div className="mono-data text-base sm:text-xl md:text-2xl font-black text-on-primary tracking-tighter">
                 08:00
@@ -95,10 +95,10 @@ export default function HeroBefore({
             </div>
             <div className="py-3 px-1">
               <div className="label-meta text-on-primary/50 mb-1">
-                Venue
+                Inicio
               </div>
               <div className="mono-data text-base sm:text-xl md:text-2xl font-black text-on-primary tracking-tighter">
-                BARCELÓ
+                09:00
               </div>
             </div>
           </div>
