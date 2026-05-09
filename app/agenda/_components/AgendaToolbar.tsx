@@ -21,7 +21,6 @@ const CATEGORIES = [
   { id: "panel", label: "Panel" },
   { id: "pitch", label: "Pitch" },
   { id: "workshop", label: "Workshop" },
-  { id: "sponsor-slot", label: "Sponsor" },
 ] as const;
 
 export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
@@ -65,6 +64,20 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
       const isVisible = matchesQuery && matchesCategory;
       row.hidden = !isVisible;
       if (isVisible) visible++;
+
+      // Cell-level category filter: when a row has a panel-cell + a sponsor-
+      // cell at the same slot (e.g. Perspectivas + Olanzo at 10:55), the
+      // row matches "panel" via at-least-one — but the non-matching sponsor
+      // card was still rendering. Walk the row's session cells and hide
+      // any whose category isn't in the active filter set so only cells
+      // matching the chosen category remain visible.
+      const cells = row.querySelectorAll<HTMLElement>("[data-session-category]");
+      cells.forEach((cell) => {
+        const cellCategory = cell.getAttribute("data-session-category") ?? "";
+        const cellMatches =
+          activeCategories.size === 0 || activeCategories.has(cellCategory);
+        cell.style.display = cellMatches ? "" : "none";
+      });
     });
     setVisibleCount(visible);
   }, [query, activeCategories]);

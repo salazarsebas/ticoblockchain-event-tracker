@@ -87,7 +87,10 @@ export default function TimeSlotRow({ slot, staggerClass, singleStage = null }: 
           <div className="md:hidden mb-2">{timeLabel}</div>
 
           {showMain && (
-            <div className="flex flex-col">
+            <div
+              className="flex flex-col"
+              {...(slot.main ? { "data-session-category": slot.main.category } : {})}
+            >
               {/* Mobile-only stage label */}
               <div className="md:hidden label-meta font-bold text-secondary mb-1 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-secondary shrink-0" aria-hidden="true" />
@@ -109,7 +112,10 @@ export default function TimeSlotRow({ slot, staggerClass, singleStage = null }: 
           )}
 
           {showEsc2 && (
-            <div className="flex flex-col">
+            <div
+              className="flex flex-col"
+              {...(slot.escenario2 ? { "data-session-category": slot.escenario2.category } : {})}
+            >
               <div className="md:hidden label-meta font-bold text-primary mt-2 mb-1 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-primary shrink-0" aria-hidden="true" />
                 Escenario 2
