@@ -64,6 +64,10 @@ export default function HeroBefore({
             TICO
             <br />
             BLOCK
+            {/* Mobile-only break so BLOCKCHAIN doesn't split mid-word
+                ("BLOCKCHAI" / "N") on phones. From sm up the viewport is
+                wide enough that BLOCKCHAIN fits comfortably as one word. */}
+            <br className="sm:hidden" aria-hidden="true" />
             <span className="text-secondary">CHAIN</span>
           </h1>
           <div className="mono-data text-secondary font-black tracking-tighter text-4xl sm:text-6xl md:text-7xl lg:text-8xl mt-3 md:mt-5 animate-fade-up stagger-3">
