@@ -9,9 +9,9 @@ type SessionCardProps = {
 const CATEGORY_CHIP: Record<SessionCategory, { label: string; className: string } | null> = {
   keynote: { label: "KEYNOTE", className: "bg-secondary text-on-secondary" },
   panel: { label: "PANEL", className: "bg-primary text-on-primary" },
+  talk: { label: "CHARLA", className: "bg-surface-container-highest text-primary border border-primary" },
   pitch: { label: "PITCH", className: "bg-primary-container text-on-primary-container" },
   workshop: { label: "WORKSHOP", className: "bg-primary-container text-on-primary-container" },
-  "sponsor-slot": { label: "SPONSOR", className: "bg-surface-container-highest text-on-surface border border-outline-variant" },
   break: null,
   ceremony: null,
 };

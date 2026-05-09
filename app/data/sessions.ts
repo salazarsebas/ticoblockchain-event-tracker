@@ -51,7 +51,7 @@ export const SESSIONS: readonly Session[] = [
     description:
       "Un recorrido sin filtros por los retos reales de llevar servicios financieros a los no bancarizados, desde la óptica de un neobanco costarricense.",
     stage: "main",
-    category: "sponsor-slot",
+    category: "talk",
     status: "live",
   },
   {
@@ -63,7 +63,7 @@ export const SESSIONS: readonly Session[] = [
     description:
       "Construye una app de pagos peer-to-peer con Nimiq y compite por hasta $10k en premios.",
     stage: "escenario-2",
-    category: "sponsor-slot",
+    category: "workshop",
     status: "live",
   },
   {
@@ -95,7 +95,7 @@ export const SESSIONS: readonly Session[] = [
     description:
       "Infraestructura para pagos y liquidación on-chain.",
     stage: "escenario-2",
-    category: "sponsor-slot",
+    category: "workshop",
     status: "scheduled",
   },
   {
@@ -118,7 +118,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Steven Cabrera",
     speakerOrg: "Fundador @ Epark",
     stage: "main",
-    category: "panel",
+    category: "talk",
     status: "scheduled",
   },
   {
@@ -162,7 +162,7 @@ export const SESSIONS: readonly Session[] = [
       "Privacidad Programable — Ethereum como Infraestructura para el Sector Público",
     speakerName: "Andy Guzmán",
     stage: "main",
-    category: "panel",
+    category: "talk",
     status: "scheduled",
   },
   {
@@ -173,7 +173,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Stephanie Sánchez",
     speakerOrg: "Miss Crypto Lawyer",
     stage: "main",
-    category: "panel",
+    category: "talk",
     status: "scheduled",
   },
   {
@@ -197,7 +197,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Carolina Mariño",
     speakerOrg: "Citi",
     stage: "main",
-    category: "sponsor-slot",
+    category: "talk",
     status: "scheduled",
   },
   {
@@ -232,7 +232,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Juan Alejandro Herrera",
     speakerOrg: "Contraloría General de la República",
     stage: "escenario-2",
-    category: "panel",
+    category: "workshop",
     status: "scheduled",
   },
   {
@@ -243,7 +243,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Andrés Gómez",
     speakerOrg: "Sakundi",
     stage: "escenario-2",
-    category: "panel",
+    category: "workshop",
     status: "scheduled",
   },
   {
@@ -273,7 +273,7 @@ export const SESSIONS: readonly Session[] = [
     title: "SMART CITIES — Galileo",
     speakerOrg: "Galileo",
     stage: "escenario-2",
-    category: "panel",
+    category: "workshop",
     status: "scheduled",
   },
   {
@@ -285,7 +285,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Ranulfo Paiva Barbosa",
     speakerOrg: "CofiBlocks",
     stage: "escenario-2",
-    category: "panel",
+    category: "workshop",
     status: "scheduled",
   },
   {
@@ -309,7 +309,7 @@ export const SESSIONS: readonly Session[] = [
     speakerName: "Stefan Fiedler",
     speakerOrg: "ReFi Costa Rica",
     stage: "escenario-2",
-    category: "panel",
+    category: "workshop",
     status: "scheduled",
   },
   {

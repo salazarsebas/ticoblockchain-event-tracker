@@ -19,6 +19,7 @@ type StageId = (typeof STAGES)[number]["id"];
 const CATEGORIES = [
   { id: "keynote", label: "Keynote" },
   { id: "panel", label: "Panel" },
+  { id: "talk", label: "Charla" },
   { id: "pitch", label: "Pitch" },
   { id: "workshop", label: "Workshop" },
 ] as const;
@@ -65,9 +66,9 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
       row.hidden = !isVisible;
       if (isVisible) visible++;
 
-      // Cell-level category filter: when a row has a panel-cell + a sponsor-
+      // Cell-level category filter: when a row has a panel-cell + a workshop-
       // cell at the same slot (e.g. Perspectivas + Olanzo at 10:55), the
-      // row matches "panel" via at-least-one — but the non-matching sponsor
+      // row matches "panel" via at-least-one — but the non-matching workshop
       // card was still rendering. Walk the row's session cells and hide
       // any whose category isn't in the active filter set so only cells
       // matching the chosen category remain visible.

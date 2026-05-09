@@ -9,7 +9,7 @@ export type Stage = "main" | "escenario-2" | "both";
 
 export type SessionCategory =
   | "keynote"
-  | "sponsor-slot" // sponsor-paid showcase slot
+  | "talk" // Sala Principal solo charla
   | "workshop" // Gold tier
   | "panel" // Silver tier
   | "pitch" // Startup Pitch Session
