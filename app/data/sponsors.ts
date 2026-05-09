@@ -274,6 +274,13 @@ export const SPONSORS: readonly Sponsor[] = [
     sessionIds: ["ecosistemas-crtw-main"],
     contribution: "Aliado regional — semana tech de Costa Rica.",
   },
+  {
+    id: "esencial-cr",
+    name: "Esencial Costa Rica",
+    tier: "aliados",
+    logoUrl: "/images/esencial-costa-rica.webp",
+    contribution: "Reconocimiento oficial Esencial Costa Rica — Marca País del evento.",
+  },
 
   // Media Partner
   {
