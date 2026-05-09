@@ -76,8 +76,8 @@ export default function UtilityBar({
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 px-3 py-4 min-h-[56px] label-meta sm:text-xs font-bold text-on-primary hover:bg-secondary transition-colors duration-200"
         >
-          <Icon name="north_east" size={14} />
-          WhatsApp
+          <Icon name="share" size={14} />
+          Enviar a WhatsApp
         </a>
         <a
           href={mapsUrl}
