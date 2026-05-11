@@ -81,7 +81,7 @@ export default function AgendaView({ now, simulated }: AgendaViewProps) {
             Almuerzo
           </span>
           <span className="mono-data text-[11px] font-bold text-primary">
-            11:00 — 13:30
+            11:30 — 13:30
           </span>
         </div>
         <p className="text-xs sm:text-sm text-on-surface-variant">
