@@ -335,7 +335,7 @@ function WordmarkMark({
   const sizeClass =
     size === "diamante"
       ? "text-4xl md:text-5xl lg:text-6xl"
-      : "text-2xl md:text-3xl";
+      : "text-4xl md:text-5xl";
   return (
     <div
       className={`font-display font-black uppercase tracking-tighter ${sizeClass} leading-[0.9] text-primary text-center`}
