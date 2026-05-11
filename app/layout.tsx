@@ -97,6 +97,26 @@ export default function RootLayout({
         <Footer />
         <Analytics />
         <SpeedInsights />
+        {/* Developer credit in DevTools — visible only to people who open
+            the console (devs, recruiters, the curious). Zero impact on
+            normal users, near-100% on the technical audience this event
+            attracts. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `console.log(
+              '%c\\n WEBSITES BY GER \\n',
+              'background:#000d33;color:#fff;font-family:ui-monospace,Menlo,monospace;font-weight:900;font-size:15px;padding:10px 20px;letter-spacing:-0.02em'
+            );
+            console.log(
+              '%cSitios web para profesionales y emprendedores en Costa Rica',
+              'color:#000d33;font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:4px 0'
+            );
+            console.log(
+              '%c→ Instagram: @websites_by_ger',
+              'color:#ba002e;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:bold;padding:2px 0 10px'
+            );`,
+          }}
+        />
       </body>
     </html>
   );

@@ -297,20 +297,55 @@ function DiamanteTile({
           Global Tier
         </div>
         <div className="flex items-center justify-center pt-4">
-          <div className="relative w-full max-w-[360px] h-20 md:h-28 lg:h-32">
-            <Image
-              src={sponsor.logoUrl}
-              alt={sponsor.name}
-              fill
-              priority
-              sizes="(min-width: 1024px) 50vw, 90vw"
-              className="object-contain"
-              unoptimized
-            />
-          </div>
+          {sponsor.wordmark ? (
+            <WordmarkMark text={sponsor.wordmark} size="diamante" />
+          ) : sponsor.logoUrl ? (
+            <div className="relative w-full max-w-[360px] h-20 md:h-28 lg:h-32">
+              <Image
+                src={sponsor.logoUrl}
+                alt={sponsor.name}
+                fill
+                priority
+                sizes="(min-width: 1024px) 50vw, 90vw"
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+          ) : null}
         </div>
       </div>
       <SponsorActivity sponsor={sponsor} variant="diamante" />
+    </div>
+  );
+}
+
+// Text-based "logo" rendered in the design system's display font. Used by
+// sponsors that don't have a graphic mark (e.g. the developer credit) so
+// the tile reads as a real wordmark instead of a stretched name string.
+// Splits on literal "\n" so multi-line wordmarks ("WEBSITES" / "BY GER")
+// stack cleanly without needing a separate React node per line in the data.
+function WordmarkMark({
+  text,
+  size,
+}: {
+  text: string;
+  size: "diamante" | "standard";
+}) {
+  const lines = text.split("\n");
+  const sizeClass =
+    size === "diamante"
+      ? "text-4xl md:text-5xl lg:text-6xl"
+      : "text-2xl md:text-3xl";
+  return (
+    <div
+      className={`font-display font-black uppercase tracking-tighter ${sizeClass} leading-[0.9] text-primary text-center`}
+    >
+      {lines.map((line, i) => (
+        <span key={i}>
+          {line}
+          {i < lines.length - 1 && <br />}
+        </span>
+      ))}
     </div>
   );
 }
@@ -343,16 +378,20 @@ function StandardTile({
       <div
         className={`${bgClass} ${borderClass} ${heightClass} ${paddingClass} flex items-center justify-center transition-colors duration-300`}
       >
-        <div className="relative w-full h-full max-w-[220px]">
-          <Image
-            src={sponsor.logoUrl}
-            alt={sponsor.name}
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 80vw"
-            className="object-contain"
-            unoptimized
-          />
-        </div>
+        {sponsor.wordmark ? (
+          <WordmarkMark text={sponsor.wordmark} size="standard" />
+        ) : sponsor.logoUrl ? (
+          <div className="relative w-full h-full max-w-[220px]">
+            <Image
+              src={sponsor.logoUrl}
+              alt={sponsor.name}
+              fill
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 40vw, 80vw"
+              className="object-contain"
+              unoptimized
+            />
+          </div>
+        ) : null}
       </div>
       <SponsorActivity sponsor={sponsor} variant="standard" />
     </div>
@@ -445,6 +484,20 @@ function SponsorActivity({
           }`}
         >
           {sponsor.contribution}
+          {sponsor.contributionLinkText && sponsor.contributionUrl && (
+            <a
+              href={sponsor.contributionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`underline underline-offset-2 transition-colors ${
+                variant === "diamante"
+                  ? "hover:text-secondary-fixed-dim"
+                  : "hover:text-secondary"
+              }`}
+            >
+              {sponsor.contributionLinkText}
+            </a>
+          )}
         </p>
       )}
     </div>

@@ -16,13 +16,23 @@ export type Sponsor = {
   id: string;
   name: string;
   tier: SponsorTier;
-  logoUrl: string;
+  // Image-based logo URL. Optional when `wordmark` is provided instead.
+  logoUrl?: string;
+  // Text-based "logo" rendered in the design system's display font. Used
+  // when a sponsor doesn't have a graphic mark — e.g. the developer
+  // credit. If both are set, wordmark wins.
+  wordmark?: string;
   // Session IDs this sponsor participates in. Powers the
   // "Qué hace en TBC2026" line under each logo on the sponsors page.
   sessionIds?: readonly string[];
   // Optional one-line description shown when the sponsor has no explicit
   // session (community/institutional partners). Kept short — under 90 chars.
   contribution?: string;
+  // Optional inline-link target appended to the contribution text. When
+  // both fields are set, the rendered output is `{contribution}<a>{linkText}</a>`
+  // so only the handle/URL portion is clickable — not the whole paragraph.
+  contributionLinkText?: string;
+  contributionUrl?: string;
 };
 
 export const TIER_ORDER: readonly SponsorTier[] = [
@@ -238,6 +248,17 @@ export const SPONSORS: readonly Sponsor[] = [
   },
 
   // Aliados
+  {
+    id: "websites-by-ger",
+    name: "Websites by Ger",
+    tier: "aliados",
+    wordmark: "WEBSITES\nBY GER",
+    contribution:
+      "Desarrollador del event tracker — sitios web para profesionales y emprendedores en Costa Rica · ",
+    contributionLinkText: "@websites_by_ger",
+    contributionUrl:
+      "https://www.instagram.com/websites_by_ger?igsh=azk3cGVhN2pnOWpz&utm_source=qr",
+  },
   {
     id: "nordcomms",
     name: "NordComms",

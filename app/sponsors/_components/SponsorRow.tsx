@@ -38,16 +38,27 @@ export default function SponsorRow({ sponsor, tier, delayMs }: SponsorRowProps) 
       style={{ "--delay": `${delayMs}ms` } as CSSProperties}
     >
       <div className="relative w-16 h-16 shrink-0 bg-surface-container-lowest p-2 flex items-center justify-center">
-        <div className="relative w-full h-full">
-          <Image
-            src={sponsor.logoUrl}
-            alt={sponsor.name}
-            fill
-            sizes="64px"
-            className="object-contain"
-            unoptimized
-          />
-        </div>
+        {sponsor.wordmark ? (
+          <div className="font-display font-black uppercase tracking-tighter text-[9px] leading-[1] text-primary text-center">
+            {sponsor.wordmark.split("\n").map((line, i, all) => (
+              <span key={i}>
+                {line}
+                {i < all.length - 1 && <br />}
+              </span>
+            ))}
+          </div>
+        ) : sponsor.logoUrl ? (
+          <div className="relative w-full h-full">
+            <Image
+              src={sponsor.logoUrl}
+              alt={sponsor.name}
+              fill
+              sizes="64px"
+              className="object-contain"
+              unoptimized
+            />
+          </div>
+        ) : null}
       </div>
 
       <div className="flex-1 min-w-0 flex flex-col justify-center gap-1 py-2 pr-3">
@@ -98,6 +109,16 @@ function SponsorActivitySummary({ sponsor }: { sponsor: Sponsor }) {
     return (
       <p className="text-xs text-primary/70 line-clamp-2">
         {sponsor.contribution}
+        {sponsor.contributionLinkText && sponsor.contributionUrl && (
+          <Link
+            href={sponsor.contributionUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-secondary transition-colors"
+          >
+            {sponsor.contributionLinkText}
+          </Link>
+        )}
       </p>
     );
   }
