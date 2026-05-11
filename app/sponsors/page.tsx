@@ -10,6 +10,7 @@ import {
   type Sponsor,
   type SponsorTier,
 } from "../data/sponsors";
+import SponsorRow from "./_components/SponsorRow";
 
 export const metadata: Metadata = {
   title: "Sponsors",
@@ -185,7 +186,6 @@ type TierBlockProps = {
 function TierBlock({ tier, sponsors, tierIndex }: TierBlockProps) {
   const styles = TIER_STYLES[tier];
   const meta = TIER_LABELS[tier];
-  const isDiamante = tier === "diamante";
 
   return (
     <div className={styles.containerSpacing}>
@@ -221,30 +221,54 @@ function TierBlock({ tier, sponsors, tierIndex }: TierBlockProps) {
         </p>
       </div>
 
-      {/* Logo grid */}
-      <div className={`grid gap-4 md:gap-6 ${styles.gridCols}`}>
-        {sponsors.map((sponsor, i) =>
-          isDiamante ? (
+      {/* Logo grid — Diamante stays as the marquee hero on every viewport.
+          Other tiers dual-render: compact rows on mobile, the full editorial
+          tile grid from sm: up. Both sides consume the same sponsor list so
+          they stay in lockstep. */}
+      {tier === "diamante" ? (
+        <div className={`grid gap-4 md:gap-6 ${styles.gridCols}`}>
+          {sponsors.map((sponsor, i) => (
             <DiamanteTile
               key={sponsor.id}
               sponsor={sponsor}
               index={i}
               tierIndex={tierIndex}
             />
-          ) : (
-            <StandardTile
-              key={sponsor.id}
-              sponsor={sponsor}
-              index={i}
-              tierIndex={tierIndex}
-              bgClass={styles.tileBg ?? ""}
-              heightClass={styles.tileHeight ?? ""}
-              paddingClass={styles.tilePadding ?? ""}
-              borderClass={styles.tileBorder ?? ""}
-            />
-          ),
-        )}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-col gap-2 sm:hidden">
+            {sponsors.map((sponsor, i) => (
+              <SponsorRow
+                key={sponsor.id}
+                sponsor={sponsor}
+                tier={tier}
+                delayMs={
+                  tierIndex * STAGGER_TIER_MS +
+                  i * STANDARD_ITEM_MS +
+                  STANDARD_OFFSET_MS
+                }
+              />
+            ))}
+          </div>
+
+          <div className={`hidden sm:grid gap-4 md:gap-6 ${styles.gridCols}`}>
+            {sponsors.map((sponsor, i) => (
+              <StandardTile
+                key={sponsor.id}
+                sponsor={sponsor}
+                index={i}
+                tierIndex={tierIndex}
+                bgClass={styles.tileBg ?? ""}
+                heightClass={styles.tileHeight ?? ""}
+                paddingClass={styles.tilePadding ?? ""}
+                borderClass={styles.tileBorder ?? ""}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
