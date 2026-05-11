@@ -26,7 +26,7 @@ export default function Footer() {
         className="order-1 md:order-2 group flex flex-col items-center gap-1 text-center hover:text-secondary transition-colors duration-200"
         aria-label="Websites by Ger — sitio diseñado por @websites_by_ger en Instagram"
       >
-        <span className="font-display font-black uppercase tracking-tighter text-xl sm:text-2xl">
+        <span className="font-display font-black uppercase tracking-tighter text-2xl sm:text-3xl">
           WEBSITES BY GER
         </span>
         <span className="label-meta text-[10px] opacity-70">
