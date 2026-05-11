@@ -32,9 +32,10 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
     stageParam === "main" || stageParam === "escenario-2" ? stageParam : "todo";
 
   // Optimistic stage flips the active button instantly on click; the real URL
-  // (and server-side timeline rerender) updates in the background via a
-  // transition. Under Slow-4G this is the difference between a 1.7s blocked
-  // click and ~50ms of perceived feedback.
+  // (and the DOM-driven filter sweep below) update in the background via a
+  // transition. Even though /agenda is now statically rendered (no server
+  // roundtrip for the stage filter), this keeps the button feedback ahead
+  // of the next paint.
   const [activeStage, setOptimisticStage] = useOptimistic(urlStage);
   const [, startStageTransition] = useTransition();
 
@@ -54,34 +55,56 @@ export default function AgendaToolbar({ totalSlots }: AgendaToolbarProps) {
 
   useEffect(() => {
     const normalizedQuery = query.trim().toLowerCase();
+
+    // Drive CSS grid-template-columns collapse via the wrapper attribute.
+    // CSS rules in globals.css read [data-stage-filter="main|escenario-2"]
+    // and collapse [data-row-grid] / [data-header-grid] from 3 cols to 2.
+    const wrapper = document.querySelector<HTMLElement>("[data-stage-filter]");
+    if (wrapper) wrapper.setAttribute("data-stage-filter", urlStage);
+
+    // Hide the non-matching column header when a single stage is active.
+    const headers = document.querySelectorAll<HTMLElement>("[data-stage-header]");
+    headers.forEach((header) => {
+      const headerStage = header.getAttribute("data-stage-header");
+      header.hidden = urlStage !== "todo" && headerStage !== urlStage;
+    });
+
     const rows = document.querySelectorAll<HTMLElement>("[data-slot]");
     let visible = 0;
     rows.forEach((row) => {
       const searchable = row.getAttribute("data-search") ?? "";
       const categories = (row.getAttribute("data-categories") ?? "").split(",");
+      const stages = (row.getAttribute("data-stages") ?? "").split(",");
       const matchesQuery = !normalizedQuery || searchable.includes(normalizedQuery);
       const matchesCategory =
         activeCategories.size === 0 || categories.some((c) => activeCategories.has(c));
-      const isVisible = matchesQuery && matchesCategory;
+      // "both"-stage rows match any stage filter; otherwise the row must
+      // have a session in the selected stage to remain visible.
+      const matchesStage =
+        urlStage === "todo" || stages.includes("both") || stages.includes(urlStage);
+      const isVisible = matchesQuery && matchesCategory && matchesStage;
       row.hidden = !isVisible;
       if (isVisible) visible++;
 
-      // Cell-level category filter: when a row has a panel-cell + a workshop-
-      // cell at the same slot (e.g. Perspectivas + Olanzo at 10:55), the
-      // row matches "panel" via at-least-one — but the non-matching workshop
-      // card was still rendering. Walk the row's session cells and hide
-      // any whose category isn't in the active filter set so only cells
-      // matching the chosen category remain visible.
-      const cells = row.querySelectorAll<HTMLElement>("[data-session-category]");
+      // Cell-level filter: hide the stage cell whose category doesn't
+      // match the active category set, and hide the stage cell that
+      // doesn't match the active stage. Placeholder em-dash cells have
+      // a `data-stage` but no `data-session-category` — they're skipped
+      // by the category half (treated as "no category" → always passes)
+      // and only hidden when the stage filter mismatches.
+      const cells = row.querySelectorAll<HTMLElement>("[data-stage]");
       cells.forEach((cell) => {
+        const cellStage = cell.getAttribute("data-stage");
         const cellCategory = cell.getAttribute("data-session-category") ?? "";
-        const cellMatches =
-          activeCategories.size === 0 || activeCategories.has(cellCategory);
-        cell.style.display = cellMatches ? "" : "none";
+        const cellMatchesStage =
+          urlStage === "todo" || !cellStage || cellStage === urlStage;
+        const cellMatchesCategory =
+          activeCategories.size === 0 || !cellCategory || activeCategories.has(cellCategory);
+        cell.style.display = cellMatchesStage && cellMatchesCategory ? "" : "none";
       });
     });
     setVisibleCount(visible);
-  }, [query, activeCategories]);
+  }, [query, activeCategories, urlStage]);
 
   const toggleCategory = (id: string) => {
     setActiveCategories((prev) => {

@@ -44,7 +44,13 @@ public/            # static assets
 - Session status (`scheduled`/`live`/`next`/`past`) is **computed from wall-clock time** in `America/Costa_Rica` (UTC-6, no DST). Never store status; always derive.
 - Time-zone-sensitive code must handle the offset explicitly — do not rely on the host TZ.
 - `LiveRefresh` schedules **exact-boundary** refreshes at session transitions; do not replace it with polling.
-- `?now=<ISO-8601>` query param enables time-travel in dev for QA — preserve this hook.
+- **All three live-data routes (`/`, `/agenda`, `/exponentes`) are statically prerendered** (ISR every 10s) so they feel instant on prefetch — same smoothness as `/mapa` / `/sponsors`. Each page body lives in a colocated view component (`app/_views/EnVivoView.tsx`, `app/_views/AgendaView.tsx`, `app/_views/ExponentesView.tsx`); the corresponding `page.tsx` files are thin static wrappers that call the view with `now = new Date()` and `simulated = null`.
+- **QA time-travel** routes (`/dev`, `/dev/agenda`, `/dev/exponentes`) mount the same view components in dynamic contexts and read `?now=<ISO-8601>` for the simulated clock — e.g. `/dev/agenda?now=2026-05-14T10:15:00-06:00`. The override is honored in `npm run dev` only — `resolveNow` ignores it in production (`app/data/now.ts:13`). Don't reintroduce `?now=` on the public routes themselves; that would force them back to dynamic rendering and bring back the loading-state flash.
+- **`/agenda?stage=main|escenario-2` filter** is preserved as a shareable URL but applied **client-side** by `AgendaToolbar` (`app/agenda/_components/AgendaToolbar.tsx`) so the page can stay static. The toolbar's useEffect:
+  - updates `data-stage-filter` on the `<main>` wrapper, which CSS rules in `app/globals.css` use to collapse `[data-row-grid]` / `[data-header-grid]` from 3 cols to 2;
+  - hides the non-matching `[data-stage-header]` column header via `hidden`;
+  - sets `display: none` on `[data-stage]` cells that don't match.
+  - Rows tagged `data-stages="both"` always pass the filter. Don't reintroduce server-side stage filtering — it would force `/agenda` back to dynamic.
 
 ### Design system ("Horizonte Cobalt")
 - Reference `docs/design-system/design-system.md` and `color-tokens.json` for any new page or component.

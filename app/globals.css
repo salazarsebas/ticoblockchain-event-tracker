@@ -536,3 +536,25 @@ textarea:focus-visible,
 .map-stage-pulse {
   animation: stage-pulse 3.2s ease-in-out infinite;
 }
+
+/* ============================================================
+   Agenda — stage filter grid template collapse
+   ============================================================ */
+
+/* When the agenda's ?stage= filter is active, the row/header grids
+   collapse from 3 columns to 2 so the remaining (visible) stage cell
+   takes the full width instead of leaving an empty 3rd column where
+   the hidden cell used to be. Mobile stays single-column either way. */
+[data-stage-filter="main"] [data-row-grid],
+[data-stage-filter="escenario-2"] [data-row-grid] {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  [data-stage-filter="main"] [data-row-grid],
+  [data-stage-filter="escenario-2"] [data-row-grid],
+  [data-stage-filter="main"] [data-header-grid],
+  [data-stage-filter="escenario-2"] [data-header-grid] {
+    grid-template-columns: 6rem 1fr;
+  }
+}
