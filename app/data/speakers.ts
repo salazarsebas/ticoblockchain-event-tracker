@@ -1,7 +1,7 @@
 import type { Speaker } from "./types";
 
 // Source of truth: ticoblockchain.cr Speakers section (May 14, 2026 lineup).
-// Confirmed roster — 58 speakers as published by the client. Ordered by:
+// Confirmed roster — 56 speakers as published by the client. Ordered by:
 //   1. Agenda time (chronological).
 //   2. "Por anunciar" tail — speakers without a pinned slot. They keep their
 //      seed status and never auto-flip during the event because no session row
@@ -121,7 +121,7 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "niklas-lind",
     name: "Niklas Lind",
     org: "Country Manager @ Olanzo · COO @ Mayanor Ventures",
-    talk: "Transformación Digital",
+    talk: "El Cliente Fantasma y el Arte de Reconocerlo",
     time: "10:55 — 11:20",
     stage: "escenario-2",
     status: "scheduled",
@@ -129,65 +129,52 @@ export const SPEAKERS: readonly Speaker[] = [
     linkedinUrl: "https://www.linkedin.com/in/niklaslind/",
   },
 
-  // ─── 11:25 — Lulubit (esc-2) ───
+  // ─── 11:20 — Lulubit (esc-2) ───
   {
     id: "alberto-galan",
     name: "Alberto Galán",
     org: "Embajador @ Lulubit",
-    talk: "El Puente entre Cripto y la Banca Local",
-    time: "11:25 — 11:50",
+    talk: "Lulubit: el puente entre cripto y la banca local",
+    time: "11:20 — 11:50",
     stage: "escenario-2",
     status: "scheduled",
     imageUrl: `${CDN}/69fe74bcd3badd55b0f4c10d_Alberto%20Gal%C3%A1n.png`,
     linkedinUrl: "https://www.linkedin.com/in/albertogalanb/",
   },
 
-  // ─── 11:40 — Fintech for Good ───
+  // ─── 11:35 — Fintech for Good ───
   {
     id: "steven-cabrera",
     name: "Steven Cabrera",
     org: "Fundador @ Epark",
     talk: "Fintech for Good — Transformación de las Ciudades",
-    time: "11:40 — 12:05",
+    time: "11:35 — 11:55",
     stage: "main",
     status: "scheduled",
     imageUrl: `${CDN}/69dfdfe396fe7ef28d86f859_Steven%20Cabrera.jpeg`,
   },
 
-  // ─── 12:10 — Regen District ───
-  {
-    id: "franz-tunez",
-    name: "Franz Tuñez",
-    org: "CEO & Co-founder @ NetX Gen",
-    talk: "Regen District en Próspera",
-    time: "12:10 — 12:35",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
-    linkedinUrl: "https://www.linkedin.com/in/francisco-tu%C3%B1ez/",
-  },
-
-  // ─── 12:40 — Privacidad Programable ───
+  // ─── 12:25 — Privacidad Programable ───
   {
     id: "andy-guzman-toledo",
     name: "Andy Guzmán Toledo",
     org: "Head of Privacy @ Ethereum Foundation",
     talk:
-      "Privacidad Programable — Ethereum como Infraestructura para el Sector Público",
-    time: "12:40 — 13:05",
+      "Privacidad Programable: Ethereum como Infraestructura para el Sector Público",
+    time: "12:25 — 12:45",
     stage: "main",
     status: "scheduled",
     imageUrl: `${CDN}/69b1632ad8361e61e604f16a_Andy%20Guzman.jpeg`,
     linkedinUrl: "https://www.linkedin.com/in/andyguzmantoledo/",
   },
 
-  // ─── 13:10 — Del Código a la Ley ───
+  // ─── 12:50 — Del Código a la Ley ───
   {
     id: "stephanie-sanchez",
     name: "Stephanie Sánchez",
     org: "Miss Crypto Lawyer · Embajadora Oficial TicoBlockchain",
     talk: "Del Código a la Ley: Web3 y la Ley de Activos Digitales",
-    time: "13:10 — 13:30",
+    time: "12:50 — 13:10",
     stage: "main",
     status: "scheduled",
     imageUrl: `${CDN}/67dd4ba9bd7e331b594ea0bf_Screenshot4.avif`,
@@ -195,13 +182,27 @@ export const SPEAKERS: readonly Speaker[] = [
       "https://www.linkedin.com/in/stephanie-s%C3%A1nchez-misscryptolawyer-b512aa14b/",
   },
 
-  // ─── 13:35 — Keynote Sovra (Anti-corrupción) ───
+  // ─── 13:15 — Sebastián Ceciliano (Stellar / LATAM) ───
+  {
+    id: "sebastian-ceciliano",
+    name: "Sebastián Ceciliano",
+    org: "Head of Growth & Community Builder @ Zeek",
+    talk:
+      "De Costa Rica al mundo: cómo Stellar está creando oportunidades reales en LATAM",
+    time: "13:15 — 13:35",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/6a02151165ad69ecfb2f216c_Sebasti%C3%A1n%20Ceciliano.jpg.jpeg`,
+    linkedinUrl: "https://www.linkedin.com/in/cbiux/",
+  },
+
+  // ─── 13:40 — Keynote Sovra (Anti-corrupción) ───
   {
     id: "chuy-cepeda",
     name: 'Jesús "Chuy" Cepeda',
     org: "Co-founder & CSO @ Sovra",
     talk: "Provenance: por qué la próxima gran infraestructura no es AI — es confianza verificable",
-    time: "13:35 — 14:15",
+    time: "13:40 — 14:20",
     stage: "main",
     status: "scheduled",
     imageUrl: `${CDN}/69dfd56f01845b6f1e8af5df_chuy%20cepeda.jpg`,
@@ -209,13 +210,13 @@ export const SPEAKERS: readonly Speaker[] = [
     companyUrl: "https://chuycepeda.com",
   },
 
-  // ─── 14:20 — Charla Citi ───
+  // ─── 14:25 — Innovaciones en Digital Assets (Citi) ───
   {
     id: "carolina-marino",
     name: "Carolina Mariño",
     org: "LATAM Client & Market Integration Head · Citi",
-    talk: "Charla Citi — Digital Assets y Pagos Tokenizados",
-    time: "14:20 — 14:45",
+    talk: "Innovaciones en digital assets y tokenización de pagos",
+    time: "14:25 — 14:45",
     stage: "main",
     status: "scheduled",
     imageUrl: IMG_TBA,
@@ -286,7 +287,8 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "juan-alejandro-herrera",
     name: "Juan Alejandro Herrera",
     org: "Asesor · Contraloría General de la República",
-    talk: "Red de Monitoreo de Obra Pública — IoT, IA y Blockchain",
+    talk:
+      "Generación de una red de monitoreo de obra pública mediante IoT, modelos de IA y blockchain",
     time: "14:55 — 15:15",
     stage: "escenario-2",
     status: "scheduled",
@@ -295,18 +297,6 @@ export const SPEAKERS: readonly Speaker[] = [
   },
 
   // ─── 15:15 — Identidad Digital (esc-2) ───
-  {
-    id: "andres-gomez",
-    name: "Andrés Gómez",
-    org: "CEO & Co-founder @ Sakundi",
-    talk: "Identidad Digital en Blockchain — Privacidad y Regulación",
-    time: "15:15 — 15:35",
-    stage: "escenario-2",
-    status: "scheduled",
-    imageUrl: `${CDN}/67b70e12f953d3095dc31151_WhatsApp%20Image%202025-02-19%20at%2012.54.12.avif`,
-    linkedinUrl:
-      "https://www.linkedin.com/in/andres-gomez-ramirez-bb7226156/",
-  },
   {
     id: "anis-halabi",
     name: "Anis Yamill Halabi",
@@ -343,9 +333,9 @@ export const SPEAKERS: readonly Speaker[] = [
     imageUrl: `${CDN}/69fccde3a48d091d953d89b8_Cristian%20Guillen.jpeg`,
     linkedinUrl: "https://www.linkedin.com/in/cristian-guillen-men/",
   },
-  // Second appearance for Gianina — also keeps her solo "Por anunciar"
-  // card below so /exponentes shows both her panel slot and her individual
-  // entry (each Speaker can only carry one `time` value).
+  // Gianina is anchored to the Agentes Autónomos panel. Her separate
+  // "Por anunciar" entry below auto-merges into this card via
+  // `mergeDuplicates` (showing as a "También presenta" line).
   {
     id: "gianina-redondo-agentes",
     name: "Gianina Redondo",
@@ -356,27 +346,38 @@ export const SPEAKERS: readonly Speaker[] = [
     status: "scheduled",
     imageUrl: `${CDN}/69fcea8335e1df81f740c852_Geaninna%20Redondo.jpeg`,
   },
-
-  // ─── 16:30 — Convergencia AI/Blockchain/Quantum (esc-2) ───
   {
-    id: "ranulfo-paiva-barbosa",
-    name: "Ranulfo Paiva Barbosa",
-    org: "Co-founder @ CofiBlocks",
-    talk:
-      "Convergencia: Cuando Agentes AI, Blockchain y Quantum Computing Crean (y Pueden Destruir) Riqueza",
+    id: "jorge-mora-flores",
+    name: "Jorge Mora Flores",
+    org: "Consultor @ BID",
+    talk: "Agentes Autónomos (Panel)",
+    time: "16:00 — 16:40",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/69b166db6b3cda83debb0b55_jorge%20mora%20flores.jpg`,
+    linkedinUrl: "https://www.linkedin.com/in/jorgemoraflores/",
+  },
+
+  // ─── 16:30 — Finanzas Regenerativas (esc-2) ───
+  {
+    id: "stefan-fiedler",
+    name: "Stefan Fiedler",
+    org: "Co-Director @ ReFi Costa Rica",
+    talk: "Sobre el Ecosistema de Finanzas Regenerativas",
     time: "16:30 — 16:55",
     stage: "escenario-2",
     status: "scheduled",
-    imageUrl: `${CDN}/67d6c44f3308e481191fce7a_1516577422716.jpg`,
-    linkedinUrl: "https://www.linkedin.com/in/ranulfosobrinho/",
+    imageUrl: `${CDN}/69f6362260eea17234867b6b_Stefan%20Fiedler%20Alvarado.png`,
+    linkedinUrl:
+      "https://www.linkedin.com/in/stefan-fiedler-alvarado-0269a0178/",
   },
 
-  // ─── 16:45 — PANEL FIA (panel main) ───
+  // ─── 16:45 — Ecosistema Fintech en LatAm (panel main) ───
   {
     id: "jose-miguel-zamora",
     name: "José Miguel Zamora Barquero",
     org: "Presidente @ AsoFintech",
-    talk: "PANEL FIA — Ecosistemas Regional (Moderador)",
+    talk: "Ecosistema Fintech en LatAm: Retos y Oportunidades (Moderador)",
     time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
@@ -387,7 +388,7 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "enrique-galdamez",
     name: "Enrique Galdámez",
     org: "Executive Director · Fintech Association of Guatemala",
-    talk: "PANEL FIA — Ecosistemas Regional (Panel)",
+    talk: "Ecosistema Fintech en LatAm: Retos y Oportunidades (Panel)",
     time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
@@ -395,34 +396,35 @@ export const SPEAKERS: readonly Speaker[] = [
     linkedinUrl: "https://www.linkedin.com/in/enriquegaldamez28/",
   },
 
-  // ─── 17:00 — Finanzas Regenerativas (esc-2) ───
+  // ─── 17:00 — Convergencia AI/Blockchain/Quantum (esc-2) ───
   {
-    id: "stefan-fiedler",
-    name: "Stefan Fiedler",
-    org: "Co-Director @ ReFi Costa Rica",
-    talk: "Sobre el Ecosistema de Finanzas Regenerativas",
+    id: "ranulfo-paiva-barbosa",
+    name: "Ranulfo Paiva Barbosa",
+    org: "Co-founder @ CofiBlocks",
+    talk:
+      "Convergencia: Cuando Agentes AI, Blockchain y Quantum Computing Crean (y Pueden Destruir) Riqueza",
     time: "17:00 — 17:25",
     stage: "escenario-2",
     status: "scheduled",
-    imageUrl: `${CDN}/69f6362260eea17234867b6b_Stefan%20Fiedler%20Alvarado.png`,
-    linkedinUrl:
-      "https://www.linkedin.com/in/stefan-fiedler-alvarado-0269a0178/",
+    imageUrl: `${CDN}/67d6c44f3308e481191fce7a_1516577422716.jpg`,
+    linkedinUrl: "https://www.linkedin.com/in/ranulfosobrinho/",
   },
 
-  // ─── 17:30 — Ecosistemas y CRTW (closing panel main) ───
+  // ─── 17:30 — TicoBlockchain y CRTW (closing panel main) ───
   // Karla and José Miguel Zamora are duplicated entries: each is already
   // anchored to an earlier panel (Karla → 10:55 Perspectivas, JM Zamora →
-  // 16:45 PANEL FIA Moderador), and we keep a second entry here so the
-  // CRTW session's panelist roster stays accurate in this file. The
-  // `expandAppearances` pass in `app/exponentes/_lib/groupSpeakers.ts`
-  // collapses each pair into a single /exponentes card — the earlier slot
-  // becomes the primary, and the cierre appearance surfaces as a
-  // "También presenta" note on that same card.
+  // 16:45 Ecosistema Fintech en LatAm Moderador), and we keep a second
+  // entry here so the CRTW session's panelist roster stays accurate in
+  // this file. The `expandAppearances` pass in
+  // `app/exponentes/_lib/groupSpeakers.ts` collapses each pair into a
+  // single /exponentes card — the earlier slot becomes the primary, and
+  // the cierre appearance surfaces as a "También presenta" note on that
+  // same card.
   {
     id: "karla-cordoba-brenes-cierre",
     name: "Karla Córdoba Brenes",
     org: "Presidenta @ AsoBlockchain",
-    talk: "Ecosistemas y CRTW (Panel)",
+    talk: "TicoBlockchain y CRTW (Panel)",
     time: "17:30 — 17:55",
     stage: "main",
     status: "scheduled",
@@ -433,7 +435,7 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "jose-miguel-zamora-cierre",
     name: "José Miguel Zamora Barquero",
     org: "Presidente @ AsoFintech",
-    talk: "Ecosistemas y CRTW (Panel)",
+    talk: "TicoBlockchain y CRTW (Panel)",
     time: "17:30 — 17:55",
     stage: "main",
     status: "scheduled",
@@ -444,7 +446,7 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "nelson-irias",
     name: "Nelson Irías",
     org: "Por confirmar",
-    talk: "Ecosistemas y CRTW (Panel)",
+    talk: "TicoBlockchain y CRTW (Panel)",
     time: "17:30 — 17:55",
     stage: "main",
     status: "scheduled",
@@ -478,12 +480,26 @@ export const SPEAKERS: readonly Speaker[] = [
     id: "diego-perez",
     name: "Diego Perez",
     org: "Board Member · ABFintechs",
-    talk: "PANEL FIA — Ecosistemas Regional (Panel)",
+    talk: "Ecosistema Fintech en LatAm: Retos y Oportunidades (Panel)",
     time: "16:45 — 17:25",
     stage: "main",
     status: "scheduled",
     imageUrl: `${CDN}/69f62c803aea82102c7fc3b5_Diego%20Perez.png`,
     linkedinUrl: "https://www.linkedin.com/in/diegoperezsmu/",
+  },
+  // Jorge Neyra is also on Ecosistema Fintech en LatAm at 16:45 — auto-merges
+  // with his primary Pagos y Stablecoins card via `mergeDuplicates`.
+  {
+    id: "jorge-neyra-fia",
+    name: "Jorge Neyra",
+    org: "Vice President · Cámara Fintech Panamá",
+    talk: "Ecosistema Fintech en LatAm: Retos y Oportunidades (Panel)",
+    time: "16:45 — 17:25",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/69f62ee8784d9fb985d57099_Jorge%20Neyra.png`,
+    linkedinUrl:
+      "https://www.linkedin.com/in/jorge-adan-neyra-loaisiga-794a49125/",
   },
   {
     id: "gianina-redondo",
@@ -494,17 +510,6 @@ export const SPEAKERS: readonly Speaker[] = [
     stage: "main",
     status: "scheduled",
     imageUrl: `${CDN}/69fcea8335e1df81f740c852_Geaninna%20Redondo.jpeg`,
-  },
-  {
-    id: "jorge-mora-flores",
-    name: "Jorge Mora Flores",
-    org: "Consultor @ BID",
-    talk: "Ciberseguridad y Transformación Digital",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: `${CDN}/69b166db6b3cda83debb0b55_jorge%20mora%20flores.jpg`,
-    linkedinUrl: "https://www.linkedin.com/in/jorgemoraflores/",
   },
 
   // ─── New additions from the official site (May 2026 confirmation pass) ───
@@ -530,16 +535,5 @@ export const SPEAKERS: readonly Speaker[] = [
     status: "scheduled",
     imageUrl: `${CDN}/67d029a93702b2c591a8ce34_Randall%20Barquero%202025.avif`,
     linkedinUrl: "https://linkedin.com/in/randall-barquero",
-  },
-  {
-    id: "sebastian-ceciliano",
-    name: "Sebastián Ceciliano",
-    org: "Head of Growth & Community Builder @ Zeek",
-    talk: "De la Curiosidad a la Acción en Blockchain",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: `${CDN}/6a02151165ad69ecfb2f216c_Sebasti%C3%A1n%20Ceciliano.jpg.jpeg`,
-    linkedinUrl: "https://www.linkedin.com/in/cbiux/",
   },
 ] as const;

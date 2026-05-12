@@ -50,12 +50,12 @@ describe("expandAppearances", () => {
     expect(karla).toHaveLength(1);
     expect(karla[0].speaker.id).toBe("karla-cordoba-brenes");
     expect(karla[0].additionalSlot).toEqual({
-      talk: "Ecosistemas y CRTW (Panel)",
+      talk: "TicoBlockchain y CRTW (Panel)",
       time: "17:30 — 17:55",
     });
   });
 
-  test("JM Zamora renders as a single card anchored to his PANEL FIA slot, with the CRTW cierre as additionalSlot", () => {
+  test("JM Zamora renders as a single card anchored to his Ecosistema Fintech panel, with the CRTW cierre as additionalSlot", () => {
     const appearances = expandAppearances(SPEAKERS);
     const jmz = appearances.filter(
       (a) => a.speaker.name === "José Miguel Zamora Barquero",
@@ -63,7 +63,7 @@ describe("expandAppearances", () => {
     expect(jmz).toHaveLength(1);
     expect(jmz[0].speaker.id).toBe("jose-miguel-zamora");
     expect(jmz[0].additionalSlot).toEqual({
-      talk: "Ecosistemas y CRTW (Panel)",
+      talk: "TicoBlockchain y CRTW (Panel)",
       time: "17:30 — 17:55",
     });
   });
@@ -144,7 +144,7 @@ describe("expandAppearances", () => {
     expect(karla).toHaveLength(1);
     expect(karla[0].speaker.id).toBe("karla-cordoba-brenes");
     expect(karla[0].speaker.status).toBe("live");
-    expect(karla[0].additionalSlot?.talk).toBe("Ecosistemas y CRTW (Panel)");
+    expect(karla[0].additionalSlot?.talk).toBe("TicoBlockchain y CRTW (Panel)");
   });
 
   test("merged card flips its primary to the currently-live appearance — Karla at 17:35 anchors to CRTW cierre", () => {
@@ -164,7 +164,7 @@ describe("expandAppearances", () => {
     expect(jmz).toHaveLength(1);
     expect(jmz[0].speaker.id).toBe("jose-miguel-zamora-cierre");
     expect(jmz[0].speaker.status).toBe("live");
-    expect(jmz[0].additionalSlot?.talk).toBe("PANEL FIA — Ecosistemas Regional (Moderador)");
+    expect(jmz[0].additionalSlot?.talk).toBe("Ecosistema Fintech en LatAm: Retos y Oportunidades (Moderador)");
   });
 
   test("panel sessionId resolves for every panel session that exists", () => {

@@ -31,12 +31,19 @@ describe("applyLiveStatus — event day", () => {
     expect(findSpeaker(result, "diego-loaiza-centeno").status).toBe("past");
   });
 
-  test("at 13:15 — Stephanie Sánchez (Del Código a la Ley) is live", () => {
-    const result = applyLiveStatus(SPEAKERS, crDate("13:15"));
+  test("at 13:00 — Stephanie Sánchez (Del Código a la Ley) is live", () => {
+    const result = applyLiveStatus(SPEAKERS, crDate("13:00"));
     expect(findSpeaker(result, "stephanie-sanchez").status).toBe("live");
     // Earlier speakers are past.
     expect(findSpeaker(result, "diego-loaiza-centeno").status).toBe("past");
     expect(findSpeaker(result, "andy-guzman-toledo").status).toBe("past");
+  });
+
+  test("at 13:25 — Sebastián Ceciliano (Stellar / LATAM) is live", () => {
+    const result = applyLiveStatus(SPEAKERS, crDate("13:25"));
+    expect(findSpeaker(result, "sebastian-ceciliano").status).toBe("live");
+    // Stephanie just ended.
+    expect(findSpeaker(result, "stephanie-sanchez").status).toBe("past");
   });
 
   test("at 14:55 — Javier Buitrago (Pagos y Stablecoins moderator) is live", () => {
@@ -56,10 +63,10 @@ describe("applyLiveStatus — event day", () => {
 
   test("after the last keyed talk (19:00) — Por-anunciar speakers fall back to their seed status", () => {
     const result = applyLiveStatus(SPEAKERS, crDate("19:00"));
-    // Jorge Mora has time "Por anunciar" — never matches a session, retains seed.
-    const jorge = findSpeaker(result, "jorge-mora-flores");
-    const seed = SPEAKERS.find((s) => s.id === "jorge-mora-flores");
-    expect(jorge.status).toBe(seed!.status);
+    // Rogelio Martínez has time "Por anunciar" — never matches a session, retains seed.
+    const rogelio = findSpeaker(result, "rogelio-martinez");
+    const seed = SPEAKERS.find((s) => s.id === "rogelio-martinez");
+    expect(rogelio.status).toBe(seed!.status);
   });
 });
 
