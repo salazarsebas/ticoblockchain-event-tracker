@@ -274,6 +274,13 @@ export const SPONSORS: readonly Sponsor[] = [
     contribution: "Aliado institucional — plataforma oficial de boletería.",
   },
   {
+    id: "iz-solutions",
+    name: "iZ Solutions",
+    tier: "aliados",
+    logoUrl: "/images/iz-solutions.webp",
+    contribution: "Aliado institucional del evento.",
+  },
+  {
     id: "blockchain-rio",
     name: "Blockchain.Rio",
     tier: "aliados",
