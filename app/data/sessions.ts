@@ -140,8 +140,7 @@ export const SESSIONS: readonly Session[] = [
     title:
       "Autorregulación y Gobernanza operativa: una visión para fundadores e instituciones públicas que buscan anticiparse a la regulación",
     speakerName: "Daniela Avendaño",
-    // TODO: client to provide Daniela's org/role — placeholder until then.
-    speakerOrg: "Por anunciar",
+    speakerOrg: "Co-founder @ BlockRock Legal & Tech",
     stage: "main",
     category: "talk",
     status: "scheduled",

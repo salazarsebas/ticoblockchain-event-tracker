@@ -154,6 +154,20 @@ export const SPEAKERS: readonly Speaker[] = [
     imageUrl: `${CDN}/69dfdfe396fe7ef28d86f859_Steven%20Cabrera.jpeg`,
   },
 
+  // ─── 12:00 — Autorregulación y Gobernanza (main) ───
+  {
+    id: "daniela-avendano",
+    name: "Daniela Avendaño Soto",
+    org: "Co-founder @ BlockRock Legal & Tech",
+    talk:
+      "Autorregulación y Gobernanza Operativa: visión para fundadores e instituciones públicas",
+    time: "12:00 — 12:20",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: "/images/speakers/daniela-avendano.webp",
+    linkedinUrl: "https://www.linkedin.com/in/licdaavendano/",
+  },
+
   // ─── 12:25 — Privacidad Programable ───
   {
     id: "andy-guzman-toledo",
@@ -219,7 +233,7 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "14:25 — 14:45",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: "/images/speakers/carolina-marino.webp",
     linkedinUrl:
       "https://www.linkedin.com/in/carolina-mari%C3%B1o-rehbein-b0796a65/",
   },
@@ -255,7 +269,7 @@ export const SPEAKERS: readonly Speaker[] = [
     time: "14:50 — 15:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: IMG_TBA,
+    imageUrl: "/images/speakers/renato-carvajal.webp",
     linkedinUrl: "https://www.linkedin.com/in/carlosrenatocarvajal/",
   },
   {
@@ -535,5 +549,16 @@ export const SPEAKERS: readonly Speaker[] = [
     status: "scheduled",
     imageUrl: `${CDN}/67d029a93702b2c591a8ce34_Randall%20Barquero%202025.avif`,
     linkedinUrl: "https://linkedin.com/in/randall-barquero",
+  },
+  {
+    id: "geraldine-pacheco",
+    name: "Geraldine Pacheco",
+    org: "Enterprise Account Executive LatAm @ Chainalysis",
+    talk: "Cumplimiento AML/CFT en Activos Digitales",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: "/images/speakers/geraldine-pacheco.webp",
+    linkedinUrl: "https://www.linkedin.com/in/geraldinebizdev/",
   },
 ] as const;

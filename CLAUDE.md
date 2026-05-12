@@ -86,12 +86,11 @@ The agenda and speaker roster will keep changing in the run-up to May 14 (and ma
 
 ## Pending placeholder fills (client info still owed)
 
-Two `// TODO:` markers in `app/data/sessions.ts` are intentional placeholders waiting on client info. Both should be replaced before May 14:
+One `// TODO:` marker in `app/data/sessions.ts` is an intentional placeholder waiting on client info, and should be replaced before May 14:
 
-- **`autorregulacion-main`** (12:00 — 12:20 Main) — Daniela Avendaño's `speakerOrg` is `"Por anunciar"`. Swap in her real role/org once the client provides it.
 - **`smart-cities-artemis-esc2`** (16:00 — 16:25 Esc-2) — `speakerName` is intentionally omitted (image marked "Falta" = TBD). Add when Artemis confirms a speaker.
 
-Find both with: `grep -n "TODO: client" app/data/sessions.ts`.
+Find it with: `grep -n "TODO: client" app/data/sessions.ts`.
 
 ## After the event: post-event reconciliation
 
