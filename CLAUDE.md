@@ -84,12 +84,21 @@ The agenda and speaker roster will keep changing in the run-up to May 14 (and ma
 - **When new agenda PDFs / source docs arrive**, drop them in the repo root or `docs/venue/`. Read the PDF (use `pypdf` for hyperlink annotations if speakers carry LinkedIn / company URLs), diff against `sessions.ts` + `speakers.ts`, and apply only the deltas.
 - **After any change**: `npm run build` + `npm run lint` + `npm test` (the speaker-status tests in `app/exponentes/_lib/speakerStatus.test.ts` and the session-engine tests in `app/data/sessions.test.ts` will catch most regressions). Spot-check via `?now=2026-05-14T<HH:MM>:00-06:00` on `/`, `/agenda`, and `/exponentes` for any moment that materially changed.
 
+## Pending placeholder fills (client info still owed)
+
+Two `// TODO:` markers in `app/data/sessions.ts` are intentional placeholders waiting on client info. Both should be replaced before May 14:
+
+- **`autorregulacion-main`** (12:00 — 12:20 Main) — Daniela Avendaño's `speakerOrg` is `"Por anunciar"`. Swap in her real role/org once the client provides it.
+- **`smart-cities-artemis-esc2`** (16:00 — 16:25 Esc-2) — `speakerName` is intentionally omitted (image marked "Falta" = TBD). Add when Artemis confirms a speaker.
+
+Find both with: `grep -n "TODO: client" app/data/sessions.ts`.
+
 ## After the event: post-event reconciliation
 
 Once May 14 ends, `phase === "after"` flips and `HeroAfter` renders. Most counts on the site derive from the data files automatically, but a handful of strings and labels are *pre-event* phrasing that needs a manual pass once the agenda is final and nothing else is going to change:
 
 - **`HeroAfter` stat band labels** (`app/components/hero/HeroAfter.tsx`) — the "Charlas" stat is bound to `SESSIONS.length`, which includes breaks and ceremonies. Under the BIOS taxonomy, "Charla" is now a specific category (a handful of sessions), so the label reads as wrong. Either rename to `"Sesiones"` (count stays accurate) or break the band into category-specific stats (e.g. `Keynotes · Paneles · Charlas · Workshops · Pitches`) sourced from `SESSIONS.filter(s => s.category === "...")`.
-- **Final `SESSIONS` / `SPEAKERS` delta** — apply cancellations, no-shows, last-minute substitutions, and any speaker-photo corrections (Webflow CDN mislabeling caveat above still applies). Update the `// Confirmed roster — N speakers` comment at the top of `speakers.ts` so it doesn't drift.
+- **Final `SESSIONS` / `SPEAKERS` delta** — apply cancellations, no-shows, last-minute substitutions, and any speaker-photo corrections (Webflow CDN mislabeling caveat above still applies).
 - **Sponsor roster final pass** (`app/data/sponsors.ts`) — `aliados`, `media`, and `coctel` tiers tend to land late; confirm the final list (e.g. the Esencial Costa Rica seal under `aliados` was a same-week add).
 - **SEO copy in past tense** — `app/layout.tsx` description and `app/opengraph-image.tsx` both say "en vivo" / "EN VIVO". Move them to past tense post-event so social shares and search snippets don't read like the event is still upcoming.
 - **Pre-event hype strings** — `HERO_CONTENT.capacityLabel` in `app/data/home-content.ts` (e.g. "85% CAPACIDAD") is only rendered on `HeroBefore` / `HeroDuring`, so nothing visibly breaks post-event — but refresh it before reusing this codebase for a future edition.

@@ -1,7 +1,7 @@
 import type { Speaker } from "./types";
 
 // Source of truth: ticoblockchain.cr Speakers section (May 14, 2026 lineup).
-// Confirmed roster — 56 speakers as published by the client. Ordered by:
+// Confirmed roster as published by the client. Ordered by:
 //   1. Agenda time (chronological).
 //   2. "Por anunciar" tail — speakers without a pinned slot. They keep their
 //      seed status and never auto-flip during the event because no session row

@@ -307,7 +307,7 @@ export const SESSIONS: readonly Session[] = [
     status: "scheduled",
   },
   {
-    id: "panel-fia-ecosistemas-main",
+    id: "ecosistema-fintech-latam-main",
     time: "16:45 — 17:25",
     startTime: "16:45",
     title: "Ecosistema Fintech en LatAm: Retos y Oportunidades",
@@ -332,7 +332,7 @@ export const SESSIONS: readonly Session[] = [
     status: "scheduled",
   },
   {
-    id: "ecosistemas-crtw-main",
+    id: "ticoblockchain-crtw-main",
     time: "17:30 — 17:55",
     startTime: "17:30",
     title: "TicoBlockchain y CRTW",

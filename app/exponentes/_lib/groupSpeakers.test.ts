@@ -177,7 +177,7 @@ describe("expandAppearances", () => {
     expect(panelSessionIds).toContain("perspectivas-inversion-main");
     expect(panelSessionIds).toContain("pagos-stablecoins-main");
     expect(panelSessionIds).toContain("agentes-autonomos-main");
-    expect(panelSessionIds).toContain("panel-fia-ecosistemas-main");
-    expect(panelSessionIds).toContain("ecosistemas-crtw-main");
+    expect(panelSessionIds).toContain("ecosistema-fintech-latam-main");
+    expect(panelSessionIds).toContain("ticoblockchain-crtw-main");
   });
 });

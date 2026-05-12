@@ -292,7 +292,7 @@ export const SPONSORS: readonly Sponsor[] = [
     name: "Costa Rica Tech Week",
     tier: "aliados",
     logoUrl: `${CDN}/69c68191cd67a95979b925c5_WhatsApp%20Image%202026-03-26%20at%2020.34.5112%201.png`,
-    sessionIds: ["ecosistemas-crtw-main"],
+    sessionIds: ["ticoblockchain-crtw-main"],
     contribution: "Aliado regional — semana tech de Costa Rica.",
   },
   {
