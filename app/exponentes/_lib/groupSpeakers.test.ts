@@ -1,33 +1,32 @@
 import { describe, expect, test } from "vitest";
 import { SPEAKERS } from "../../data/speakers";
 import { expandAppearances } from "./groupSpeakers";
+import { applyLiveStatus } from "./speakerStatus";
 
-// Counts speakers whose name appears with both a "Por anunciar" entry and
-// at least one entry with a real time — these are the ones the merge pass
-// drops from the output.
-function countTbaScheduledDuplicates(): number {
-  const byName = new Map<string, { tba: number; scheduled: number }>();
+function crDate(hhmm: string, dateISO = "2026-05-14"): Date {
+  return new Date(`${dateISO}T${hhmm}:00-06:00`);
+}
+
+// Counts duplicate entries the merge pass drops from the output (every
+// same-name appearance beyond the first one collapses into additionalSlot).
+function countDuplicateAppearances(): number {
+  const byName = new Map<string, number>();
   for (const s of SPEAKERS) {
-    const slot = byName.get(s.name) ?? { tba: 0, scheduled: 0 };
-    if (s.time === "Por anunciar") slot.tba += 1;
-    else slot.scheduled += 1;
-    byName.set(s.name, slot);
+    byName.set(s.name, (byName.get(s.name) ?? 0) + 1);
   }
   let dropped = 0;
-  for (const { tba, scheduled } of byName.values()) {
-    if (tba > 0 && scheduled > 0) dropped += tba;
+  for (const count of byName.values()) {
+    if (count > 1) dropped += count - 1;
   }
   return dropped;
 }
 
 describe("expandAppearances", () => {
-  test("returns one appearance per speaker, minus same-name TBA duplicates that merge into a scheduled card", () => {
+  test("returns one appearance per speaker, minus same-name duplicates that merge into the earliest card", () => {
     const appearances = expandAppearances(SPEAKERS);
-    // Gianina has both a confirmed panel slot and a "Por anunciar" entry —
-    // those collapse into one card carrying additionalSlot. Nobody else
-    // currently has this duplicate shape.
-    const tbaDuplicateCount = countTbaScheduledDuplicates();
-    expect(appearances).toHaveLength(SPEAKERS.length - tbaDuplicateCount);
+    // Karla, JM Zamora, and Gianina each have two source entries that
+    // collapse into a single card with additionalSlot.
+    expect(appearances).toHaveLength(SPEAKERS.length - countDuplicateAppearances());
   });
 
   test("Gianina renders as a single card with the TBA slot folded in as additionalSlot", () => {
@@ -35,32 +34,38 @@ describe("expandAppearances", () => {
     const gianinaAppearances = appearances.filter(
       (a) => a.speaker.name === "Gianina Redondo",
     );
-    // Single card after merge.
     expect(gianinaAppearances).toHaveLength(1);
-    // The kept card is the scheduled panel slot.
     expect(gianinaAppearances[0].speaker.id).toBe("gianina-redondo-agentes");
-    // additionalSlot mirrors the TBA entry's talk + time.
     expect(gianinaAppearances[0].additionalSlot).toEqual({
       talk: "Agentes Autónomos y Dinero Digital",
       time: "Por anunciar",
     });
   });
 
-  test("Karla and José Miguel Zamora keep two cards (both slots have real times — no merge)", () => {
+  test("Karla renders as a single card anchored to her Perspectivas slot, with the CRTW cierre as additionalSlot", () => {
     const appearances = expandAppearances(SPEAKERS);
     const karla = appearances.filter(
       (a) => a.speaker.name === "Karla Córdoba Brenes",
     );
+    expect(karla).toHaveLength(1);
+    expect(karla[0].speaker.id).toBe("karla-cordoba-brenes");
+    expect(karla[0].additionalSlot).toEqual({
+      talk: "Ecosistemas y CRTW (Panel)",
+      time: "17:30 — 17:55",
+    });
+  });
+
+  test("JM Zamora renders as a single card anchored to his PANEL FIA slot, with the CRTW cierre as additionalSlot", () => {
+    const appearances = expandAppearances(SPEAKERS);
     const jmz = appearances.filter(
       (a) => a.speaker.name === "José Miguel Zamora Barquero",
     );
-    expect(karla.length).toBeGreaterThanOrEqual(2);
-    expect(jmz.length).toBeGreaterThanOrEqual(2);
-    // Neither carries an additionalSlot — the merge rule only fires when
-    // one of the slots is "Por anunciar".
-    for (const a of [...karla, ...jmz]) {
-      expect(a.additionalSlot).toBeUndefined();
-    }
+    expect(jmz).toHaveLength(1);
+    expect(jmz[0].speaker.id).toBe("jose-miguel-zamora");
+    expect(jmz[0].additionalSlot).toEqual({
+      talk: "Ecosistemas y CRTW (Panel)",
+      time: "17:30 — 17:55",
+    });
   });
 
   test("solo speakers have no panelContext", () => {
@@ -130,6 +135,36 @@ describe("expandAppearances", () => {
     for (const a of tba) {
       expect(a.panelContext).toBeUndefined();
     }
+  });
+
+  test("merged card flips its primary to the currently-live appearance — Karla at 11:00 anchors to Perspectivas", () => {
+    const withStatus = applyLiveStatus(SPEAKERS, crDate("11:00"));
+    const appearances = expandAppearances(withStatus);
+    const karla = appearances.filter((a) => a.speaker.name === "Karla Córdoba Brenes");
+    expect(karla).toHaveLength(1);
+    expect(karla[0].speaker.id).toBe("karla-cordoba-brenes");
+    expect(karla[0].speaker.status).toBe("live");
+    expect(karla[0].additionalSlot?.talk).toBe("Ecosistemas y CRTW (Panel)");
+  });
+
+  test("merged card flips its primary to the currently-live appearance — Karla at 17:35 anchors to CRTW cierre", () => {
+    const withStatus = applyLiveStatus(SPEAKERS, crDate("17:35"));
+    const appearances = expandAppearances(withStatus);
+    const karla = appearances.filter((a) => a.speaker.name === "Karla Córdoba Brenes");
+    expect(karla).toHaveLength(1);
+    expect(karla[0].speaker.id).toBe("karla-cordoba-brenes-cierre");
+    expect(karla[0].speaker.status).toBe("live");
+    expect(karla[0].additionalSlot?.talk).toBe("Perspectivas de Inversión 2026 (Moderadora)");
+  });
+
+  test("merged card flips its primary to the currently-live appearance — JM Zamora at 17:35 anchors to CRTW cierre", () => {
+    const withStatus = applyLiveStatus(SPEAKERS, crDate("17:35"));
+    const appearances = expandAppearances(withStatus);
+    const jmz = appearances.filter((a) => a.speaker.name === "José Miguel Zamora Barquero");
+    expect(jmz).toHaveLength(1);
+    expect(jmz[0].speaker.id).toBe("jose-miguel-zamora-cierre");
+    expect(jmz[0].speaker.status).toBe("live");
+    expect(jmz[0].additionalSlot?.talk).toBe("PANEL FIA — Ecosistemas Regional (Moderador)");
   });
 
   test("panel sessionId resolves for every panel session that exists", () => {

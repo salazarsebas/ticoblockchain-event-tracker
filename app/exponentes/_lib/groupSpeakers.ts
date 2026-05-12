@@ -95,16 +95,26 @@ export function expandAppearances(
       });
     });
   }
-  return mergeTbaDuplicates(result);
+  return mergeDuplicates(result);
 }
 
-// When the same person shows up with both a scheduled slot and a "Por
-// anunciar" placeholder (data drift / pending confirmation), collapse
-// the duplicate: the TBA entry's talk + time get attached to the
-// scheduled appearance as `additionalSlot`, and the standalone TBA
-// appearance is dropped. Speakers with only TBA entries, or with
-// multiple real-time slots, are left alone.
-function mergeTbaDuplicates(
+// When the same person shows up more than once in `speakers.ts` (a
+// confirmed panel slot + a "Por anunciar" placeholder, or two real-time
+// panel slots like Karla / JM Zamora moderating two sessions), collapse
+// the appearances into a single /exponentes card.
+//
+// Primary selection is *dynamic*, based on each entry's current status:
+// `live > next > scheduled > past`. That way the merged card always
+// anchors to whichever appearance is most relevant right now — at 11:00
+// Karla's card shows Perspectivas as live; at 17:35 the same card flips
+// to show her CRTW closing panel as live. The other appearance surfaces
+// on the same card as `additionalSlot` ("También presenta …"). File
+// order breaks ties when statuses match (e.g. before the event, when
+// every entry is "scheduled"). Third+ duplicates are dropped (no
+// speaker currently has more than two slots).
+const STATUS_PRIORITY = { live: 0, next: 1, scheduled: 2, past: 3 } as const;
+
+function mergeDuplicates(
   appearances: SpeakerAppearance[],
 ): SpeakerAppearance[] {
   const indicesByName = new Map<string, number[]>();
@@ -117,16 +127,14 @@ function mergeTbaDuplicates(
   const dropIdx = new Set<number>();
   for (const indices of indicesByName.values()) {
     if (indices.length < 2) continue;
-    const tba = indices.filter(
-      (i) => appearances[i].speaker.time === "Por anunciar",
-    );
-    const scheduled = indices.filter(
-      (i) => appearances[i].speaker.time !== "Por anunciar",
-    );
-    if (tba.length === 0 || scheduled.length === 0) continue;
-    const targetIdx = scheduled[0];
-    const sourceIdx = tba[0];
-    const source = appearances[sourceIdx];
+    const sorted = [...indices].sort((a, b) => {
+      const pa = STATUS_PRIORITY[appearances[a].speaker.status];
+      const pb = STATUS_PRIORITY[appearances[b].speaker.status];
+      if (pa !== pb) return pa - pb;
+      return a - b;
+    });
+    const targetIdx = sorted[0];
+    const source = appearances[sorted[1]];
     appearances[targetIdx] = {
       ...appearances[targetIdx],
       additionalSlot: {
@@ -134,7 +142,7 @@ function mergeTbaDuplicates(
         time: source.speaker.time,
       },
     };
-    for (const i of tba) dropIdx.add(i);
+    for (const i of sorted.slice(1)) dropIdx.add(i);
   }
 
   return appearances.filter((_, i) => !dropIdx.has(i));

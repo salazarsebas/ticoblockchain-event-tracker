@@ -1,7 +1,7 @@
 import type { Speaker } from "./types";
 
 // Source of truth: ticoblockchain.cr Speakers section (May 14, 2026 lineup).
-// Confirmed roster — 54 speakers as published by the client. Ordered by:
+// Confirmed roster — 58 speakers as published by the client. Ordered by:
 //   1. Agenda time (chronological).
 //   2. "Por anunciar" tail — speakers without a pinned slot. They keep their
 //      seed status and never auto-flip during the event because no session row
@@ -114,6 +114,32 @@ export const SPEAKERS: readonly Speaker[] = [
     imageUrl: `${CDN}/69f62fb27621c1fce04b1453_Jos%C3%A9%20Miguel%20Alfaro.png`,
     linkedinUrl:
       "https://cr.linkedin.com/in/jos%C3%A9-miguel-alfaro-g%C3%B3mez-6a491529",
+  },
+
+  // ─── 10:55 — Olanzo (esc-2) ───
+  {
+    id: "niklas-lind",
+    name: "Niklas Lind",
+    org: "Country Manager @ Olanzo · COO @ Mayanor Ventures",
+    talk: "Transformación Digital",
+    time: "10:55 — 11:20",
+    stage: "escenario-2",
+    status: "scheduled",
+    imageUrl: `${CDN}/69fe73f37e61f3fbffeb1fc7_Screenshot555.png`,
+    linkedinUrl: "https://www.linkedin.com/in/niklaslind/",
+  },
+
+  // ─── 11:25 — Lulubit (esc-2) ───
+  {
+    id: "alberto-galan",
+    name: "Alberto Galán",
+    org: "Embajador @ Lulubit",
+    talk: "El Puente entre Cripto y la Banca Local",
+    time: "11:25 — 11:50",
+    stage: "escenario-2",
+    status: "scheduled",
+    imageUrl: `${CDN}/69fe74bcd3badd55b0f4c10d_Alberto%20Gal%C3%A1n.png`,
+    linkedinUrl: "https://www.linkedin.com/in/albertogalanb/",
   },
 
   // ─── 11:40 — Fintech for Good ───
@@ -281,6 +307,17 @@ export const SPEAKERS: readonly Speaker[] = [
     linkedinUrl:
       "https://www.linkedin.com/in/andres-gomez-ramirez-bb7226156/",
   },
+  {
+    id: "anis-halabi",
+    name: "Anis Yamill Halabi",
+    org: "Co-founder @ Sakundi",
+    talk: "Identidad Digital en Blockchain — Privacidad y Regulación",
+    time: "15:15 — 15:35",
+    stage: "escenario-2",
+    status: "scheduled",
+    imageUrl: `${CDN}/69fe6fad1e6f3131f6d33339_WhatsApp%20Image%202026-05-08%20at%2013.16.18.jpeg`,
+    linkedinUrl: "https://www.linkedin.com/in/anisyamillhalabi/",
+  },
 
   // ─── 16:00 — Agentes Autónomos (panel main) ───
   {
@@ -373,10 +410,14 @@ export const SPEAKERS: readonly Speaker[] = [
   },
 
   // ─── 17:30 — Ecosistemas y CRTW (closing panel main) ───
-  // Karla & José Miguel are duplicated entries: they're already anchored
-  // to earlier panels (10:55 and 16:45 respectively), and we need a second
-  // entry to auto-flip them live again at 17:30 since each Speaker can only
-  // hold one `time` value.
+  // Karla and José Miguel Zamora are duplicated entries: each is already
+  // anchored to an earlier panel (Karla → 10:55 Perspectivas, JM Zamora →
+  // 16:45 PANEL FIA Moderador), and we keep a second entry here so the
+  // CRTW session's panelist roster stays accurate in this file. The
+  // `expandAppearances` pass in `app/exponentes/_lib/groupSpeakers.ts`
+  // collapses each pair into a single /exponentes card — the earlier slot
+  // becomes the primary, and the cierre appearance surfaces as a
+  // "También presenta" note on that same card.
   {
     id: "karla-cordoba-brenes-cierre",
     name: "Karla Córdoba Brenes",
@@ -489,5 +530,16 @@ export const SPEAKERS: readonly Speaker[] = [
     status: "scheduled",
     imageUrl: `${CDN}/67d029a93702b2c591a8ce34_Randall%20Barquero%202025.avif`,
     linkedinUrl: "https://linkedin.com/in/randall-barquero",
+  },
+  {
+    id: "sebastian-ceciliano",
+    name: "Sebastián Ceciliano",
+    org: "Head of Growth & Community Builder @ Zeek",
+    talk: "De la Curiosidad a la Acción en Blockchain",
+    time: "Por anunciar",
+    stage: "main",
+    status: "scheduled",
+    imageUrl: `${CDN}/6a02151165ad69ecfb2f216c_Sebasti%C3%A1n%20Ceciliano.jpg.jpeg`,
+    linkedinUrl: "https://www.linkedin.com/in/cbiux/",
   },
 ] as const;

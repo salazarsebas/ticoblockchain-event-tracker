@@ -91,7 +91,8 @@ export const SESSIONS: readonly Session[] = [
     time: "10:55 — 11:20",
     startTime: "10:55",
     title: "Olanzo",
-    speakerOrg: "Olanzo",
+    speakerName: "Niklas Lind",
+    speakerOrg: "Country Manager @ Olanzo",
     description:
       "Infraestructura para pagos y liquidación on-chain.",
     stage: "escenario-2",
@@ -103,7 +104,8 @@ export const SESSIONS: readonly Session[] = [
     time: "11:25 — 11:50",
     startTime: "11:25",
     title: "Lulubit",
-    speakerOrg: "Lulubit",
+    speakerName: "Alberto Galán",
+    speakerOrg: "Embajador @ Lulubit",
     description:
       "Herramientas para integrar pagos cripto en comercios tradicionales.",
     stage: "escenario-2",
@@ -240,7 +242,7 @@ export const SESSIONS: readonly Session[] = [
     time: "15:15 — 15:35",
     startTime: "15:15",
     title: "Identidad Digital en Blockchain — Privacidad y Regulación",
-    speakerName: "Andrés Gómez",
+    speakerName: "Andrés Gómez · Anis Halabi",
     speakerOrg: "Sakundi",
     stage: "escenario-2",
     category: "workshop",
