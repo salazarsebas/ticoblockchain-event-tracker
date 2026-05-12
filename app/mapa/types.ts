@@ -37,7 +37,7 @@ export type GrecoFeature = {
   iconName?: IconName;
 };
 
-type StandNumber = 1 | 2 | 3 | 4 | 5;
+type StandNumber = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type Stand = {
   id: `stand-${StandNumber}`;

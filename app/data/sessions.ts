@@ -11,7 +11,7 @@ export const SESSIONS: readonly Session[] = [
     id: "registro",
     time: "08:00 — 09:00",
     startTime: "08:00",
-    title: "Registro y Café de Bienvenida",
+    title: "Registro",
     speakerOrg: "Equipo TicoBlockchain",
     stage: "both",
     category: "break",

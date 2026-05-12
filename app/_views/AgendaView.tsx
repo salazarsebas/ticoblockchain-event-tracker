@@ -73,21 +73,54 @@ export default function AgendaView({ now, simulated }: AgendaViewProps) {
       </Suspense>
 
       {/* Logistics strip — lunch runs in parallel to talks (not in SESSIONS),
-          so surface it once above the schedule as context rather than a card. */}
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 border-l-4 border-secondary bg-surface-container-highest px-4 py-3 animate-fade-up">
-        <div className="flex items-center gap-2 shrink-0">
-          <Icon name="restaurant" size={16} className="text-secondary" />
-          <span className="label-meta font-bold text-secondary">
-            Almuerzo
-          </span>
-          <span className="mono-data text-[11px] font-bold text-primary">
+          so surface it once above the schedule as context rather than a card.
+          Split into two bracelet-keyed windows: ROSA 11:30—12:30, AZUL
+          12:30—13:30. Swatch colors are inlined arbitrary values (one-off
+          functional indicators, not part of the Horizonte Cobalt palette);
+          each window also carries the literal word "ROSA" / "AZUL" so the
+          info is never communicated by color alone. */}
+      <div className="mb-6 flex flex-col gap-2 sm:gap-3 border-l-4 border-secondary bg-surface-container-highest px-4 py-3 animate-fade-up">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <Icon name="restaurant" size={16} className="text-secondary shrink-0" />
+            <span className="label-meta font-bold text-secondary truncate">
+              Almuerzo · Restaurante
+            </span>
+          </div>
+          <span className="mono-data text-[11px] font-bold text-primary shrink-0">
             11:30 — 13:30
           </span>
         </div>
-        <p className="text-xs sm:text-sm text-on-surface-variant">
-          Servicio continuo en el área de networking. Requiere tiquete incluido
-          en tu registro.
-        </p>
+        <div className="flex items-start gap-3">
+          <span
+            className="w-4 h-4 mt-0.5 shrink-0 bg-[#db2777]"
+            aria-hidden="true"
+          />
+          <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-3 flex-1 min-w-0">
+            <span className="mono-data text-[11px] font-bold text-primary tracking-widest shrink-0">
+              ROSA · 11:30 — 12:30
+            </span>
+            <p className="text-xs sm:text-sm text-on-surface-variant">
+              Servicio continuo en el Restaurante para participantes con
+              brazalete color ROSA.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-start gap-3">
+          <span
+            className="w-4 h-4 mt-0.5 shrink-0 bg-[#2563eb]"
+            aria-hidden="true"
+          />
+          <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-3 flex-1 min-w-0">
+            <span className="mono-data text-[11px] font-bold text-primary tracking-widest shrink-0">
+              AZUL · 12:30 — 13:30
+            </span>
+            <p className="text-xs sm:text-sm text-on-surface-variant">
+              Servicio continuo en el Restaurante para participantes con
+              brazalete color AZUL.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Dual-track timeline — always renders all slots; stage filter is

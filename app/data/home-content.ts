@@ -77,7 +77,7 @@ export const PRACTICAL_INFO: readonly PracticalInfoItem[] = [
     id: "lunch",
     hook: "11:30 — 13:30",
     label: "Almuerzo",
-    body: "Servicio con tiquete incluido en tu registro. Acceso libre durante la ventana de almuerzo.",
+    body: "ROSA 11:30 — 12:30 · AZUL 12:30 — 13:30. Servicio continuo en el Restaurante según el color de tu brazalete.",
   },
   {
     id: "dresscode",
