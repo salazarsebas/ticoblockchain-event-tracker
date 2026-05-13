@@ -101,7 +101,7 @@ export default function AgendaView({ now, simulated }: AgendaViewProps) {
               ROSA · 11:30 — 12:30
             </span>
             <p className="text-xs sm:text-sm text-on-surface-variant">
-              Servicio continuo en el Restaurante para participantes con
+              Servicio en el Restaurante para participantes con
               brazalete color ROSA.
             </p>
           </div>
@@ -116,7 +116,7 @@ export default function AgendaView({ now, simulated }: AgendaViewProps) {
               AZUL · 12:30 — 13:30
             </span>
             <p className="text-xs sm:text-sm text-on-surface-variant">
-              Servicio continuo en el Restaurante para participantes con
+              Servicio en el Restaurante para participantes con
               brazalete color AZUL.
             </p>
           </div>

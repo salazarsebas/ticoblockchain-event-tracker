@@ -30,12 +30,24 @@ export default function SessionCard({ session, stageLabel, variant = "column" }:
 
   const hasLongDescription = (session.description?.length ?? 0) > 120;
 
+  // Both lunch breaks render full-width (stage="both") so they show
+  // regardless of the stage filter, but each retains its bracelet color
+  // matching the AgendaView logistics strip — ROSA wave (11:30—12:30),
+  // AZUL wave (12:30—13:30). Discriminate by id since stage is "both".
+  // Other shared breaks (coffee, ceremonies) stay neutral.
+  const breakBg =
+    isBreak && session.id === "lunch-break-main"
+      ? "bg-[#db2777]/15"
+      : isBreak && session.id === "lunch-break-esc2"
+        ? "bg-[#2563eb]/15"
+        : "bg-surface-container-highest";
+
   const rootClasses = [
     "relative h-full px-5 py-5 md:px-6 md:py-6 flex flex-col gap-3 transition-colors duration-200",
     isLive
       ? "bg-surface-container-low animate-border-breathe border-2 border-secondary"
       : isBreak
-        ? "bg-surface-container-highest"
+        ? breakBg
         : "bg-surface hover:bg-surface-container-high border-2 border-transparent hover:border-primary/20",
     isPast ? "opacity-40" : "",
     variant === "wide" ? "md:text-center md:items-center" : "",
