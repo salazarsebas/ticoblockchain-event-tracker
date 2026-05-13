@@ -13,7 +13,7 @@ import type { Speaker } from "./types";
 const CDN = "https://cdn.prod.website-files.com/6744c862a5d9324c919d6b4d";
 
 // Generic placeholder used when the official site does not show a real
-// portrait for a confirmed speaker (e.g. roberto-grella), or when the
+// portrait for a confirmed speaker (e.g. nelson-irias), or when the
 // site's photo attribution is ambiguous.
 const IMG_TBA = `${CDN}/67e29d86c819abd198b2e8cc_Screenshot%20(25).avif`;
 
@@ -479,16 +479,6 @@ export const SPEAKERS: readonly Speaker[] = [
     status: "scheduled",
     imageUrl: `${CDN}/69b1647566e862a48f42e86e_rogelio%20martinez.jpg`,
     linkedinUrl: "https://www.linkedin.com/in/rogeliomartinez/",
-  },
-  {
-    id: "roberto-grella",
-    name: "Roberto Grella",
-    org: "Fintech Uruguay",
-    talk: "Ecosistema Regional Fintech",
-    time: "Por anunciar",
-    stage: "main",
-    status: "scheduled",
-    imageUrl: IMG_TBA,
   },
   {
     id: "diego-perez",
