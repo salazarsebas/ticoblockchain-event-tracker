@@ -48,7 +48,7 @@ export const SESSIONS: readonly Session[] = [
     startTime: "10:00",
     title: "Neocooperativismo: el futuro le pertenece a las personas",
     speakerName: "Diego Loaiza",
-    speakerOrg: "CEO @ Wink",
+    speakerOrg: "Gerente de Tecnología · Coopenae - Wink",
     description:
       "Un recorrido sin filtros por los retos reales de llevar servicios financieros a los no bancarizados, desde la óptica de un neobanco costarricense.",
     stage: "main",
@@ -149,7 +149,7 @@ export const SESSIONS: readonly Session[] = [
     title:
       "Autorregulación y Gobernanza operativa: una visión para fundadores e instituciones públicas que buscan anticiparse a la regulación",
     speakerName: "Daniela Avendaño",
-    speakerOrg: "Co-founder @ BlockRock Legal & Tech",
+    speakerOrg: "Abogada @ BlockRock",
     stage: "main",
     category: "talk",
     status: "scheduled",

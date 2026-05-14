@@ -37,7 +37,7 @@ export const SPEAKERS: readonly Speaker[] = [
   {
     id: "diego-loaiza-centeno",
     name: "Diego Loaiza Centeno",
-    org: "CEO @ Wink",
+    org: "Gerente de Tecnología · Coopenae - Wink",
     talk: "Mitos y Realidades de la Inclusión Financiera",
     time: "10:00 — 10:25",
     stage: "main",
@@ -158,7 +158,7 @@ export const SPEAKERS: readonly Speaker[] = [
   {
     id: "daniela-avendano",
     name: "Daniela Avendaño Soto",
-    org: "Co-founder @ BlockRock Legal & Tech",
+    org: "Abogada @ BlockRock",
     talk:
       "Autorregulación y Gobernanza Operativa: visión para fundadores e instituciones públicas",
     time: "12:00 — 12:20",
@@ -252,14 +252,14 @@ export const SPEAKERS: readonly Speaker[] = [
   },
   {
     id: "daniel-calderon-serna",
-    name: "Daniel Calderón Serna",
-    org: "Business Development Manager · VISA Centroamérica & Caribe",
+    name: "Daniel Calderón",
+    org: "Senior Manager Desarrollo de Negocios · VISA Centroamérica & Caribe",
     talk: "Pagos y Stablecoins (Panel)",
     time: "14:50 — 15:30",
     stage: "main",
     status: "scheduled",
-    imageUrl: `${CDN}/67d6c61eee11dca78ec6021b_Screenshot2.avif`,
-    linkedinUrl: "https://cr.linkedin.com/in/daniel-calder%C3%B3n-ey",
+    imageUrl: "/images/speakers/daniel-calderon.webp",
+    linkedinUrl: "https://www.linkedin.com/in/daniel-calder%C3%B3n-ey/",
   },
   {
     id: "renato-carvajal",
@@ -287,7 +287,7 @@ export const SPEAKERS: readonly Speaker[] = [
   {
     id: "karol-zuniga-castro",
     name: "Karol Zúñiga Castro",
-    org: "Banco Central de Costa Rica",
+    org: "Coordinadora Legal · Banco Central de Costa Rica",
     talk: "Pagos y Stablecoins (Panel)",
     time: "14:50 — 15:30",
     stage: "main",
@@ -363,7 +363,7 @@ export const SPEAKERS: readonly Speaker[] = [
   {
     id: "jorge-mora-flores",
     name: "Jorge Mora Flores",
-    org: "Consultor @ BID",
+    org: "Chief Technical Advisor @ LuxDev",
     talk: "Agentes Autónomos (Panel)",
     time: "16:00 — 16:40",
     stage: "main",
@@ -483,7 +483,7 @@ export const SPEAKERS: readonly Speaker[] = [
   {
     id: "diego-perez",
     name: "Diego Perez",
-    org: "Board Member · ABFintechs",
+    org: "VP · Asociación Brasileña de Cripto",
     talk: "Ecosistema Fintech en LatAm: Retos y Oportunidades (Panel)",
     time: "16:45 — 17:25",
     stage: "main",
