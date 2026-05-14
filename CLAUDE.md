@@ -13,12 +13,14 @@ Live event tracker for TicoBlockchain 2026 (May 14, 2026 — Hotel Barcelo San J
 
 ## Commands
 ```bash
-npm run dev          # next dev
-npm run build        # next build  — must pass before declaring task done
-npm run lint         # eslint
-npm test             # vitest run
-npm run test:watch   # vitest watch
+pnpm dev             # next dev
+pnpm build           # next build  — must pass before declaring task done
+pnpm lint            # eslint
+pnpm test            # vitest run
+pnpm test:watch      # vitest watch
 ```
+
+> This project is committed to **pnpm** (pinned in `package.json` `packageManager`, enforced by a `preinstall` guard). Do not run `npm install` — it will fail by design.
 
 ## Structure
 ```
@@ -45,7 +47,7 @@ public/            # static assets
 - Time-zone-sensitive code must handle the offset explicitly — do not rely on the host TZ.
 - `LiveRefresh` schedules **exact-boundary** refreshes at session transitions; do not replace it with polling.
 - **All three live-data routes (`/`, `/agenda`, `/exponentes`) are statically prerendered** (ISR every 10s) so they feel instant on prefetch — same smoothness as `/mapa` / `/sponsors`. Each page body lives in a colocated view component (`app/_views/EnVivoView.tsx`, `app/_views/AgendaView.tsx`, `app/_views/ExponentesView.tsx`); the corresponding `page.tsx` files are thin static wrappers that call the view with `now = new Date()` and `simulated = null`.
-- **QA time-travel** routes (`/dev`, `/dev/agenda`, `/dev/exponentes`) mount the same view components in dynamic contexts and read `?now=<ISO-8601>` for the simulated clock — e.g. `/dev/agenda?now=2026-05-14T10:15:00-06:00`. The override is honored in `npm run dev` only — `resolveNow` ignores it in production (`app/data/now.ts:13`). Don't reintroduce `?now=` on the public routes themselves; that would force them back to dynamic rendering and bring back the loading-state flash.
+- **QA time-travel** routes (`/dev`, `/dev/agenda`, `/dev/exponentes`) mount the same view components in dynamic contexts and read `?now=<ISO-8601>` for the simulated clock — e.g. `/dev/agenda?now=2026-05-14T10:15:00-06:00`. The override is honored in `pnpm dev` only — `resolveNow` ignores it in production (`app/data/now.ts:13`). Don't reintroduce `?now=` on the public routes themselves; that would force them back to dynamic rendering and bring back the loading-state flash.
 - **`/agenda?stage=main|escenario-2` filter** is preserved as a shareable URL but applied **client-side** by `AgendaToolbar` (`app/agenda/_components/AgendaToolbar.tsx`) so the page can stay static. The toolbar's useEffect:
   - updates `data-stage-filter` on the `<main>` wrapper, which CSS rules in `app/globals.css` use to collapse `[data-row-grid]` / `[data-header-grid]` from 3 cols to 2;
   - hides the non-matching `[data-stage-header]` column header via `hidden`;
@@ -82,7 +84,7 @@ The agenda and speaker roster will keep changing in the run-up to May 14 (and ma
 - **For "both"-stage sessions** (ceremonies, joint keynotes, breaks), leave `stage: "both"` in `sessions.ts` — speakers on either physical stage at that time inherit the status correctly.
 - **No reseed needed.** The status field hard-coded in each entry is only a fallback for off-event-day rendering. On May 14, the live engine recomputes everything from `time` + the wall clock; you don't need to update `status` fields manually.
 - **When new agenda PDFs / source docs arrive**, drop them in the repo root or `docs/venue/`. Read the PDF (use `pypdf` for hyperlink annotations if speakers carry LinkedIn / company URLs), diff against `sessions.ts` + `speakers.ts`, and apply only the deltas.
-- **After any change**: `npm run build` + `npm run lint` + `npm test` (the speaker-status tests in `app/exponentes/_lib/speakerStatus.test.ts` and the session-engine tests in `app/data/sessions.test.ts` will catch most regressions). Spot-check via `?now=2026-05-14T<HH:MM>:00-06:00` on `/`, `/agenda`, and `/exponentes` for any moment that materially changed.
+- **After any change**: `pnpm build` + `pnpm lint` + `pnpm test` (the speaker-status tests in `app/exponentes/_lib/speakerStatus.test.ts` and the session-engine tests in `app/data/sessions.test.ts` will catch most regressions). Spot-check via `?now=2026-05-14T<HH:MM>:00-06:00` on `/`, `/agenda`, and `/exponentes` for any moment that materially changed.
 
 ## Pending placeholder fills (client info still owed)
 
@@ -106,9 +108,9 @@ Spot-check via `?now=2026-05-14T20:30:00-06:00` and `?now=2026-05-21T12:00:00-06
 
 ## Before declaring a task done
 1. Real code changes are in (not just a plan).
-2. `npm run build` passes.
-3. `npm run lint` is clean for files you touched.
-4. For UI work, manually verify in `npm run dev` (golden path + an edge case).
+2. `pnpm build` passes.
+3. `pnpm lint` is clean for files you touched.
+4. For UI work, manually verify in `pnpm dev` (golden path + an edge case).
 5. Brief summary of what changed and which files were touched.
 
 ## Browser Automation
